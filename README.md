@@ -44,3 +44,7 @@ Please do **not** mark a task as done in Trello if it doesn't have at least a fe
 We'll be using Doxygen, the output of which will probably be parsed by Sphinx, if I have the time. Please write the documentation using [markdown](http://daringfireball.net/projects/markdown/syntax), which will enable easy HTML code generation. You can also find it helpful to [look at the Doxygen specific markdown docs](http://www.stack.nl/~dimitri/doxygen/manual/markdown.html).
 
 The documentation from the master branch should also be [avaliable here](http://pumas.bazzle.me/index.html) (with 10-minute lag).
+
+## Tasks
+
+To see, add and claim the tasks, visit [the Trello board](https://trello.com/b/KRhBGiUB/pumas).
