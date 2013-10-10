@@ -26,3 +26,8 @@ In order to build the code, you need to create a build directory, generate the m
     make -j3
 
 which should produce a 'solver' executable for you.
+
+Tests
+====
+
+We will most probably be using the unit test framework from [Boost](http://www.boost.org/). It is added as a compile-time requirement.
