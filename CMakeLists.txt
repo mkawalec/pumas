@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
-project(pumas)
+project(PUMAS)
 include_directories(include src)
 
-add_executable(simulator simulator.cpp)
+add_executable(solver solver.cpp)
 #add_executable(test-suite test-suite.cpp)
 target_link_libraries(solver -lm)
 
