@@ -23,10 +23,12 @@ Building the application
 
 In order to build the code, you need to create a build directory, generate the makefile and build:
 
-    mkdir build
-    cd build
-    cmake ..
-    make -j3
+```shell
+mkdir build
+cd build
+cmake ..
+make -j3
+```
 
 which should produce a 'solver' executable for you.
 
@@ -35,8 +37,10 @@ Building the documentation
 
 To do that you need to be inside the build directory and make doc:
 
-    cd build
-    make doc
+```shell
+cd build
+make doc
+```
 
 Tests
 ====
