@@ -7,14 +7,14 @@
 class Simulator
 {
     private:
-        landscape *current_state = NULL;
-        landscape *temp_state = NULL;
+        landscape *current_state;
+        landscape *temp_state;
         double dt;
 
     public:
         // This should read in the data and throw an exception(s)
         // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
-        void Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt){}
+        Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt){}
 
         void apply_step(){}
 

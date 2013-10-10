@@ -1,8 +1,8 @@
-#include "simulator.h"
+#include "Simulator.h"
 #include <fstream>
 #include <iostream>
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 
     return 0;

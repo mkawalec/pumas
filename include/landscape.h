@@ -1,7 +1,7 @@
 #ifndef PUMAS_landscape_h
 #define PUMAS_landscape_h
 
-Struct landscape {
+struct landscape {
     double hare_density, puma_density;
     bool is_land;
 
