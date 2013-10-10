@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(PUMAS)
 include_directories(src include)
-set(HEADER_FILES include/landscape.hpp include/Simulator.hpp)
+set(HEADER_FILES include/helpers.hpp include/Simulator.hpp)
 
 message(status "${CMAKE_CURRENT_SOURCE_DIR}")
 add_executable(solver src/solver.cpp src/Simulator.cpp ${HEADER_FILES})
