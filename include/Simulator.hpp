@@ -3,12 +3,13 @@
 
 #include "helpers.hpp"
 #include <fstream>
+#include <boost/scoped_array.hpp>
 
 namespace PUMA {
 
     class Simulator {
-        boost::scoped_array<landscape> current_state();
-        boost::scoped_array<landscape> temp_state();
+        boost::scoped_array<landscape> current_state;
+        boost::scoped_array<landscape> temp_state;
         double dt;
 
         public:
