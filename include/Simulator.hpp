@@ -1,7 +1,7 @@
 #ifndef PUMAS_Simulator_h
 #define PUMAS_Simulator_h
 
-#include "landscape.h"
+#include "landscape.hpp"
 #include <fstream>
 
 class Simulator

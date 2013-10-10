@@ -1,4 +1,4 @@
-#include "Simulator.h"
+#include "Simulator.hpp"
 #include <fstream>
 #include <iostream>
 

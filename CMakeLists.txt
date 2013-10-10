@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
 project(PUMAS)
 include_directories(src include)
-set(HEADER_FILES include/landscape.h include/Simulator.h)
+set(HEADER_FILES include/landscape.hpp include/Simulator.hpp)
 
 message(status "${CMAKE_CURRENT_SOURCE_DIR}")
 add_executable(solver src/solver.cpp ${HEADER_FILES})
-#add_executable(test-suite test-suite.cpp)
+add_executable(test-suite src/test-suite.cpp)
 target_link_libraries(solver -lm)
 
 find_package(Doxygen)
@@ -33,7 +33,7 @@ message(status "** Boost Libraries: ${Boost_LIBRARIES}")
 
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-#target_link_libraries(test-suite ${Boost_LIBRARIES})
+target_link_libraries(test-suite ${Boost_LIBRARIES})
 
 set(Boost_USE_STATIC_LIBS        OFF)
 set(Boost_USE_MULTITHREADED      ON)
