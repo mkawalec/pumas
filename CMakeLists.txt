@@ -4,7 +4,7 @@ include_directories(src include)
 set(HEADER_FILES include/landscape.h include/Simulator.h)
 
 message(status "${CMAKE_CURRENT_SOURCE_DIR}")
-add_executable(solver src/solver.cpp)
+add_executable(solver src/solver.cpp ${HEADER_FILES})
 #add_executable(test-suite test-suite.cpp)
 target_link_libraries(solver -lm)
 
