@@ -25,14 +25,7 @@ In order to build the code, you need to create a build directory, generate the m
     cmake ..
     make -j3
 
-which should produce a 'solver' executable for you.
-
-### Building the documentation
-
-To do that you need to be inside the build directory and make doc:
-
-    cd build
-    make doc
+which should produce 'solver' and 'test-suite' executables for you.
 
 ## Tests
 
@@ -41,3 +34,11 @@ We will most probably be using the unit test framework from [Boost](http://www.b
 A good how-to on using Boost tests can be found [in the Boost docs](http://www.boost.org/doc/libs/1_35_0/libs/test/doc/components/utf/index.html). The first three examples are mostly worth the read.
 
 Please do *not* mark a task as done in Trello if it doesn't have at least a few tests to prove its correctness!
+
+### Building the documentation
+
+To do that you need to be inside the build directory and make doc:
+
+    cd build
+    make doc
+
