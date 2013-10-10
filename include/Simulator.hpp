@@ -1,17 +1,15 @@
-#ifndef PUMAS_Simulator_h
-#define PUMAS_Simulator_h
+#ifndef PUMA_Simulator_h
+#define PUMA_Simulator_h
 
 #include "helpers.hpp"
 #include <fstream>
-#include <boost/scoped_array.hpp>
 
 namespace PUMA {
 
     class Simulator {
-        private:
-            boost::scoped_array<landscape> current_state();
-            boost::scoped_array<landscape> temp_state();
-            double dt;
+        boost::scoped_array<landscape> current_state();
+        boost::scoped_array<landscape> temp_state();
+        double dt;
 
         public:
             // This should read in the data and throw an exception(s)
