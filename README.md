@@ -35,7 +35,7 @@ To do that you need to be inside the build directory and make doc:
 
 We will most probably be using the unit test framework from [Boost](http://www.boost.org/). It is added as a compile-time requirement, so you need to have it installed.
 
-A good how-to on using Boost tests can be found [in the Boost docs](http://www.boost.org/doc/libs/1_35_0/libs/test/doc/components/utf/index.html). The first three examples are mostly worth the read.
+A good how-to on using Boost tests can be found [in the Boost docs](http://www.boost.org/doc/libs/1_54_0/libs/test/doc/html/index.html). The first three examples are mostly worth the read.
 
 Please do **not** mark a task as done in Trello if it doesn't have at least a few tests to prove its correctness!
 
