@@ -26,33 +26,39 @@ namespace PUMA {
 		
 
 		current_state.reset(new landscape[dim_x*dim_y]);
-		for (int x_counter = 0; x_counter < dim_x; x_counter++){
-			for (int y_counter = 0; y_counter < dim_y; y_counter++){
-				double initial_hares_density = 5.0 * ((double) rand() / (double) RAND_MAX);
-				double initial_pumas_density = 5.0 * ((double) rand() / (double) RAND_MAX);
-				current_state[x_counter+ dim_x*y_counter].is_land = land_map[x_counter + dim_x*y_counter];
+		for (int i = 0; i < dim_x; i++){
+			for (int j = 0; j < dim_y; j++){
 
-				// Random initial densities in the range from 0 to 5. Maybe we could overload the constructor st. we could parse initial densities as well.
-				//Alternatively we give this constructor another variable that defines whether or not we use random initial densities and a pointer to doubles 
-				// for hare densities and puma densities. 
-				// I mean like this: Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt, bool wantRandom, double *haresDensities, double *pumasDensities)
+				current_state[i+ dim_x * j].is_land = land_map[i + dim_x * j];
 
-				if (current_state[x_counter+ dim_x*y_counter].is_land) {
-					current_state[x_counter+ dim_x*y_counter].hare_density = initial_hares_density;
-					current_state[x_counter+ dim_x*y_counter].puma_density = initial_pumas_density;
+				/** TODO: Maybe we could overload the constructor st. 
+				*	we could parse initial densities as well.
+				*	Alternatively we give this constructor another 
+				*	variable that defines whether or not we use 
+				*	random initial densities and a pointer to doubles 
+				*	for hare densities and puma densities. 
+				*	I mean like this: 
+				*	Simulator(size_t dim_x, size_t dim_y, 
+				*		bool *land_map, double dt, bool wantRandom, 
+				*		double *haresDensities, double *pumasDensities)
+				*/
+
+				if (current_state[i + dim_x * j].is_land) {
+
+					//Random initial densities in the range from 0 to 5.
+
+					current_state[i + dim_x * j].hare_density = 
+								5.0 * ((double) rand() / (double) RAND_MAX);
+					current_state[i + dim_x * j].puma_density = 
+								5.0 * ((double) rand() / (double) RAND_MAX);
 				}
 				else {
-					current_state[x_counter+ dim_x*y_counter].hare_density = 0;
-					current_state[x_counter+ dim_x*y_counter].puma_density = 0;
+					current_state[i + dim_x * j].hare_density = 0;
+					current_state[i + dim_x * j].puma_density = 0;
 				}
 			}
 		}
-		
-		
 	}
-
-
-
 
 	void Simulator::apply_step(){
 
