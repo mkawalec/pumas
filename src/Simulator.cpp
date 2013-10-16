@@ -1,26 +1,18 @@
 #include "Simulator.hpp"
+#include <iostream>
+
 
 namespace PUMA {
-// TODO: The inner parts of the simulator class should be defined here
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt)
     {
+        // We want to have a predictable random seed
         srand(112233);
-        try {
-            if (dim_x <= 0) throw 1;
-        } catch(int x){
-            std::cout << "x-Dimension has to be larger than 0. ERROR: " << x << std::endl;
-        } 
 
-        try {
-            if (dim_y <= 0) throw 2;
-        } catch(int x) {
-            std::cout << "y-Dimension has to be larger than 0. ERROR: " << x << std::endl;
-        }
-        try {
-            if (dt <= 0) throw 3;
-            this->dt = dt;
-        } catch (int x) {
-            std::cout << "Time step dt has to be larger than 0. ERROR: "<< x << std::endl;
+        // The value too small is also illegal, we want to filter
+        // these out too
+        if (dt < 1e-15) {
+            throw IllegalValue("The step should be non-zero "
+                    "and bigger than the accuracy of a double");
         }
         
         current_state.reset(new landscape[dim_x*dim_y]);

@@ -5,8 +5,27 @@
 #include <fstream>
 #include <boost/scoped_array.hpp>
 #include <time.h>
+#include <string>
 
 namespace PUMA {
+
+    /** The exception base class, every PUMA
+     *  exception should inherit from it
+     */
+    struct Exception {
+        std::string what() { return message;}
+
+        protected:
+        std::string message;
+    };
+
+    /** Exception thrown when a variable has an
+     *  illegal value.
+     */
+    struct IllegalValue : public Exception {
+        IllegalValue(std::string msg) { message = msg;}
+        IllegalValue() { message = "";}
+    };
 
     class Simulator {
         boost::scoped_array<landscape> current_state;
@@ -14,16 +33,16 @@ namespace PUMA {
         double dt;
 
         public:
-            // This should read in the data and throw an exception(s)
-            // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
-			Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt);
+        // This should read in the data and throw an exception(s)
+        // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
+        Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt);
 
 
-            void apply_step();
+        void apply_step();
 
-            // After serializing puma and hare densities to relevant streams
-            // both streams should be closed
-            void serialize(std::ofstream *output_hares, std::ofstream *output_pumas);
+        // After serializing puma and hare densities to relevant streams
+        // both streams should be closed
+        void serialize(std::ofstream *output_hares, std::ofstream *output_pumas);
     };
 
 }
