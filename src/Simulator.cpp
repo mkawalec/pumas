@@ -1,4 +1,5 @@
 #include "Simulator.hpp"
+#include "exceptions.hpp"
 #include <iostream>
 
 

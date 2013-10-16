@@ -5,27 +5,8 @@
 #include <fstream>
 #include <boost/scoped_array.hpp>
 #include <time.h>
-#include <string>
 
 namespace PUMA {
-
-    /** The exception base class, every PUMA
-     *  exception should inherit from it
-     */
-    struct Exception {
-        std::string what() { return message;}
-
-        protected:
-        std::string message;
-    };
-
-    /** Exception thrown when a variable has an
-     *  illegal value.
-     */
-    struct IllegalValue : public Exception {
-        IllegalValue(std::string msg) { message = msg;}
-        IllegalValue() { message = "";}
-    };
 
     class Simulator {
         boost::scoped_array<landscape> current_state;
