@@ -17,6 +17,14 @@ namespace PUMA {
                     "and bigger than the accuracy of a double");
         }
 
+        // Initializing the diffusion constants
+        r = 0.08;
+        a = 0.04; 
+        b = 0.02;
+        m = 0.06;
+        k = 0.2; 
+        l = 0.2;
+
         /** Allocating the memory for the halo cell, 
          *  so that we don't do a terrible amount of mallocks
          *  later on in the program
@@ -68,9 +76,9 @@ namespace PUMA {
                  */
 
                 size_t nLand = get_cell(i + 1, j)->is_land
-                             + get_cell(i - 1, j)->is_land
-                             + get_cell(i, j + 1)->is_land
-                             + get_cell(i, j - 1)->is_land;
+                    + get_cell(i - 1, j)->is_land
+                    + get_cell(i, j + 1)->is_land
+                    + get_cell(i, j - 1)->is_land;
 
                 if (current_state[i + dim_x * j].is_land) {
                     current_state[i + dim_x * j].hare_density = get_cell(i,j)->hare_density
