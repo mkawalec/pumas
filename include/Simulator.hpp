@@ -10,14 +10,31 @@ namespace PUMA {
 
     class Simulator {
         protected:
+            /** Pointer to the current state of simulation.
+             *  When referencing, take into account that it 
+             *  **does not** point to the same place in memory
+             *  at all times
+             */
             boost::shared_array<landscape> current_state;
+
+            /** Temprorary, internal state used when calculating
+             *  the puma and hare densities
+             */
             boost::shared_array<landscape> temp_state;
 
             double dt;
+            /// X and Y sizes of the simulation area
             size_t size_x, size_y;
 
-            landscape* halo_cell;
+            /** A proxy function that enables easy implementation
+             *  of boundary conditions
+             */
             inline landscape* get_cell(int i, int j);
+
+            /** A special 'empty cell' used as a nonexistent cell
+             *  in the boundary conditions checker
+             */
+            landscape* halo_cell;
 
         public:
             // This should read in the data and throw an exception(s)
