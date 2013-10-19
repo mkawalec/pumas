@@ -20,6 +20,10 @@ namespace PUMA {
         current_state.reset(new landscape[dim_x * dim_y]);
         temp_state.reset(new landscape[dim_x * dim_y]);
 
+        /** Allocating the memory for the halo cell, 
+         *  so that we don't do a terrible amount of mallocks
+         *  later on in the program
+         */
         halo_cell = landscape;
         halo_cell.puma_desity = 0.0;
         halo_cell.hare_density = 0.0;
@@ -58,7 +62,6 @@ namespace PUMA {
 
     void Simulator::apply_step() 
     {
-
         temp_state.swap(current_state);
         int nLand;
 
