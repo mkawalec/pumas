@@ -5,7 +5,7 @@ set(HEADER_FILES include/helpers.hpp include/Simulator.hpp)
 
 message(status "${CMAKE_CURRENT_SOURCE_DIR}")
 add_executable(solver src/solver.cpp src/Simulator.cpp ${HEADER_FILES})
-add_executable(test-suite src/test-suite.cpp)
+add_executable(test-suite src/test-suite.cpp src/Simulator.cpp ${HEADER_FILES})
 target_link_libraries(solver -lm)
 
 find_package(Doxygen)
