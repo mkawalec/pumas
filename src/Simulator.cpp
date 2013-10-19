@@ -68,28 +68,16 @@ namespace PUMA {
     {
         temp_state.swap(current_state);
 
-        for (size_t i = 0; i < size_x; ++i) {
-            for (size_t j = 0; j < size_y; ++j) {
-
-                /** TODO: Maybe we could overload the constructor st.
-                 *   we could parse initial densities as well.
-                 *   Alternatively we give this constructor another
-                 *   variable that defines whether or not we use
-                 *   random initial densities and a pointer to doubles
-                 *   for hare densities and puma densities.
-                 *   I mean like this:
-                 *   Simulator(size_t dim_x, size_t dim_y,
-                 *       bool *land_map, double dt, bool wantRandom,
-                 *       double *haresDensities, double *pumasDensities)
-                 */
+        for (int i = 0; i < size_x; ++i) {
+            for (int j = 0; j < size_y; ++j) {
 
                 size_t nLand = get_cell(i + 1, j)->is_land
                     + get_cell(i - 1, j)->is_land
                     + get_cell(i, j + 1)->is_land
                     + get_cell(i, j - 1)->is_land;
 
-                if (current_state[i + dim_x * j].is_land) {
-                    current_state[i + dim_x * j].hare_density = get_cell(i,j)->hare_density
+                if (current_state[i + size_x * j].is_land) {
+                    current_state[i + size_x * j].hare_density = get_cell(i,j)->hare_density
                         + dt * (r * get_cell(i,j)->hare_density
                                 - a * get_cell(i,j)->hare_density * get_cell(i,j)->puma_density
                                 + k * ((get_cell(i - 1, j)->hare_density + get_cell(i + 1, j)->hare_density
