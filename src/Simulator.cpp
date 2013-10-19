@@ -2,6 +2,8 @@
 #include "exceptions.hpp"
 #include <iostream>
 
+#include <boost/scoped_ptr.hpp>
+
 namespace PUMA {
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
@@ -16,6 +18,8 @@ namespace PUMA {
         }
 
         current_state.reset(new landscape[dim_x * dim_y]);
+        temp_state.reset(new landscape[dim_x * dim_y]);
+
         for (size_t i = 0; i < dim_x; ++i) {
             for (size_t j = 0; j < dim_y; ++j) {
                 current_state[i + dim_x * j].is_land = land_map[i + dim_x * j];
@@ -88,19 +92,18 @@ namespace PUMA {
         }
     }
 
-
-    landscape* Simulator::get_cell(int i, int j)
+    boost::scoped_ptr<landscape> Simulator::get_cell(int i, int j)
     {
         if (i < 0 || i >= size_x || j < 0 || j >= size_y) {
-            landscape = malloc(sizeof(landscape));
-            returned.hare_density = 0.0;
-            returned.puma_density = 0.0;
-            returned.is_land = false;
+            boost::scoped_ptr<landscape> returned(new landscape);
+            returned->hare_density = 0.0;
+            returned->puma_density = 0.0;
+            returned->is_land = false;
 
-            return &returned;
+            return returned;
         }
         else
-            return &temp_state[i + size_x * j];
+            return boost::scoped_ptr<landscape>(temp_state[i + size_x * j]);
     }
 
     void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)

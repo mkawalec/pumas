@@ -6,6 +6,8 @@
 #include <boost/scoped_array.hpp>
 #include <time.h>
 
+#include <boost/scoped_ptr.hpp>
+
 namespace PUMA {
 
     class Simulator {
@@ -16,7 +18,7 @@ namespace PUMA {
         double dt;
         size_t size_x, size_y;
 
-        landscape* get_cell(int i, int j);
+        boost::scoped_ptr<landscape> get_cell(int i, int j);
 
         public:
         // This should read in the data and throw an exception(s)
