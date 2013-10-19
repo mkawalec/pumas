@@ -100,6 +100,12 @@ namespace PUMA {
         }
     }
 
+
+    /** Returns a pointer to a cell at given coordinates.
+     *  If there is no cell at the given coordinates (due to the
+     *  boundary conditions), returns a pointer to a special 'empty cell',
+     *  what acts as a water cell for all intents and purposes.
+     */
     landscape* Simulator::get_cell(int i, int j)
     {
         if (i < 0 || i >= size_x || j < 0 || j >= size_y) 
