@@ -29,10 +29,10 @@ namespace PUMA {
          *  so that we don't do a terrible amount of mallocks
          *  later on in the program
          */
-        landscape halo_cell;
-        halo_cell.puma_density = 0.0;
-        halo_cell.hare_density = 0.0;
-        halo_cell.is_land = false;
+        halo_cell = new landscape;
+        halo_cell->puma_density = 0.0;
+        halo_cell->hare_density = 0.0;
+        halo_cell->is_land = false;
 
         current_state.reset(new landscape[dim_x * dim_y]);
         temp_state.reset(new landscape[dim_x * dim_y]);
@@ -60,8 +60,8 @@ namespace PUMA {
     {
         temp_state.swap(current_state);
 
-        for (size_t i = 0; i < dim_x; ++i) {
-            for (size_t j = 0; j < dim_y; ++j) {
+        for (size_t i = 0; i < size_x; ++i) {
+            for (size_t j = 0; j < size_y; ++j) {
 
                 /** TODO: Maybe we could overload the constructor st.
                  *   we could parse initial densities as well.
@@ -96,7 +96,7 @@ namespace PUMA {
     landscape* Simulator::get_cell(int i, int j)
     {
         if (i < 0 || i >= size_x || j < 0 || j >= size_y) 
-            return &halo_cell;
+            return halo_cell;
         else
             return &temp_state[i + size_x * j];
     }

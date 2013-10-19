@@ -18,7 +18,7 @@ namespace PUMA {
             double dt;
             size_t size_x, size_y;
 
-            landscape halo_cell;
+            landscape* halo_cell;
             inline landscape* get_cell(int i, int j);
 
         public:
