@@ -76,8 +76,8 @@ void Simulator::apply_step() {
 					current_state[i + dim_x * j].hare_density = temp_state[i + dim_x * j].hare_density
 					+ size_t*(r*temp_state[i + dim_x * j].hare_density
 							- a*temp_state[i + dim_x * j].hare_density*temp_state[i + dim_x * j].puma_density
-							+ k*((temp_state[i-1 + dim_x * j].hare_density + temp_state[i+1 + dim_x * j].hare_density
-											+ temp_state[i + dim_x * (j-1)].hare_density + temp_state[i + dim_x *(j+1)].hare_density)
+							+ k*((checkHareTemp(i-1,j) + checkHareTemp(i+1,j)
+											+ checkHareTemp(i,j-1) + checkHareTemp(i,j+1))
 									- nLand*temp_state[i + dim_x j].hare_density));
 
 					current_state[i + dim_x * j].puma_density = 5.0
