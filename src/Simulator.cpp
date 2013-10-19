@@ -52,8 +52,24 @@ namespace PUMA {
     {
     }
 
-    void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
+     void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
     {
+		output_hares.open ("output_hares.txt");
+		output_hares << "# hare density for predator and prey" << endl;
+		output_hares << "# i j h land=1" << endl;
+
+		output_pumas.open ("output_pumas.txt");
+		output_pumas << "# pumas density for predator and prey" << endl;
+		output_pumas << "# i j p land=1" << endl;
+		 for (size_t i = 0; i < dim_x; ++i){
+            for (size_t j = 0; j < dim_y; ++j){
+             output_hares << i << " " << j << " " << current_state[i + dim_x*j].hares_density << " " << current_state[i + dim_x*j].is_land << endl;
+             output_pumas << i << " " << j << " " << current_state[i + dim_x*j].pumas_density << " " << current_state[i + dim_x*j].is_land << endl;
+			}
+		 }
+		 output_hares.close();
+		 output_pumas.close();
     }
+
 
 }
