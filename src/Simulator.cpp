@@ -99,9 +99,8 @@ namespace PUMA {
 
     landscape* Simulator::get_cell(int i, int j)
     {
-        if (i < 0 || i >= size_x || j < 0 || j >= size_y) {
+        if (i < 0 || i >= size_x || j < 0 || j >= size_y) 
             return &halo_cell;
-        }
         else
             return &temp_state[i + size_x * j];
     }
