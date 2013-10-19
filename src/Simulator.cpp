@@ -3,6 +3,7 @@
 #include <iostream>
 
 namespace PUMA {
+
 Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) {
 	// We want to have a predictable random seed
 	srand(112233);
@@ -47,7 +48,6 @@ Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) {
 }
 
 void Simulator::apply_step() {
-	void Simulator::apply_step() {
 
 		temp_state.swap(current_state);
 		int nLand;
@@ -85,17 +85,27 @@ void Simulator::apply_step() {
 				}
 			}
 		}
-	}
 }
 
-void Simulator::serialize(std::ofstream *output_hares,
-		std::ofstream *output_pumas) {
-}
 
 void Simulator::checkHareTemp(int i, int j){
 	int limit = size_x * ((i+1)/size_X) - i+1;
 	if (limit == 0 || limit == 1) return 0;
 	else return temp_state.[i + size_x*j].hare_density;
 }
+    void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
+    {
+        for (size_t i = 0; i < size_x; ++i){
+            for (size_t j = 0; j < size_y; ++j){
+                *output_hares << current_state[i + size_x*j].hare_density << " ";
+                *output_pumas << current_state[i + size_x*j].puma_density << " ";
+            }
+            *output_hares << std::endl;
+            *output_pumas << std::endl;
+        }
 
+        // Closing to make sure nothing corrupts the output
+        output_hares->close();
+        output_pumas->close();
+    }
 }

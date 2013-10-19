@@ -9,15 +9,17 @@
 namespace PUMA {
 
     class Simulator {
+        protected:
         boost::scoped_array<landscape> current_state;
         boost::scoped_array<landscape> temp_state;
+
         double dt;
+        size_t size_x, size_y;
 
         public:
         // This should read in the data and throw an exception(s)
         // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
         Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt);
-
 
         void apply_step();
 
