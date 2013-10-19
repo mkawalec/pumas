@@ -5,9 +5,8 @@
 namespace PUMA {
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
-        // We want to have a predictable random seed
-        srand(112233);
-
+        boost::mt19937 generator(time(0));
+	
         // The value too small is also illegal, we want to filter
         // these out too
         if (dt < 1e-15) {
@@ -42,10 +41,8 @@ namespace PUMA {
                 if (current_state[i + dim_x * j].is_land) {
                     // The puma and hare densities are set for every field
                     // to be in range of 0 to 5
-                    current_state[i + dim_x * j].hare_density = 5.0
-                        * (rand() / (double) RAND_MAX);
-                    current_state[i + dim_x * j].puma_density = 5.0
-                        * (rand() / (double) RAND_MAX);
+                    current_state[i + dim_x * j].hare_density = random(generator);
+                    current_state[i + dim_x * j].puma_density = random(generator);
                 } else {
                     current_state[i + dim_x * j].hare_density = 0;
                     current_state[i + dim_x * j].puma_density = 0;
