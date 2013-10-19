@@ -16,6 +16,8 @@ namespace PUMA {
         double dt;
         size_t size_x, size_y;
 
+        landscape* get_cell(int i, int j);
+
         public:
         // This should read in the data and throw an exception(s)
         // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
