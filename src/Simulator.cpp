@@ -8,6 +8,15 @@
 #include <boost/random/uniform_real_distribution.hpp>
 
 namespace PUMA {
+	/** TODO: I think Ewen was right in saying we have to have our for loops like this 
+	*   for (int j = 0; j < size_y; ++j) {
+	*	   for (int i = 0; i < size_x; ++i) {
+	*          etc 
+	*      }
+	*   }
+	*   because that is how the input files are structured
+	*/
+
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
         timeval tv;
