@@ -30,7 +30,7 @@ namespace PUMA {
          *  later on in the program
          */
         landscape halo_cell;
-        halo_cell.puma_desity = 0.0;
+        halo_cell.puma_density = 0.0;
         halo_cell.hare_density = 0.0;
         halo_cell.is_land = false;
 
