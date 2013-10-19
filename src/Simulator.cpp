@@ -2,10 +2,19 @@
 #include "exceptions.hpp"
 #include <iostream>
 
+#include <sys/time.h>
+
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
+
 namespace PUMA {
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
-        boost::mt19937 generator(time(0));
+        timeval tv;
+        gettimeofday(&tv, NULL);
+        boost::mt19937 rng;
+        boost::random::uniform_real_distribution<> random_data(0, 5);
+        rng.seed(1000000 * tv.tv_sec + tv.tv_usec);
 	
         // The value too small is also illegal, we want to filter
         // these out too
@@ -41,8 +50,8 @@ namespace PUMA {
                 if (current_state[i + dim_x * j].is_land) {
                     // The puma and hare densities are set for every field
                     // to be in range of 0 to 5
-                    current_state[i + dim_x * j].hare_density = random(generator);
-                    current_state[i + dim_x * j].puma_density = random(generator);
+                    current_state[i + dim_x * j].hare_density = random_data(rng);
+                    current_state[i + dim_x * j].puma_density = random_data(rng);
                 } else {
                     current_state[i + dim_x * j].hare_density = 0;
                     current_state[i + dim_x * j].puma_density = 0;

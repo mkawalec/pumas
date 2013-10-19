@@ -1,7 +1,6 @@
 #ifndef PUMA_helpers_h
 #define PUMA_helpers_h
 
-#include <boost/random.hpp>
 #include <ctime>
 
 /** The basic stucture holding info about the landscape
@@ -12,11 +11,5 @@ struct landscape {
     double hare_density, puma_density;
     bool is_land;
 };
-
-double random(boost::mt19937 generator)
-{
-    static boost::uniform_01<boost::mt19937> dist(generator);
-    return dist();
-}
 
 #endif
