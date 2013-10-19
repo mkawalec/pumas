@@ -50,7 +50,6 @@ namespace PUMA {
             boost::shared_array<landscape> get_current();
             boost::shared_array<landscape> get_temp();
     };
-
 }
 
 #endif

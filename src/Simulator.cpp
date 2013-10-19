@@ -117,4 +117,14 @@ namespace PUMA {
         output_hares->close();
         output_pumas->close();
     }
+
+    boost::shared_array<landscape> TestSimulator::get_current()
+    {
+        return current_state;
+    }
+
+    boost::shared_array<landscape> TestSimulator::get_temp()
+    {
+        return temp_state;
+    }
 }

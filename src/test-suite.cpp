@@ -1,13 +1,24 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 #include <Simulator.hpp>
-
-
 using namespace boost::unit_test;
+using namespace boost;
+using namespace PUMA;
 
-BOOST_AUTO_TEST_CASE(test1)
+BOOST_AUTO_TEST_CASE(check_landmap)
 {
-    
+    bool *landmap1 = (bool*) malloc(sizeof(bool) * 100);
+    for (size_t i = 0; i < 100; ++i)
+        landmap1[i] = true;
+
+    TestSimulator tested(2, 50, landmap1, 0.000213);
+    BOOST_CHECK(true);
+
+    shared_array<landscape> current_state = tested.get_current(); 
+    for (size_t i = 0; i < 100; ++i) 
+        BOOST_CHECK(current_state[i].is_land);
+
+    free(landmap1);
 }
 
 test_suite *init_unit_test_suite(int, char *[])
