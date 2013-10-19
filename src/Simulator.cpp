@@ -55,8 +55,8 @@ namespace PUMA {
 
     void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
     {
-        for (size_t i = 0; i < size_x; ++i){
-            for (size_t j = 0; j < size_y; ++j){
+        for (size_t i = 0; i < size_x; ++i) {
+            for (size_t j = 0; j < size_y; ++j) {
                 *output_hares << current_state[i + size_x*j].hare_density << " ";
                 *output_pumas << current_state[i + size_x*j].puma_density << " ";
             }
