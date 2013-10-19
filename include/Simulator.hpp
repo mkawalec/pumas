@@ -19,7 +19,7 @@ namespace PUMA {
             size_t size_x, size_y;
 
             landscape halo_cell;
-            landscape* get_cell(int i, int j);
+            inline landscape* get_cell(int i, int j);
 
         public:
             // This should read in the data and throw an exception(s)
