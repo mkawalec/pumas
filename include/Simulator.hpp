@@ -34,7 +34,7 @@ namespace PUMA {
              * k = Diffusion rate for hares
              * l = Diffusion rate for pumas
              */
-            double r=0.08, a=0.04, b=0.02, m-0.06, k=0.2, l=0.2;
+            double r, a, b, m, k, l;
 
             void apply_step();
 

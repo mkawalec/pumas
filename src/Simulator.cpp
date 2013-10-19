@@ -51,7 +51,6 @@ namespace PUMA {
     void Simulator::apply_step() 
     {
         temp_state.swap(current_state);
-        int nLand;
 
         for (size_t i = 0; i < dim_x; ++i) {
             for (size_t j = 0; j < dim_y; ++j) {
@@ -67,19 +66,19 @@ namespace PUMA {
                  *       bool *land_map, double dt, bool wantRandom,
                  *       double *haresDensities, double *pumasDensities)
                  */
-                int nDesnsiy;
-                nLand = get_cell(i +1,j).is_land
-                    + get_cell(i-1,j).is_land
-                    + get_cell(i, j+1)].is_land
-                    + get_cell(i, j-1).is_land;
+
+                size_t nLand = get_cell(i + 1, j)->is_land
+                             + get_cell(i - 1, j)->is_land
+                             + get_cell(i, j + 1)->is_land
+                             + get_cell(i, j - 1)->is_land;
 
                 if (current_state[i + dim_x * j].is_land) {
-                    current_state[i + dim_x * j].hare_density = get_cell(i,j).hare_density
-                        + size_t*(r*get_cell(i,j).hare_density
-                                - a*get_cell(i,j).hare_density*get_cell(i,j).puma_density
-                                + k*((get_cell(i-1,j).hare_density + get_cell(i+1,j).hare_density
-                                        + get_cell(i,j-1).hare_density + get_cell(i,j+1).hare_density)
-                                    - nLand*get_cell(i,j).hare_density));
+                    current_state[i + dim_x * j].hare_density = get_cell(i,j)->hare_density
+                        + dt * (r * get_cell(i,j)->hare_density
+                                - a * get_cell(i,j)->hare_density * get_cell(i,j)->puma_density
+                                + k * ((get_cell(i - 1, j)->hare_density + get_cell(i + 1, j)->hare_density
+                                        + get_cell(i, j - 1)->hare_density + get_cell(i,j + 1)->hare_density)
+                                    - nLand * get_cell(i,j)->hare_density));
 
                 }
             }
