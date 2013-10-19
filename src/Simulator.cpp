@@ -17,33 +17,21 @@ namespace PUMA {
                     "and bigger than the accuracy of a double");
         }
 
-        current_state.reset(new landscape[dim_x * dim_y]);
-        temp_state.reset(new landscape[dim_x * dim_y]);
-
         /** Allocating the memory for the halo cell, 
          *  so that we don't do a terrible amount of mallocks
          *  later on in the program
          */
-        halo_cell = landscape;
+        landscape halo_cell;
         halo_cell.puma_desity = 0.0;
         halo_cell.hare_density = 0.0;
         halo_cell.is_land = false;
 
+        current_state.reset(new landscape[dim_x * dim_y]);
+        temp_state.reset(new landscape[dim_x * dim_y]);
+
         for (size_t i = 0; i < dim_x; ++i) {
             for (size_t j = 0; j < dim_y; ++j) {
                 current_state[i + dim_x * j].is_land = land_map[i + dim_x * j];
-
-                /** TODO: Maybe we could overload the constructor st.
-                 *   we could parse initial densities as well.
-                 *   Alternatively we give this constructor another
-                 *   variable that defines whether or not we use
-                 *   random initial densities and a pointer to doubles
-                 *   for hare densities and puma densities.
-                 *   I mean like this:
-                 *   Simulator(size_t dim_x, size_t dim_y,
-                 *       bool *land_map, double dt, bool wantRandom,
-                 *       double *haresDensities, double *pumasDensities)
-                 */
 
                 if (current_state[i + dim_x * j].is_land) {
                     // The puma and hare densities are set for every field
