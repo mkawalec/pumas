@@ -56,6 +56,14 @@ namespace PUMA {
         }
     }
 
+    /** Removes the data structures that cannot
+     *  destruct on their own
+     */
+    Simulator::~Simulator() 
+    {
+        free(halo_cell);
+    }
+
     void Simulator::apply_step() 
     {
         temp_state.swap(current_state);

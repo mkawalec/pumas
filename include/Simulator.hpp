@@ -25,6 +25,7 @@ namespace PUMA {
             // This should read in the data and throw an exception(s)
             // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
             Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt);
+            ~Simulator();
 
             /** These are the diffusion constants used in the differential equation
              * r = Birth rate of hares
