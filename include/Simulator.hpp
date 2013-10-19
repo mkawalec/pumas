@@ -14,7 +14,7 @@ namespace PUMA {
         boost::scoped_array<landscape> temp_state;
 
         double dt;
-        size_t size__x, size_y;
+        size_t size_x, size_y;
 
         public:
         // This should read in the data and throw an exception(s)
