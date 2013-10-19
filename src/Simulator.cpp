@@ -17,8 +17,8 @@ namespace PUMA {
         }
         
         current_state.reset(new landscape[dim_x*dim_y]);
-        for (size_t i = 0; i < dim_x; ++i){
-            for (size_t j = 0; j < dim_y; ++j){
+        for (size_t i = 0; i < dim_x; ++i) {
+            for (size_t j = 0; j < dim_y; ++j) {
                 current_state[i+ dim_x * j].is_land = land_map[i + dim_x * j];
 
                 /** TODO: Maybe we could overload the constructor st. 

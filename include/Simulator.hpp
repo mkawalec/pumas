@@ -18,7 +18,6 @@ namespace PUMA {
         // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
         Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt);
 
-
         void apply_step();
 
         // After serializing puma and hare densities to relevant streams
