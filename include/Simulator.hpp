@@ -9,6 +9,7 @@
 namespace PUMA {
 
     class Simulator {
+        protected:
         boost::scoped_array<landscape> current_state;
         boost::scoped_array<landscape> temp_state;
         double dt;
