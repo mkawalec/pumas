@@ -3,17 +3,15 @@
 
 #include "helpers.hpp"
 #include <fstream>
-#include <boost/scoped_array.hpp>
+#include <boost/shared_array.hpp>
 #include <time.h>
-
-#include <boost/scoped_ptr.hpp>
 
 namespace PUMA {
 
     class Simulator {
         protected:
-            boost::scoped_array<landscape> current_state;
-            boost::scoped_array<landscape> temp_state;
+            boost::shared_array<landscape> current_state;
+            boost::shared_array<landscape> temp_state;
 
             double dt;
             size_t size_x, size_y;
@@ -42,6 +40,15 @@ namespace PUMA {
             // After serializing puma and hare densities to relevant streams
             // both streams should be closed
             void serialize(std::ofstream *output_hares, std::ofstream *output_pumas);
+    };
+
+    class TestSimulator : public Simulator {
+        public:
+            TestSimulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) :
+                Simulator(dim_x, dim_y, land_map, dt) {};
+
+            boost::shared_array<landscape> get_current();
+            boost::shared_array<landscape> get_temp();
     };
 
 }

@@ -2,8 +2,6 @@
 #include "exceptions.hpp"
 #include <iostream>
 
-#include <boost/scoped_ptr.hpp>
-
 namespace PUMA {
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
