@@ -92,7 +92,7 @@ namespace PUMA {
     landscape* Simulator::get_cell(int i, int j)
     {
         if (i < 0 || i >= size_x || j < 0 || j >= size_y) {
-            landscape = new returned;
+            landscape = malloc(sizeof(landscape));
             returned.hare_density = 0.0;
             returned.puma_density = 0.0;
             returned.is_land = false;
