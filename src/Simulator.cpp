@@ -68,21 +68,19 @@ namespace PUMA {
                  *       double *haresDensities, double *pumasDensities)
                  */
                 int nDesnsiy;
-                nLand = temp.state[i +1 +dim_x*j].island
-                    + temp.state[i-1 +dim_x*j].island
-                    + temp.state[i +dim_x*j].island
-                    + temp.state[i +dim_x*j].island;
+                nLand = get_cell(i +1,j).is_land
+                    + get_cell(i-1,j).is_land
+                    + get_cell(i, j+1)].is_land
+                    + get_cell(i, j-1).is_land;
 
                 if (current_state[i + dim_x * j].is_land) {
-                    current_state[i + dim_x * j].hare_density = temp_state[i + dim_x * j].hare_density
-                        + size_t*(r*temp_state[i + dim_x * j].hare_density
-                                - a*temp_state[i + dim_x * j].hare_density*temp_state[i + dim_x * j].puma_density
-                                + k*((checkHareTemp(i-1,j) + checkHareTemp(i+1,j)
-                                        + checkHareTemp(i,j-1) + checkHareTemp(i,j+1))
-                                    - nLand*temp_state[i + dim_x j].hare_density));
+                    current_state[i + dim_x * j].hare_density = get_cell(i,j).hare_density
+                        + size_t*(r*get_cell(i,j).hare_density
+                                - a*get_cell(i,j).hare_density*get_cell(i,j).puma_density
+                                + k*((get_cell(i-1,j).hare_density + get_cell(i+1,j).hare_density
+                                        + get_cell(i,j-1).hare_density + get_cell(i,j+1).hare_density)
+                                    - nLand*get_cell(i,j).hare_density));
 
-                    current_state[i + dim_x * j].puma_density = 5.0
-                        * (rand() / (double) RAND_MAX);
                 }
             }
         }
