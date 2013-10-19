@@ -84,6 +84,13 @@ namespace PUMA {
                                         + get_cell(i, j - 1)->hare_density + get_cell(i,j + 1)->hare_density)
                                     - nLand * get_cell(i,j)->hare_density));
 
+                    current_state[i + size_x * j].puma_density = get_cell(i,j)->puma_density
+                        + dt * (- m * get_cell(i,j)->puma_density
+                                + b * get_cell(i,j)->puma_density * get_cell(i,j)->hare_density
+                                + k * ((get_cell(i - 1, j)->puma_density + get_cell(i + 1, j)->puma_density
+                                        + get_cell(i, j - 1)->puma_density + get_cell(i,j + 1)->puma_density)
+                                    - nLand * get_cell(i,j)->puma_density));
+
                 }
             }
         }
