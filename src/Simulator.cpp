@@ -8,14 +8,6 @@
 #include <boost/random/uniform_real_distribution.hpp>
 
 namespace PUMA {
-	/** TODO: I think Ewen was right in saying we have to have our for loops like this 
-	*   for (int j = 0; j < size_y; ++j) {
-	*	   for (int i = 0; i < size_x; ++i) {
-	*          etc 
-	*      }
-	*   }
-	*   because that is how the input files are structured
-	*/
 
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
@@ -52,18 +44,19 @@ namespace PUMA {
         current_state.reset(new landscape[dim_x * dim_y]);
         temp_state.reset(new landscape[dim_x * dim_y]);
 
-        for (size_t i = 0; i < dim_x; ++i) {
-            for (size_t j = 0; j < dim_y; ++j) {
-                current_state[i + dim_x * j].is_land = land_map[i + dim_x * j];
+        for (size_t i = 0; i < dim_y; ++i) {
+            for (size_t j = 0; j < dim_x; ++j) {
+                size_t index = i * dim_x + j;
+                current_state[index].is_land = land_map[index];
 
-                if (current_state[i + dim_x * j].is_land) {
+                if (current_state[index].is_land) {
                     // The puma and hare densities are set for every field
                     // to be in range of 0 to 5
-                    current_state[i + dim_x * j].hare_density = random_data(rng);
-                    current_state[i + dim_x * j].puma_density = random_data(rng);
+                    current_state[index].hare_density = random_data(rng);
+                    current_state[index].puma_density = random_data(rng);
                 } else {
-                    current_state[i + dim_x * j].hare_density = 0;
-                    current_state[i + dim_x * j].puma_density = 0;
+                    current_state[index].hare_density = 0;
+                    current_state[index].puma_density = 0;
                 }
             }
         }
@@ -81,23 +74,24 @@ namespace PUMA {
     {
         temp_state.swap(current_state);
 
-        for (int i = 0; i < size_x; ++i) {
-            for (int j = 0; j < size_y; ++j) {
+        for (int i = 0; i < size_y; ++i) {
+            for (int j = 0; j < size_x; ++j) {
+                size_t index = i * size_x + j;
 
                 size_t nLand = get_cell(i + 1, j)->is_land
                     + get_cell(i - 1, j)->is_land
                     + get_cell(i, j + 1)->is_land
                     + get_cell(i, j - 1)->is_land;
 
-                if (current_state[i + size_x * j].is_land) {
-                    current_state[i + size_x * j].hare_density = get_cell(i,j)->hare_density
+                if (current_state[index].is_land) {
+                    current_state[index].hare_density = get_cell(i,j)->hare_density
                         + dt * (r * get_cell(i,j)->hare_density
                                 - a * get_cell(i,j)->hare_density * get_cell(i,j)->puma_density
                                 + k * ((get_cell(i - 1, j)->hare_density + get_cell(i + 1, j)->hare_density
                                         + get_cell(i, j - 1)->hare_density + get_cell(i,j + 1)->hare_density)
                                     - nLand * get_cell(i,j)->hare_density));
 
-                    current_state[i + size_x * j].puma_density = get_cell(i,j)->puma_density
+                    current_state[index].puma_density = get_cell(i,j)->puma_density
                         + dt * (- m * get_cell(i,j)->puma_density
                                 + b * get_cell(i,j)->puma_density * get_cell(i,j)->hare_density
                                 + k * ((get_cell(i - 1, j)->puma_density + get_cell(i + 1, j)->puma_density
