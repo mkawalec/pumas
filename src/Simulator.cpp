@@ -11,9 +11,9 @@ namespace PUMA {
 
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
-        /** Using Mersenne-Twister as the random number generator
-         *  as it has much better statistics that plain
-         *  linear congruential bit that comes with gcc
+        /* Using Mersenne-Twister as the random number generator
+         * as it has much better statistics that plain
+         * linear congruential bit that comes with gcc
          */
         timeval tv;
         gettimeofday(&tv, NULL);
@@ -36,9 +36,9 @@ namespace PUMA {
         k = 0.2; 
         l = 0.2;
 
-        /** Allocating the memory for the halo cell, 
-         *  so that we don't do a terrible amount of mallocks
-         *  later on in the program
+        /* Allocating the memory for the halo cell, 
+         * so that we don't do a terrible amount of mallocks
+         * later on in the program
          */
         halo_cell = new landscape;
         halo_cell->puma_density = 0.0;
