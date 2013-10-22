@@ -76,8 +76,8 @@ namespace PUMA {
     {
         temp_state.swap(current_state);
 
-        for (int i = 0; i < size_y; ++i) {
-            for (int j = 0; j < size_x; ++j) {
+        for (int i = 0; (unsigned)i < size_y; ++i) {
+            for (int j = 0; (unsigned)j < size_x; ++j) {
                 size_t index = i * size_x + j;
 
                 size_t nLand = get_cell(i + 1, j)->is_land
@@ -113,7 +113,7 @@ namespace PUMA {
      */
     landscape* Simulator::get_cell(int i, int j)
     {
-        if (i < 0 || i >= size_x || j < 0 || j >= size_y) 
+        if (i < 0 || (unsigned)i >= size_x || j < 0 || (unsigned)j >= size_y) 
             return halo_cell;
         else
             return &temp_state[i + size_x * j];
