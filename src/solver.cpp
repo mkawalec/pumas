@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     PUMA::Simulator simulation(size_x, size_y, land_map, dt);
     delete[] land_map;
 
-    for (int i = 0; i < total_timesteps; ++i) {
+    for (size_t i = 0; i < total_timesteps; ++i) {
         simulation.apply_step();
 
         hare_densities.open("hare_hensities_" + std::to_string(i) + ".dat");
