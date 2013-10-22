@@ -11,6 +11,10 @@ namespace PUMA {
 
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
     {
+        /** Using Mersenne-Twister as the random number generator
+         *  as it has much better statistics that plain
+         *  linear congruential bit that comes with gcc
+         */
         timeval tv;
         gettimeofday(&tv, NULL);
         boost::mt19937 rng;
@@ -50,8 +54,6 @@ namespace PUMA {
                 current_state[index].is_land = land_map[index];
 
                 if (current_state[index].is_land) {
-                    // The puma and hare densities are set for every field
-                    // to be in range of 0 to 5
                     current_state[index].hare_density = random_data(rng);
                     current_state[index].puma_density = random_data(rng);
                 } else {
