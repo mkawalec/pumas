@@ -4,18 +4,19 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc < 2) {
+    if (argc < 3) {
         std::cout << "This program should be run as follows: " <<
-            argv[0] << " input_filename" << std::endl;
+            argv[0] << " input_filename timesteps_number" << std::endl;
         return -1;
     }
 
-    int total_timesteps = 100;
+    std::ifstream input(argv[1]);
+    size_t total_timesteps = std::stoi(argv[2]);
+
     double dt = 0.1;
     std::ofstream hare_densities, puma_densities;
     size_t size_x, size_y;
 
-    std::ifstream input(argv[1]);
     input >> size_x >> size_y;
     bool *land_map = new bool[size_x*size_y];
 
