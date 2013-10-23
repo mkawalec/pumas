@@ -10,7 +10,7 @@
 namespace PUMA {
 
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) : 
-        size_x(dim_x), size_y(dim_y)
+        size_x(dim_x), size_y(dim_y), dt(dt)
     {
         /* Using Mersenne-Twister as the random number generator
          * as it has much better statistics that plain
