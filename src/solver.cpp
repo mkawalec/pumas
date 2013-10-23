@@ -4,12 +4,18 @@
 
 int main(int argc, char *argv[])
 {
+    if (argc < 2) {
+        std::cout << "This program should be run as follows: " <<
+            argv[0] << " input_filename" << std::endl;
+        return -1;
+    }
+
     int total_timesteps = 100;
     double dt = 0.1;
     std::ofstream hare_densities, puma_densities;
     size_t size_x, size_y;
 
-    std::ifstream input("input.txt");
+    std::ifstream input(argv[1]);
     input >> size_x >> size_y;
     bool *land_map = new bool[size_x*size_y];
 
