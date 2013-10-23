@@ -12,8 +12,6 @@ BOOST_AUTO_TEST_CASE(check_update)
         landmap1[i] = true;
    
     TestSimulator tested(2, 50, landmap1, 0.000213);
-
-    tested.apply_step();
     tested.apply_step();
 
     shared_array<landscape> current_state = tested.get_current(); 
@@ -29,7 +27,7 @@ BOOST_AUTO_TEST_CASE(check_update)
 
 BOOST_AUTO_TEST_CASE(check_landmap)
 {
-    bool *landmap1 = (bool*) malloc(sizeof(bool) * 100);
+    bool *landmap1 = new bool[100];
     for (size_t i = 0; i < 100; ++i)
         landmap1[i] = true;
 
@@ -40,7 +38,7 @@ BOOST_AUTO_TEST_CASE(check_landmap)
     for (size_t i = 0; i < 100; ++i) 
         BOOST_CHECK(current_state[i].is_land);
 
-    free(landmap1);
+    delete[] landmap1;
 }
 
 test_suite *init_unit_test_suite(int, char *[])
