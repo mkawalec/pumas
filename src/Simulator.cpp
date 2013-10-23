@@ -52,6 +52,7 @@ namespace PUMA {
             for (size_t j = 0; j < dim_x; ++j) {
                 size_t index = i * dim_x + j;
                 current_state[index].is_land = land_map[index];
+                temp_state[index].is_land = land_map[index];
 
                 if (current_state[index].is_land) {
                     current_state[index].hare_density = random_data(rng);
