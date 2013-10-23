@@ -46,6 +46,5 @@ BOOST_AUTO_TEST_CASE(check_landmap)
 test_suite *init_unit_test_suite(int, char *[])
 {
     framework::master_test_suite().p_name.value = "PUMAS unit test";
-
     return 0;
 }
