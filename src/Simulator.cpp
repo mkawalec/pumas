@@ -49,9 +49,9 @@ namespace PUMA {
         current_state.reset(new landscape[dim_x * dim_y]);
         temp_state.reset(new landscape[dim_x * dim_y]);
 
-        for (size_t i = 0; i < dim_y; ++i) {
-            for (size_t j = 0; j < dim_x; ++j) {
-                size_t index = i * dim_x + j;
+        for (size_t j = 0; j < dim_y; ++j) {
+            for (size_t i = 0; i < dim_x; ++i) {
+                size_t index = j * dim_x + i;
                 current_state[index].is_land = land_map[index];
                 temp_state[index].is_land = land_map[index];
 
@@ -78,9 +78,9 @@ namespace PUMA {
     {
         temp_state.swap(current_state);
         
-        for (int i = 0; (unsigned)i < size_y; ++i) {
-            for (int j = 0; (unsigned)j < size_x; ++j) {
-                size_t index = i * size_x + j;
+        for (int j = 0; (unsigned)j < size_y; ++j) {
+            for (int i = 0; (unsigned)i < size_x; ++i) {
+                size_t index = j * size_x + i;
                 
                 
                 size_t nLand = get_cell(i + 1, j)->is_land + 
@@ -119,15 +119,17 @@ namespace PUMA {
         if (i < 0 || (unsigned)i >= size_x || j < 0 || (unsigned)j >= size_y) 
             return halo_cell;
         else
-            return &temp_state[i * size_x + j];
+            return &temp_state[j * size_x + i];
     }
 
     void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
     {
-        for (size_t i = 0; i < size_x; ++i) {
-            for (size_t j = 0; j < size_y; ++j) {
-                *output_hares << current_state[i + size_x*j].hare_density << " ";
-                *output_pumas << current_state[i + size_x*j].puma_density << " ";
+        for (int j = 0; (unsigned)j < size_y; ++j) {
+            for (int i = 0; (unsigned)i < size_x; ++i) {
+                size_t index = j * size_x + i;
+
+                *output_hares << current_state[index].hare_density << " ";
+                *output_pumas << current_state[index].puma_density << " ";
             }
             *output_hares << std::endl;
             *output_pumas << std::endl;
