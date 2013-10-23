@@ -7,24 +7,24 @@ using namespace PUMA;
 
 BOOST_AUTO_TEST_CASE(check_update)
 {
-    bool *landmap1 = (bool*) malloc(sizeof(bool) * 100);
+    bool *landmap1 = new bool[100];
     for (size_t i = 0; i < 100; ++i)
         landmap1[i] = true;
    
     TestSimulator tested(2, 50, landmap1, 0.000213);
 
+    tested.apply_step();
+    tested.apply_step();
+
     shared_array<landscape> current_state = tested.get_current(); 
-
-    tested.apply_step();
-    tested.apply_step();
-
     shared_array<landscape> temp_state = tested.get_temp(); 
     
-    for (size_t i = 0; i < 100; ++i){ 
-        BOOST_CHECK(current_state[i].is_land && current_state[i].hare_density != temp_state[i].hare_density);
+    for (size_t i = 0; i < 100; ++i) {
+        BOOST_CHECK(current_state[i].is_land); 
+        BOOST_CHECK(abs(current_state[i].hare_density - temp_state[i].hare_density) > 1e-15);
     }
-    free(landmap1);
 
+    delete[] landmap1;
 }
 
 BOOST_AUTO_TEST_CASE(check_landmap)
