@@ -9,7 +9,8 @@
 
 namespace PUMA {
 
-    Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) 
+    Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) : 
+        size_x(dim_x), size_y(dim_y)
     {
         /* Using Mersenne-Twister as the random number generator
          * as it has much better statistics that plain
@@ -76,15 +77,16 @@ namespace PUMA {
     void Simulator::apply_step() 
     {
         temp_state.swap(current_state);
-
+        
         for (int i = 0; (unsigned)i < size_y; ++i) {
             for (int j = 0; (unsigned)j < size_x; ++j) {
                 size_t index = i * size_x + j;
-
-                size_t nLand = get_cell(i + 1, j)->is_land
-                    + get_cell(i - 1, j)->is_land
-                    + get_cell(i, j + 1)->is_land
-                    + get_cell(i, j - 1)->is_land;
+                
+                
+                size_t nLand = get_cell(i + 1, j)->is_land + 
+                       get_cell(i - 1, j)->is_land +
+                       get_cell(i, j + 1)->is_land +
+                       get_cell(i, j - 1)->is_land;
 
                 if (current_state[index].is_land) {
                     current_state[index].hare_density = get_cell(i,j)->hare_density
@@ -117,7 +119,7 @@ namespace PUMA {
         if (i < 0 || (unsigned)i >= size_x || j < 0 || (unsigned)j >= size_y) 
             return halo_cell;
         else
-            return &temp_state[i + size_x * j];
+            return &temp_state[i * size_x + j];
     }
 
     void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
