@@ -56,20 +56,17 @@ BOOST_AUTO_TEST_CASE(check_no_migration_through_water)
 
     TestSimulator tested(8, 8, landmap1, 0.000213);
     
-    for (int step = 0; step < 100; ++step) 
+    for (int step = 0; step < 10; ++step) 
     {
         tested.apply_step();
         shared_array<landscape> current_state = tested.get_current();
-        for( size_t i = 0; i < 8; ++i)
+        for( size_t i = 0; i < 64; ++i)
         {
-            BOOST_CHECK(current_state[i].hare_density == 0.0);
-            BOOST_CHECK(current_state[i].puma_density == 0.0);
-            BOOST_CHECK(current_state[i + 7 * 8].hare_density == 0.0);
-            BOOST_CHECK(current_state[i + 7 * 8].puma_density == 0.0);
-            BOOST_CHECK(current_state[i * 8].hare_density == 0.0);
-            BOOST_CHECK(current_state[i * 8].puma_density == 0.0);
-            BOOST_CHECK(current_state[i * 8 + 7].hare_density == 0.0);
-            BOOST_CHECK(current_state[i * 8 + 7].puma_density == 0.0);
+            if (!current_state[i].is_land)
+            {
+                BOOST_CHECK(current_state[i].hare_density == 0.0);
+                BOOST_CHECK(current_state[i].puma_density == 0.0);
+            }
         }
     }
 
