@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[])
 {
+    
     if (argc < 3) {
         std::cout << "This program should be run as follows: " <<
             argv[0] << " input_filename timesteps_number" << std::endl;

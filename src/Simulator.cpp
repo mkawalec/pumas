@@ -9,11 +9,27 @@
 
 namespace PUMA {
 
+    /** 
+     * Initializes the Simulator for a dim_x by dim_y defined by land_map. 
+     * The initial puma and hare densities are chosen randomly between 0 and 5.
+     * All diffusion constants are initialized to the
+     * default values given on the problem sheet. 
+     *
+     * @param dim_x defines the x-dimension of the landmap.
+     *
+     * @param dim_y defines the y-dimension of the landmap.
+     *
+     * @param land_map defines a pointer to a boolean list where true signifies land 
+     * and false signifies false.
+     *
+     * @params dt defines the time stepsize used in the simulation.
+     **/
+
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) : 
         size_x(dim_x), size_y(dim_y), dt(dt)
     {
         /* Using Mersenne-Twister as the random number generator
-         * as it has much better statistics that plain
+         * as it has much better statistics than plain
          * linear congruential bit that comes with gcc
          */
         timeval tv;
@@ -46,15 +62,20 @@ namespace PUMA {
         halo_cell->hare_density = 0.0;
         halo_cell->is_land = false;
 
+        // Allocating memory for current and temporary states.
         current_state.reset(new landscape[dim_x * dim_y]);
         temp_state.reset(new landscape[dim_x * dim_y]);
 
+        /* Initializing land and water distributions according to the 
+         * provided landmap. Then, initializing puma and hare densities 
+         * to random valued between 0 and 5.
+         */
         for (size_t j = 0; j < dim_y; ++j) {
             for (size_t i = 0; i < dim_x; ++i) {
                 size_t index = j * dim_x + i;
                 current_state[index].is_land = land_map[index];
                 temp_state[index].is_land = land_map[index];
-
+                
                 if (current_state[index].is_land) {
                     current_state[index].hare_density = random_data(rng);
                     current_state[index].puma_density = random_data(rng);
