@@ -75,13 +75,16 @@ namespace PUMA {
                 current_state[index].is_land = land_map[index];
                 temp_state[index].is_land = land_map[index];
                 
-                if (temp_state[index].is_land) {
-                    temp_state[index].hare_density = random_data(rng);
-                    temp_state[index].puma_density = random_data(rng);
+                if (current_state[index].is_land) {
+                    current_state[index].hare_density = random_data(rng);
+                    current_state[index].puma_density = random_data(rng);
                 } else {
-                    temp_state[index].hare_density = 0.0;
-                    temp_state[index].puma_density = 0.0;
+                    current_state[index].hare_density = 0.0;
+                    current_state[index].puma_density = 0.0;
                 }
+
+                temp_state[index].hare_density = 0.0;
+                temp_state[index].puma_density = 0.0;
             }
         }
     }
