@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
     }
     input.close();
 
-    PUMA::GnuplotSerializer blah;
     PUMA::Simulator simulation(size_x, size_y, land_map, dt);
     delete[] land_map;
 

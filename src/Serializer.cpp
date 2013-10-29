@@ -31,6 +31,8 @@ namespace PUMA {
         output_hares->close();
         output_pumas->close();
     }
+
+    GnuplotSerializer an_instance;
 }
 
 
