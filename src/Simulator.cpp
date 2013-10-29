@@ -36,6 +36,8 @@ namespace PUMA {
         boost::mt19937 rng;
         boost::random::uniform_real_distribution<> random_data(0, 5);
         rng.seed(1000000 * tv.tv_sec + tv.tv_usec);
+
+        current_serializer = NULL;
 	
         // The value too small is also illegal, we want to filter
         // these out too
@@ -146,20 +148,13 @@ namespace PUMA {
 
     void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
     {
-        for (int j = 0; (unsigned)j < size_y; ++j) {
-            for (int i = 0; (unsigned)i < size_x; ++i) {
-                size_t index = j * size_x + i;
-
-                *output_hares << current_state[index].hare_density << " ";
-                *output_pumas << current_state[index].puma_density << " ";
-            }
-            *output_hares << std::endl;
-            *output_pumas << std::endl;
+        if (current_serializer == NULL) {
+            Serializer::known[0]->serialize(output_hares, output_pumas, current_state,
+                    size_x, size_y);
+        } else {
+            current_serializer->serialize(output_hares, output_pumas, current_state,
+                    size_x, size_y);
         }
-
-        // Closing to make sure nothing corrupts the output
-        output_hares->close();
-        output_pumas->close();
     }
 
     boost::shared_array<landscape> TestSimulator::get_current()

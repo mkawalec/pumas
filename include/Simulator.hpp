@@ -1,7 +1,8 @@
-#ifndef PUMA_Simulator_h
-#define PUMA_Simulator_h
+#ifndef PUMA_Simulator_hpp
+#define PUMA_Simulator_hpp
 
 #include "helpers.hpp"
+#include "Serializer.hpp"
 #include <fstream>
 #include <boost/shared_array.hpp>
 #include <time.h>
@@ -53,6 +54,7 @@ namespace PUMA {
             double r, a, b, m, k, l;
 
             void apply_step();
+            Serializer* current_serializer;
 
             // After serializing puma and hare densities to relevant streams
             // both streams should be closed
