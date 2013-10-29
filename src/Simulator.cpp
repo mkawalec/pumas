@@ -24,7 +24,6 @@ namespace PUMA {
      *
      * @params dt defines the time stepsize used in the simulation.
      **/
-
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) : 
         size_x(dim_x), size_y(dim_y), dt(dt)
     {
@@ -76,12 +75,12 @@ namespace PUMA {
                 current_state[index].is_land = land_map[index];
                 temp_state[index].is_land = land_map[index];
                 
-                if (current_state[index].is_land) {
-                    current_state[index].hare_density = random_data(rng);
-                    current_state[index].puma_density = random_data(rng);
+                if (temp_state[index].is_land) {
+                    temp_state[index].hare_density = random_data(rng);
+                    temp_state[index].puma_density = random_data(rng);
                 } else {
-                    current_state[index].hare_density = 0.0;
-                    current_state[index].puma_density = 0.0;
+                    temp_state[index].hare_density = 0.0;
+                    temp_state[index].puma_density = 0.0;
                 }
             }
         }
@@ -103,7 +102,6 @@ namespace PUMA {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
                 
-                
                 size_t nLand = get_cell(i + 1, j)->is_land + 
                        get_cell(i - 1, j)->is_land +
                        get_cell(i, j + 1)->is_land +
@@ -124,12 +122,6 @@ namespace PUMA {
                                         + get_cell(i, j - 1)->puma_density + get_cell(i, j + 1)->puma_density)
                                     - nLand * get_cell(i, j)->puma_density));
 
-                }
-                else {
-
-                    // I had to add this in order to be sure that there is no migration through water.
-                    current_state[index].hare_density = 0.0;
-                    current_state[index].puma_density = 0.0;
                 }
             }
         }
