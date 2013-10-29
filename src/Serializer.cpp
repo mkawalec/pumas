@@ -12,9 +12,9 @@ namespace PUMA {
         Serializer::known.push_back(this);
     }
 
-        void GnuplotSerializer::serialize(std::ofstream *output_hares, 
-                std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
-                size_t size_x, size_t size_y)
+    void GnuplotSerializer::serialize(std::ofstream *output_hares, 
+            std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
+            size_t size_x, size_t size_y)
     {
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {

@@ -25,7 +25,7 @@ namespace PUMA {
      * @params dt defines the time stepsize used in the simulation.
      **/
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) : 
-        size_x(dim_x), size_y(dim_y), dt(dt)
+        dt(dt), size_x(dim_x), size_y(dim_y)
     {
         /* Using Mersenne-Twister as the random number generator
          * as it has much better statistics than plain
