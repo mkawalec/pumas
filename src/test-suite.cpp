@@ -51,7 +51,9 @@ BOOST_AUTO_TEST_CASE(check_no_migration_through_water)
     for (size_t j = 1; j < 7; ++j)
         for (size_t i = 1; i < 7; ++i)
             landmap1[ i + j * 8] = true;
-    
+    landmap1[3+4*8]=false;
+    landmap1[2+6*8]=false;
+    landmap1[5+1*8]=false;
 
 
     TestSimulator tested(8, 8, landmap1, 0.000213);
@@ -71,6 +73,32 @@ BOOST_AUTO_TEST_CASE(check_no_migration_through_water)
             }
         }
     }
+
+    delete[] landmap1;
+}
+
+BOOST_AUTO_TEST_CASE(check_migration_rate)
+{
+    bool *landmap1 = new bool[100];
+    for (size_t i = 0; i < 100; ++i)
+        landmap1[i] = true;
+
+    TestSimulator tested(2, 50, landmap1, 0.000213);
+    BOOST_CHECK(true);
+
+
+    delete[] landmap1;
+}
+
+BOOST_AUTO_TEST_CASE(check_timestep_change)
+{
+    bool *landmap1 = new bool[100];
+    for (size_t i = 0; i < 100; ++i)
+        landmap1[i] = true;
+
+    TestSimulator tested(2, 50, landmap1, 0.000213);
+    BOOST_CHECK(true);
+
 
     delete[] landmap1;
 }
