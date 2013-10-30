@@ -149,7 +149,7 @@ namespace PUMA {
     void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
     {
         if (current_serializer == NULL) {
-            Serializer::known[0]->serialize(output_hares, output_pumas, current_state,
+            Serializer::output_methods.front()->serialize(output_hares, output_pumas, current_state,
                     size_x, size_y);
         } else {
             current_serializer->serialize(output_hares, output_pumas, current_state,

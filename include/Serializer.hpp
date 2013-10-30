@@ -2,7 +2,7 @@
 #define PUMA_Serializer_hpp
 
 #include <fstream>
-#include <vector>
+#include <list>
 #include <string>
 #include <boost/shared_array.hpp>
 
@@ -13,7 +13,7 @@ namespace PUMA {
     class Serializer {
 
     public:
-        static std::vector<Serializer*> known;
+        static std::list<Serializer*> output_methods;
         virtual void serialize(std::ofstream *output_hares, 
                 std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
                 size_t size_x, size_t size_y) = 0;
@@ -23,8 +23,10 @@ namespace PUMA {
     class GnuplotSerializer : public Serializer {
 
     public:
-        std::string description;
         GnuplotSerializer();
+        ~GnuplotSerializer();
+
+        std::string description;
         void serialize(std::ofstream *output_hares, 
                 std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
                 size_t size_x, size_t size_y);

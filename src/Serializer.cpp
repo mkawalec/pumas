@@ -4,12 +4,19 @@
 
 namespace PUMA {
 
-    std::vector<Serializer*> Serializer::known;
+    std::list<Serializer*> Serializer::output_methods;
 
     GnuplotSerializer::GnuplotSerializer()
     {
         description = "Outputs to Gnuplot compatible text format";
-        Serializer::known.push_back(this);
+        Serializer::output_methods.push_back(this);
+    }
+
+    GnuplotSerializer::~GnuplotSerializer()
+    {
+        // As an instance is about to be destructed, remove any
+        // references to this memory region
+        Serializer::output_methods.remove(this);
     }
 
     void GnuplotSerializer::serialize(std::ofstream *output_hares, 
