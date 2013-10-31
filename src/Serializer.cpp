@@ -1,10 +1,24 @@
 #include "Serializer.hpp"
+
 #include "helpers.hpp"
+#include "exceptions.hpp"
+
 #include <boost/shared_array.hpp>
 
 namespace PUMA {
 
     std::list<Serializer*> Serializer::output_methods;
+
+    Serializer* Serializer::choose_output_method(std::string name)
+    {
+        for (std::list<Serializer*>::iterator it=output_methods.begin(); 
+                it != output_methods.end(); ++it) {
+            if ((*it)->name == name) return *it;
+        }
+
+        throw SerializerNotFound("Serializer " + name + " is not found");
+    }
+
 
     GnuplotSerializer::GnuplotSerializer()
     {
