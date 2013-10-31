@@ -83,7 +83,12 @@ namespace PUMA {
                     current_state[index].hare_density * scale << std::endl;
                 *output << "pumas " << i << " " << j << " " <<
                     current_state[index].puma_density * scale << std::endl;
-                *output << "baseline " << i << " " << j << " 0" << std::endl;
+                
+                if (current_state[index].is_land) *output << "land ";
+                else *output << "water ";
+
+                *output << i << " " << j << " 0" << std::endl;
+
             }
         }
     }
