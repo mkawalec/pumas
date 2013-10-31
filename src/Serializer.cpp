@@ -8,6 +8,7 @@ namespace PUMA {
 
     GnuplotSerializer::GnuplotSerializer()
     {
+        name = "gnuplot";
         description = "Outputs to Gnuplot compatible text format";
         Serializer::output_methods.push_back(this);
     }
