@@ -17,10 +17,11 @@ namespace PUMA {
 
     public:
         static std::list<Serializer*> output_methods;
-        Serializer* choose_output_method(std::string name);
+        static Serializer* choose_output_method(std::string name);
 
         std::string name;
         std::string description;
+        double scale = 10.0;
 
         virtual void serialize(std::ofstream *output_hares, 
                 std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
@@ -45,8 +46,8 @@ namespace PUMA {
         VMDSerializer();
         ~VMDSerializer() { remove_instance(this); };
 
-        void serialize(std::ofstream *output_hares, 
-                std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
+        void serialize(std::ofstream *output, 
+                std::ofstream *nothing, boost::shared_array<landscape> current_state,
                 size_t size_x, size_t size_y);
     };
 }
