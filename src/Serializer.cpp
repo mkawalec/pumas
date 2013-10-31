@@ -9,6 +9,13 @@ namespace PUMA {
 
     std::list<Serializer*> Serializer::output_methods;
 
+    void Serializer::remove_instance(Serializer *instance_pointer)
+    {
+        // As an instance is about to be destructed, remove any
+        // references to this memory region
+        Serializer::output_methods.remove(instance_pointer);
+    }
+
     Serializer* Serializer::choose_output_method(std::string name)
     {
         for (std::list<Serializer*>::iterator it=output_methods.begin(); 
@@ -19,7 +26,6 @@ namespace PUMA {
         throw SerializerNotFound("Serializer " + name + " is not found");
     }
 
-
     GnuplotSerializer::GnuplotSerializer()
     {
         name = "gnuplot";
@@ -27,12 +33,6 @@ namespace PUMA {
         Serializer::output_methods.push_back(this);
     }
 
-    GnuplotSerializer::~GnuplotSerializer()
-    {
-        // As an instance is about to be destructed, remove any
-        // references to this memory region
-        Serializer::output_methods.remove(this);
-    }
 
     void GnuplotSerializer::serialize(std::ofstream *output_hares, 
             std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
