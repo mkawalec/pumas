@@ -62,6 +62,8 @@ namespace PUMA {
     {
         name = "vmd";
         description = "Outputs to VMD compatible XYZ file format";
+        scale = 10.0;
+
         Serializer::output_methods.push_back(this);
     }
 
