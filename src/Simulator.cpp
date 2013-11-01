@@ -127,6 +127,8 @@ namespace PUMA {
                                         + get_cell(i, j - 1)->puma_density + get_cell(i, j + 1)->puma_density)
                                     - nLand * get_cell(i, j)->puma_density));
 
+                    if (current_state[index].hare_density < 0.0) current_state[index].hare_density = 0.0;
+                    if (current_state[index].puma_density < 0.0) current_state[index].puma_density = 0.0;
                 }
             }
         }

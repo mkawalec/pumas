@@ -10,15 +10,16 @@ int main(int argc, char *argv[])
     // at the cost of making printf/scanf nonsafe
     std::ios_base::sync_with_stdio(0);
 
-    if (argc < 4) {
+    if (argc < 5) {
         std::cout << "This program should be run as follows: " <<
-            argv[0] << " input_filename timesteps_number dt" << std::endl;
+            argv[0] << " input_filename output_filename timesteps_number dt" << std::endl;
         return -1;
     }
 
     std::ifstream input(argv[1]);
-    size_t total_timesteps = std::stoi(argv[2]);
-    double dt = strtod(argv[3], NULL);
+    std::string filename(argv[2]);
+    size_t total_timesteps = std::stoi(argv[3]);
+    double dt = strtod(argv[4], NULL);
 
     size_t size_x, size_y;
     input >> size_x >> size_y;
@@ -31,18 +32,17 @@ int main(int argc, char *argv[])
     }
     input.close();
 
-    PUMA::Simulator simulation(size_x, size_y, land_map, dt);
+    PUMA::Simulator simulation(size_x, size_y, land_map, dt / 100);
     delete[] land_map;
 
     // Bind the current output method
     simulation.current_serializer = PUMA::Serializer::choose_output_method("vmd");
-
-    std::ofstream output("output.xyz");
+    std::ofstream output(filename);
 
     // The main loop
-    for (size_t i = 0; i < total_timesteps; ++i) {
+    for (size_t i = 0; i < total_timesteps * 100; ++i) {
         simulation.apply_step();
-        simulation.serialize(&output, NULL);
+        if (i%100 == 0) simulation.serialize(&output, NULL);
     }
 
     return 0;
