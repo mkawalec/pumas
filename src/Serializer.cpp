@@ -52,10 +52,6 @@ namespace PUMA {
             *output_hares << std::endl;
             *output_pumas << std::endl;
         }
-
-        // Closing to make sure nothing corrupts the output
-        output_hares->close();
-        output_pumas->close();
     }
 
     GnuplotSerializer gnuplot_serializer_instance;

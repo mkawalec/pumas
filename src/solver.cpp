@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
     simulation.current_serializer = PUMA::Serializer::choose_output_method("vmd");
 
     std::ofstream output("output.xyz");
+
     // The main loop
     for (size_t i = 0; i < total_timesteps; ++i) {
         simulation.apply_step();
