@@ -8,6 +8,7 @@
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/parsers.hpp>
+#include <boost/program_options/positional_options.hpp>
 namespace po = boost::program_options;
 
 PUMA::Simulator* initialize(std::ifstream *map_input)
@@ -31,12 +32,13 @@ PUMA::Simulator* initialize(std::ifstream *map_input)
 }
 
 PUMA::Simulator* read_params(int argc, char *argv[],
-        std::ifstream *input, double *dt, double *end_time,
+        double *dt, double *end_time,
         size_t *oversampling, size_t *notify_after,
         std::string *output_fn, std::string *aux_output_fn)
 {
     double r, a, b, m, k, l;
-    std::string output_methods_desc="", output_method;
+    std::string output_methods_desc="", output_method,
+        input_filename;
 
     std::list<PUMA::Serializer*>::iterator it;
     for (it = PUMA::Serializer::output_methods.begin();
@@ -93,23 +95,43 @@ PUMA::Simulator* read_params(int argc, char *argv[],
             "diffusion rate for pumas")
         ;
 
+    po::options_description hidden_opts("Hidden parameters");
+    hidden_opts.add_options()
+        ("input-file,I", po::value<std::string>(&input_filename),
+            "input file containing a landmap")
+        ;
+
     po::options_description cmdline_opts;
     cmdline_opts.add(generic_opts).add(file_opts).
-        add(simulation_opts).add(simulation_params);
+        add(simulation_opts).add(simulation_params).
+        add(hidden_opts);
 
     po::options_description config_file_opts;
     config_file_opts.add(file_opts).add(simulation_opts).
         add(simulation_params);
 
+    po::options_description visible_opts;
+    visible_opts.add(generic_opts).add(file_opts).
+        add(simulation_opts).add(simulation_params);
+    
+    po::positional_options_description p;
+    p.add("input-file", -1);
+
     po::variables_map vm;
-    po::store(po::parse_command_line(argc, argv, cmdline_opts), vm);
+    po::store(po::command_line_parser(argc, argv).
+        options(cmdline_opts).positional(p).run(), vm);
+    po::notify(vm);
 
     if (vm.count("help")) {
-        std::cout << cmdline_opts << std::endl;
+        std::cerr << visible_opts << std::endl;
+        throw PUMA::ProgramDeathRequest();
+    } else if (!vm.count("input-file")) {
+        std::cerr << "You need to provide an input file\n";
         throw PUMA::ProgramDeathRequest();
     }
 
-    PUMA::Simulator *simulation = initialize(input);
+    std::ifstream input(vm["input-file"].as<std::string>());
+    PUMA::Simulator *simulation = initialize(&input);
 
     // Set the equation parameters
     simulation->r = vm["r"].as<double>();
@@ -137,21 +159,15 @@ int main(int argc, char *argv[])
     size_t oversampling, notify_after;
     double dt, end_time;
     std::string output_fn, aux_output_fn;
-    
-    if (argc < 2) {
-        std::cout << "You need to specify an input file\n";
-        return -1;
-    }
-    std::ifstream input(argv[1]);
     PUMA::Simulator *simulation = NULL;
 
     try {
-        simulation = read_params(argc, argv, &input, &dt, &end_time, 
+        simulation = read_params(argc, argv, &dt, &end_time, 
                 &oversampling, &notify_after, &output_fn, &aux_output_fn);
     } catch (PUMA::ProgramDeathRequest e) {
         return 0;
     } catch (PUMA::SerializerNotFound e) {
-        std::cout << "The serializer you asked for could not be found\n";
+        std::cerr << "The serializer you asked for could not be found\n";
         return -1;
     }
 
