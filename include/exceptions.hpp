@@ -35,6 +35,11 @@ namespace PUMA {
         SerializerNotFound(std::string msg) : Exception(msg) {};
         SerializerNotFound() : Exception() {};
     };
+
+    struct ProgramDeathRequest : public Exception {
+        ProgramDeathRequest(std::string msg) : Exception(msg) {}
+        ProgramDeathRequest() : Exception() {};
+    };
 }
 
 #endif

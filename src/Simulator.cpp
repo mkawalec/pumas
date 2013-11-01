@@ -24,8 +24,8 @@ namespace PUMA {
      *
      * @params dt defines the time stepsize used in the simulation.
      **/
-    Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) : 
-        dt(dt), size_x(dim_x), size_y(dim_y)
+    Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map) : 
+        size_x(dim_x), size_y(dim_y)
     {
         /* Using Mersenne-Twister as the random number generator
          * as it has much better statistics than plain
@@ -38,6 +38,7 @@ namespace PUMA {
         rng.seed(1000000 * tv.tv_sec + tv.tv_usec);
 
         current_serializer = NULL;
+        dt = 0.01;
 	
         // The value too small is also illegal, we want to filter
         // these out too
@@ -46,13 +47,9 @@ namespace PUMA {
                     "and bigger than the accuracy of a double");
         }
 
-        // Initializing the diffusion constants
-        r = 0.08;
-        a = 0.04; 
-        b = 0.02;
-        m = 0.06;
-        k = 0.2; 
-        l = 0.2;
+        // Initializing the simulation constants
+        r = 0.08; a = 0.04; b = 0.02;
+        m = 0.06; k = 0.2; l = 0.2;
 
         /* Allocating the memory for the halo cell, 
          * so that we don't do a terrible amount of mallocks

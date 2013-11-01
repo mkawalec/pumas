@@ -4,6 +4,7 @@
 #include "exceptions.hpp"
 
 #include <boost/shared_array.hpp>
+#include <iostream>
 
 namespace PUMA {
 
@@ -24,7 +25,7 @@ namespace PUMA {
                 it != output_methods.end(); ++it) {
             if ((*it)->name == name) return *it;
         }
-
+        std::cout << name << std::endl;
         throw SerializerNotFound("Serializer " + name + " is not found");
     }
 
@@ -33,7 +34,8 @@ namespace PUMA {
     GnuplotSerializer::GnuplotSerializer()
     {
         name = "gnuplot";
-        description = "Outputs to Gnuplot compatible text format";
+        description = "Outputs to Gnuplot compatible text format. " 
+                      "Requires the auxiliary output file";
         Serializer::output_methods.push_back(this);
     }
 
