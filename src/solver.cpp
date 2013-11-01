@@ -103,7 +103,6 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, cmdline_opts), vm);
-    po::notify(vm);
 
     if (vm.count("help")) {
         std::cout << cmdline_opts << std::endl;
