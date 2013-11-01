@@ -21,7 +21,7 @@ namespace PUMA {
 
         std::string name;
         std::string description;
-        double scale = 10.0;
+        double scale;
 
         virtual void serialize(std::ofstream *output_hares, 
                 std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
