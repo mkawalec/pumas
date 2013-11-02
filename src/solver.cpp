@@ -130,7 +130,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
         throw PUMA::ProgramDeathRequest();
     }
 
-    std::ifstream input(vm["input-file"].as<std::string>());
+    std::ifstream input(input_filename);
     PUMA::Simulator *simulation = initialize(&input);
 
     // Set the equation parameters
@@ -164,9 +164,9 @@ int main(int argc, char *argv[])
     try {
         simulation = read_params(argc, argv, &dt, &end_time, 
                 &oversampling, &notify_after, &output_fn, &aux_output_fn);
-    } catch (PUMA::ProgramDeathRequest e) {
+    } catch (const PUMA::ProgramDeathRequest& e) {
         return 0;
-    } catch (PUMA::SerializerNotFound e) {
+    } catch (const PUMA::SerializerNotFound& e) {
         std::cerr << "The serializer you asked for could not be found\n";
         return -1;
     }
