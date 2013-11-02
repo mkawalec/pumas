@@ -94,6 +94,45 @@ namespace PUMA {
     }
                
     VMDSerializer vmd_serializer_instance;
+
+    /* ****             PlainPPMSerializer               **** */
+
+    PlainPPMSerializer::PlainPPMSerializer()
+    {
+        name = "plainppm";
+        description = "Outputs Plain PPM file. "
+                      "Requires the auxiliary output file.";
+        scale = 10.0;
+
+        Serializer::output_methods.push_back(this);
+    }
+
+    void PlainPPMSerializer::serialize(std::ofstream *output_hares, 
+            std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
+            size_t size_x, size_t size_y)
+    {
+        //PlainPPM magic number
+        *output_hares << "P3" << std::endl;
+        *output_pumas << "P3" << std::endl;
+        // width and height
+        *output_hares << size_x << " " << size_y << std::endl;
+        *output_pumas << size_x << " " << size_y << std::endl;
+        // MaxVal so that each sample is 1 byte.
+        *output_hares << 255  << std::endl;
+        *output_pumas << 255  << std::endl;
+        // raster where we have one value per line to respect the character limit per line
+        for (int j = 0; (unsigned)j < size_y; ++j) {
+            for (int i = 0; (unsigned)i < size_x; ++i) {
+                size_t index = j * size_x + i;
+
+                *output_hares << current_state[index].hare_density << std::endl;
+                *output_pumas << current_state[index].puma_density << std::endl;
+            }
+        }
+    }
+               
+    PlainPPMSerializer plainppm_serializer_instance;
+
 }
 
 

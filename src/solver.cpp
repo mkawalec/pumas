@@ -57,10 +57,10 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     file_opts.add_options()
         ("output,o", 
             po::value<std::string>(output_fn)->default_value("output"),
-            "the main output file")
+            "the main output file, or hares output file for methods requiring auxiliary outputs")
         ("aux,auxiliary-output",
             po::value<std::string>(aux_output_fn)->default_value(""),
-            "auxiliary output file, used by some output methods")
+            "auxiliary output file, ie. puma output file, used by some output methods")
         ("output-format,f",
             po::value<std::string>(&output_method)->default_value("vmd"),
             ("The currently available output methods are: \n\n" + 
