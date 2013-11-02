@@ -16,3 +16,4 @@
 .*.sw*
 tags
 build
+*.pdf
