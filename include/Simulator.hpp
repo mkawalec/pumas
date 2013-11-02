@@ -9,6 +9,17 @@
 
 namespace PUMA {
 
+    /** \brief Predator-Prey simulation
+     *
+     *  The Simulator class simulates a 
+     *  Predator (pumas) - Prey (hares) system on a landmap
+     *  that consists of discrete land and water cells.
+     *  The Simulation takes into account birth rates, predation rates
+     *  mortality rates of both predators and prey as well as 
+     *  migration rates from cell to cell.
+     *
+     */
+
     class Simulator {
     protected:
         /** Pointer to the current state of simulation.
@@ -53,8 +64,17 @@ namespace PUMA {
          */
         double r, a, b, m, k, l;
 
+        /** \brief Calculates the average densities of pumas/hares
+         *  over all land cells of the current state. 
+         */
         average_densities get_averages();
 
+        /** \brief Applies the next time step to the Simulation
+         *  which is based on a discretization of two coupled 
+         *  partial differential equations linking pumas and hares 
+         *  in a predator prey model that includes diffusion over some 
+         *  landscape. 
+         */
         virtual void apply_step();
         Serializer* current_serializer;
 
