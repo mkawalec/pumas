@@ -78,8 +78,6 @@ namespace PUMA {
         virtual void apply_step();
         Serializer* current_serializer;
 
-        // After serializing puma and hare densities to relevant streams
-        // both streams should be closed
         virtual void serialize(std::ofstream *output_hares, std::ofstream *output_pumas);
     };
 
