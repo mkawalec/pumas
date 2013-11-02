@@ -98,7 +98,10 @@ BOOST_AUTO_TEST_CASE(check_average)
     average_densities av = tested.get_averages();
     BOOST_CHECK(av.hares == 3.0);
     BOOST_CHECK(av.pumas == 2.0);
-
+    tested.set_densities_const(0.0, 0.0, 2, 25);
+    av = tested.get_averages();
+    BOOST_CHECK(av.hares == 1.5);
+    BOOST_CHECK(av.pumas == 1.0);
 
     delete[] landmap1;
 }

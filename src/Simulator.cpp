@@ -101,19 +101,22 @@ namespace PUMA {
      **/
     average_densities Simulator::get_averages() 
     {
-        //TODO: Question: should we only consider averages for land grid points?
         average_densities av;
         av.hares = 0.0;
         av.pumas = 0.0;
+        size_t nLand = 0;
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
-                av.hares += current_state[index].hare_density;
-                av.pumas += current_state[index].puma_density;
+                if (current_state[index].is_land) {
+                    ++ nLand;
+                    av.hares += current_state[index].hare_density;
+                    av.pumas += current_state[index].puma_density;
+                }
             }
         }
-        av.hares = av.hares / (double)(size_x * size_y);
-        av.pumas = av.pumas / (double)(size_x * size_y);
+        av.hares = av.hares / (double) nLand;
+        av.pumas = av.pumas / (double) nLand;
         return av;
     }
 
