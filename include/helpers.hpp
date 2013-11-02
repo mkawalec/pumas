@@ -10,4 +10,7 @@ struct landscape {
     bool is_land;
 };
 
+template <typename T>
+void ignore(T &&) { }
+
 #endif
