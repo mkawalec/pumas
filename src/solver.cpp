@@ -185,10 +185,9 @@ int main(int argc, char *argv[])
         if (i%(print_every * notify_after) == 0) { 
             std::cout << i / print_every << " frames had been written" 
                 << std::endl;
-            std::cout << "Average hare density after " << i / print_every 
-                << " frames is " << averages.hares << std::endl;
-            std::cout << "Average puma density after " << i / print_every 
-                << " frames is " << averages.pumas << std::endl;
+            std::cout << "Average hare and puma densities after " << i / print_every 
+                << " frames are " << averages.hares << " and " << averages.pumas
+                << " respectively." << std::endl;
         }
 
         if (i%print_every == 0) simulation->serialize(&output, &aux_output);
