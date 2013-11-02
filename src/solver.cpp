@@ -63,7 +63,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
             "auxiliary output file, ie. puma output file, used by some output methods")
         ("output-format,f",
             po::value<std::string>(&output_method)->default_value("vmd"),
-            ("The currently available output methods are: \n\n" + 
+            ("The currently available output methods are: \n" + 
             output_methods_desc).c_str())
         ("notify-after,n", po::value<size_t>(notify_after)->default_value(30), 
             "print progress to stdout every n frames")
