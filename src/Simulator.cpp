@@ -96,6 +96,27 @@ namespace PUMA {
         free(halo_cell);
     }
 
+    /** This function returns the averages of puma and hare
+     *  densities of the current state 
+     **/
+    average_densities Simulator::get_averages() 
+    {
+        //TODO: Question: should we only consider averages for land grid points?
+        average_densities av;
+        av.hares = 0.0;
+        av.pumas = 0.0;
+        for (int j = 0; (unsigned)j < size_y; ++j) {
+            for (int i = 0; (unsigned)i < size_x; ++i) {
+                size_t index = j * size_x + i;
+                av.hares += current_state[index].hare_density;
+                av.pumas += current_state[index].puma_density;
+            }
+        }
+        av.hares = av.hares / (double)(size_x * size_y);
+        av.pumas = av.pumas / (double)(size_x * size_y);
+        return av;
+    }
+
     void Simulator::apply_step() 
     {
         temp_state.swap(current_state);
@@ -156,6 +177,17 @@ namespace PUMA {
         }
     }
 
+    void TestSimulator::set_densities_const(double hare, double puma, size_t x_dim, size_t y_dim)
+    {
+        for (int j = 0; (unsigned)j < y_dim; ++j) {
+            for (int i = 0; (unsigned)i < x_dim; ++i) {
+                size_t index = j * size_x + i;
+                
+                current_state[index].hare_density = hare;
+                current_state[index].puma_density = puma;
+            }
+        }
+    }
     boost::shared_array<landscape> TestSimulator::get_current()
     {
         return current_state;

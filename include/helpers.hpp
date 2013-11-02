@@ -10,7 +10,13 @@ struct landscape {
     bool is_land;
 };
 
+<<<<<<< HEAD
+struct average_densities{
+    double hares, pumas;
+};
+=======
 template <typename T>
 void ignore(T &&) { }
+>>>>>>> b137d7e64e874ed8064b287d6c499d4a9a7b4409
 
 #endif
