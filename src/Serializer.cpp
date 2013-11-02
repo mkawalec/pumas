@@ -118,8 +118,8 @@ namespace PUMA {
         *output_hares << size_x << " " << size_y << std::endl;
         *output_pumas << size_x << " " << size_y << std::endl;
         // MaxVal so that each sample is 1 byte.
-        *output_hares << 255  << std::endl;
-        *output_pumas << 255  << std::endl;
+        *output_hares << 255 << std::endl;
+        *output_pumas << 255 << std::endl;
         // raster where we have one value per line to respect the character limit per line
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
