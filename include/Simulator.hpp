@@ -53,6 +53,7 @@ namespace PUMA {
          */
         double r, a, b, m, k, l;
 
+        average_densities get_averages();
         void apply_step();
         Serializer* current_serializer;
 
@@ -69,6 +70,7 @@ namespace PUMA {
         TestSimulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) :
             Simulator(dim_x, dim_y, land_map), dt(dt) {};
 
+        void set_densities_const(double hare, double puma, size_t x_dim, size_t y_dim);
         boost::shared_array<landscape> get_current();
         boost::shared_array<landscape> get_temp();
     };

@@ -175,10 +175,18 @@ int main(int argc, char *argv[])
     output.open(output_fn);
     if (aux_output_fn != "") aux_output.open(aux_output_fn);
 
+    average_densities averages;
+
     // The main loop
     for (size_t i = 0; i * dt / oversampling < end_time; ++i) {
-        if (i%(oversampling * notify_after) == 0) 
+        averages = simulation->get_averages();
+        if (i%(oversampling * notify_after) == 0) { 
             std::cout << i / oversampling << " frames had been written" << std::endl;
+            std::cout << "Average hare density after " << i / oversampling << " frames is "
+                << averages.hares << std::endl;
+            std::cout << "Average puma density after " << i / oversampling << " frames is "
+                << averages.pumas << std::endl;
+        }
 
         simulation->apply_step();
         if (i%oversampling == 0) simulation->serialize(&output, &aux_output);

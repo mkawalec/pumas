@@ -14,6 +14,7 @@ BOOST_AUTO_TEST_CASE(check_update)
         landmap1[i] = true;
    
     TestSimulator tested(2, 50, landmap1, 0.000213);
+    tested.apply_step();
     shared_array<landscape> current_state = tested.get_current(); 
     shared_array<landscape> temp_state = tested.get_temp(); 
 
@@ -75,6 +76,22 @@ BOOST_AUTO_TEST_CASE(check_no_migration_through_water)
     delete[] landmap1;
 }
 
+BOOST_AUTO_TEST_CASE(check_average)
+{
+    bool *landmap1 = new bool[100];
+    for (size_t i = 0; i < 100; ++i)
+        landmap1[i] = true;
+
+    TestSimulator tested(2, 50, landmap1, 0.000213);
+    tested.set_densities_const(3.0, 2.0, 2, 50);
+    average_densities av = tested.get_averages();
+    BOOST_CHECK(av.hares == 3.0);
+    BOOST_CHECK(av.pumas == 2.0);
+
+
+    delete[] landmap1;
+}
+
 BOOST_AUTO_TEST_CASE(check_migration_rate)
 {
     bool *landmap1 = new bool[100];
@@ -82,8 +99,27 @@ BOOST_AUTO_TEST_CASE(check_migration_rate)
         landmap1[i] = true;
 
     TestSimulator tested(2, 50, landmap1, 0.000213);
-    BOOST_CHECK(true);
+    tested.r = 0.0;
+    tested.a = 0.0;
+    tested.b = 0.0;
+    tested.m = 0.0;
+    tested.set_densities_const(3.0, 2.0, 2, 50);
+    tested.set_densities_const(0.0, 0.0, 2, 25);
+    for (int i = 0; i < 100; ++i)
+        tested.apply_step();
 
+    shared_array<landscape> current_state = tested.get_current();
+
+    for (int i = 0; i < 100; ++i) {
+        BOOST_CHECK(current_state[i].hare_density != 0.0);
+        BOOST_CHECK(current_state[i].puma_density != 0.0);
+    }
+
+    // Checking if there are any hares or pumas born/dying.
+    // Which shouldn't be the case.
+    average_densities av = tested.get_averages();
+    BOOST_CHECK(abs(av.hares - 1.5) < 1e-15);
+    BOOST_CHECK(abs(av.pumas - 1.0) < 1e-15);
 
     delete[] landmap1;
 }

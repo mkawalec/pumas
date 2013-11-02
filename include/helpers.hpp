@@ -10,4 +10,8 @@ struct landscape {
     bool is_land;
 };
 
+struct average_densities{
+    double hares, pumas;
+};
+
 #endif
