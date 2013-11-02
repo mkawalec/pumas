@@ -53,12 +53,9 @@ namespace PUMA {
          */
         double r, a, b, m, k, l;
 
-<<<<<<< HEAD
         average_densities get_averages();
-        void apply_step();
-=======
+
         virtual void apply_step();
->>>>>>> b137d7e64e874ed8064b287d6c499d4a9a7b4409
         Serializer* current_serializer;
 
         // After serializing puma and hare densities to relevant streams
