@@ -33,7 +33,7 @@ PUMA::Simulator* initialize(std::ifstream *map_input)
 
 PUMA::Simulator* read_params(int argc, char *argv[],
         double *dt, double *end_time,
-        size_t *oversampling, size_t *notify_after,
+        size_t *print_every, size_t *notify_after,
         std::string *output_fn, std::string *aux_output_fn)
 {
     double r, a, b, m, k, l;
@@ -73,9 +73,9 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     simulation_opts.add_options()
         ("end_time,e", po::value<double>(end_time)->default_value(1000),
             "time at which the simulation ends")
-        ("dt", po::value<double>(dt)->default_value(1), 
-            "interval between output frames")
-        ("oversampling,O", po::value<size_t>(oversampling)->default_value(100), 
+        ("dt", po::value<double>(dt)->default_value(0.01), 
+            "interval between computation steps")
+        ("print-every,p", po::value<size_t>(print_every)->default_value(100), 
             "number of iterations between two output frames")
         ;
 
@@ -156,14 +156,14 @@ int main(int argc, char *argv[])
     std::ios_base::sync_with_stdio(0);
 
     // Command line parameters
-    size_t oversampling, notify_after;
+    size_t print_every, notify_after;
     double dt, end_time;
     std::string output_fn, aux_output_fn;
     PUMA::Simulator *simulation = NULL;
 
     try {
         simulation = read_params(argc, argv, &dt, &end_time, 
-                &oversampling, &notify_after, &output_fn, &aux_output_fn);
+                &print_every, &notify_after, &output_fn, &aux_output_fn);
     } catch (const PUMA::ProgramDeathRequest& e) {
         return 0;
     } catch (const PUMA::SerializerNotFound& e) {
@@ -178,18 +178,20 @@ int main(int argc, char *argv[])
     average_densities averages;
 
     // The main loop
-    for (size_t i = 0; i * dt / oversampling < end_time; ++i) {
+    for (size_t i = 0; i * dt < end_time; ++i) {
+        simulation->apply_step();
+
         averages = simulation->get_averages();
-        if (i%(oversampling * notify_after) == 0) { 
-            std::cout << i / oversampling << " frames had been written" << std::endl;
-            std::cout << "Average hare density after " << i / oversampling << " frames is "
-                << averages.hares << std::endl;
-            std::cout << "Average puma density after " << i / oversampling << " frames is "
-                << averages.pumas << std::endl;
+        if (i%(print_every * notify_after) == 0) { 
+            std::cout << i / print_every << " frames had been written" 
+                << std::endl;
+            std::cout << "Average hare density after " << i / print_every 
+                << " frames is " << averages.hares << std::endl;
+            std::cout << "Average puma density after " << i / print_every 
+                << " frames is " << averages.pumas << std::endl;
         }
 
-        simulation->apply_step();
-        if (i%oversampling == 0) simulation->serialize(&output, &aux_output);
+        if (i%print_every == 0) simulation->serialize(&output, &aux_output);
     }
 
     return 0;

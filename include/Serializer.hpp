@@ -125,7 +125,8 @@ namespace PUMA {
         ~PlainPPMSerializer() { remove_instance(this); };
 
         void serialize(std::ofstream *output_hares, 
-                std::ofstream *output_pumas, boost::shared_array<landscape> current_state,
+                std::ofstream *output_pumas, 
+                boost::shared_array<landscape> current_state,
                 size_t size_x, size_t size_y);
     };
 
