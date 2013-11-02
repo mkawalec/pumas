@@ -53,7 +53,7 @@ namespace PUMA {
          */
         double r, a, b, m, k, l;
 
-        void apply_step();
+        virtual void apply_step();
         Serializer* current_serializer;
 
         // After serializing puma and hare densities to relevant streams

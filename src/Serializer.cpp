@@ -20,6 +20,7 @@ namespace PUMA {
     }
 
     Serializer* Serializer::choose_output_method(std::string name)
+            throw(SerializerNotFound)
     {
         for (std::list<Serializer*>::iterator it=output_methods.begin(); 
                 it != output_methods.end(); ++it) {
@@ -73,6 +74,7 @@ namespace PUMA {
             std::ofstream *nothing, boost::shared_array<landscape> current_state,
             size_t size_x, size_t size_y)
     {
+        ignore(nothing);
 
         *output << 3 * size_x * size_y - 1<< std::endl;
         for (int j = 0; (unsigned)j < size_y; ++j) {
@@ -114,12 +116,14 @@ namespace PUMA {
         //PlainPPM magic number
         *output_hares << "P3" << std::endl;
         *output_pumas << "P3" << std::endl;
+
         // width and height
         *output_hares << size_x << " " << size_y << std::endl;
         *output_pumas << size_x << " " << size_y << std::endl;
         // MaxVal so that each sample is 1 byte.
         *output_hares << 255 << std::endl;
         *output_pumas << 255 << std::endl;
+
         // raster where we have one value per line to respect the character limit per line
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
