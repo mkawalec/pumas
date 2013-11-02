@@ -26,7 +26,7 @@ namespace PUMA {
                 it != output_methods.end(); ++it) {
             if ((*it)->name == name) return *it;
         }
-        std::cout << name << std::endl;
+
         throw SerializerNotFound("Serializer " + name + " is not found");
     }
 
@@ -76,18 +76,23 @@ namespace PUMA {
     {
         ignore(nothing);
 
+        /* Set the number of particles to be three times
+         * the number of coordinates (one for simulation
+         * plane, one for hare density and one for pumas
+         * density
+         */
         *output << 3 * size_x * size_y - 1<< std::endl;
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
     
-                *output << "hares " << i << " " << j << " " << 
+                *output << "S " << i << " " << j << " " << 
                     current_state[index].hare_density * scale << std::endl;
-                *output << "pumas " << i << " " << j << " " <<
+                *output << "H " << i << " " << j << " " <<
                     current_state[index].puma_density * scale << std::endl;
                 
-                if (current_state[index].is_land) *output << "land ";
-                else *output << "water ";
+                if (current_state[index].is_land) *output << "O ";
+                else *output << "C ";
 
                 *output << i << " " << j << " 0" << std::endl;
 

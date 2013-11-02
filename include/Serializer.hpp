@@ -18,7 +18,7 @@ namespace PUMA {
      *  constructor, destructor and 'void serialize'. 
      *
      *  Also at least the name must be set and setting the description
-     *  is strongly suggested.
+     *  is strongly encouraged.
      */
     class Serializer {
 
