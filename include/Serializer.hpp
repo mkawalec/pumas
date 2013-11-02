@@ -11,10 +11,11 @@
 
 namespace PUMA {
 
-    /** A scaffold class to build serializers from. Any serializer
-     *  that is used by the Simulator  must inherit from this
-     *  class and implement a constructor, destructor and 
-     *  'void serialize'. 
+    /** \brief A scaffold class to build serializers from. 
+     *
+     *  Any serializer that is used by the Simulator 
+     *  must inherit from this class and implement a 
+     *  constructor, destructor and 'void serialize'. 
      *
      *  Also at least the name must be set and setting the description
      *  is strongly suggested.
