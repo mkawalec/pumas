@@ -1,0 +1,15 @@
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {1}Introduction}{1}{figure.caption.1}
+\contentsline {section}{\numberline {2}Group Coordination}{1}{figure.caption.1}
+\contentsline {subsection}{\numberline {2.1}Assignment of tasks to group members}{1}{section*.2}
+\contentsline {subsection}{\numberline {2.2}Coordination}{2}{section*.2}
+\contentsline {section}{\numberline {3}Design}{2}{section*.2}
+\contentsline {subsection}{\numberline {3.1}Programming Language}{2}{section*.3}
+\contentsline {subsection}{\numberline {3.2}Revision Control}{2}{section*.3}
+\contentsline {subsection}{\numberline {3.3}Build tools}{2}{section*.3}
+\contentsline {subsection}{\numberline {3.4}Testing}{2}{section*.3}
+\contentsline {subsection}{\numberline {3.5}Debugging}{2}{section*.3}
+\contentsline {subsection}{\numberline {3.6}Testing}{2}{section*.3}
+\contentsline {section}{\numberline {4}Conclusion}{2}{section*.3}
+\contentsline {subsection}{\numberline {4.1}Further Works}{3}{section*.4}

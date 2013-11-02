@@ -1,0 +1,61 @@
+\subsubsection{Boosting}
+
+In order to stabilize decision trees, a process called \emph{boosting} is utilized.  This can loosely be considered an averaging process which  incorporates many different decision trees into the final BDT output.    This is especially useful for dealing with variables that have a high separation power along with high fluctuations in the training sample.  While three different types of boosting are offered in TMVA, only  the most common form called Adaptive Boosting was used. 
+
+The process starts by training one decision tree, as described (REF).  The training events are then resampled with all the misclassified events receiving a higher weight, $\alpha$.  This \emph{boost weight} is a function of the ratio of misclassified events to total events, $r_{mis}$.  
+
+$$\alpha = \frac{1-r_{mis}}{r_{mis}}$$
+
+The weights of the entire training sample are then renormalized such that the sum of the weights is constant.  Each individual classifier will assign each event as signal or background, hence for event {\bf{x}}, we define the result of a classifier as $h({\bf{x}})=+1$ or $-1$, respectively.  In order to combine these results into one output, $y({\bf{x}})$, the following formula is used, where $N_{\text{trees}}$ is the total number of trees used and $\alpha_i,h_i$ refer to the $i^\text{th}$ tree.
+
+$$y({\bf{x}}) = \frac{1}{N_{\text{trees}}}\sum^{N_{\text{trees}}}_i \ln(\alpha_i)\cdot h_i({\bf{x}})$$
+
+This output will fall in $[-1,1]$ depending on if the event was classified as more signal-like or background-like.%MORE
+
+
+\vspace{-10pt}
+\[
+\begin{minipage}{.5\linewidth}
+\begin{itemize}
+\item \emph{Gini Index} : $s(p) = p \cdot (1-p)$
+\item \emph{Cross Entropy} : $s(p) = -p \cdot \ln(p) - (1-p)\cdot \ln (1-p)$
+\item \emph{Misclassification Error} : $1-\max\left(p,1-p\right)$ 
+\end{itemize}
+ \end{minipage}
+ \begin{minipage}{.5\linewidth}
+ \begin{wrapfigure}{rh}{0.1\textwidth}
+     \vspace{30pt}
+  \begin{center}
+    \includegraphics[width=0.1\textwidth]{finalMVAoutput.png}
+  \end{center}
+    \vspace{-20pt}
+  \caption{Decay channel}
+\end{wrapfigure}
+  \end{minipage}%
+\]
+
+
+ \begin{itemize}  % To get list without points
+		\item \emph{Loose}: \ \ \ \ \ \ \ $y_{\text{Ba}}$ < 0.45
+		\item \emph{Tight}:  \ \ \ \ \ \ \    $y_{\text{Ba}}$ < 0.25
+		\item \emph{Very Tight}: $y_{\text{Ba}}$ < 0.00
+        \end{itemize}
+
+
+
+\begin{table}[ht]
+\caption{Multivariate Analysis Results} % title of Table
+\vspace{-5pt}
+\centering % used for centering table
+\begin{tabular}{c c c c c c} % centered columns (4 columns)
+\hline\hline %inserts double horizontal lines
+Cut & $\text{S}_{\text{eff}}$ & $\text{B}_{\text{eff}}$ & $\text{D}_{\text{eff}}$ & B/S & D/B \\ [0.5ex] % inserts table
+%heading
+\hline % inserts single horizontal line
+L & 0.18 & 0.72 & 0.65 & 4.03 & 0.90  \\ % inserting body of the table
+T & 0.08 & 0.60 & 0.52 & 7.58 & 0.87 \\
+VT & 0.02 & 0.28 & 0.24 & 13.88 & 0.86 \\ [1ex] % [1ex] adds vertical space
+\hline %inserts single line
+\end{tabular}
+\label{table:nonlin} % is used to refer this table in the text
+\end{table}

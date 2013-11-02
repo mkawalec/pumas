@@ -1,0 +1,181 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{hyperref}
+\usepackage{sidecap}
+\usepackage{theorem}
+\usepackage{thc}
+\usepackage{url}
+\usepackage{epsfig}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage[floatrow]{chemstyle}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{cite}
+\usepackage{titlesec}
+\usepackage[makeroom]{cancel}
+\include{header}
+\usepackage{indentfirst}
+
+
+
+\long\def\symbolfootnote[#1]#2{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
+
+\geometry{ bottom=2 cm}
+
+
+\setlength{\abovecaptionskip}{-10pt plus 3pt minus 2pt}
+
+
+\setlength{\headheight}{15pt}
+
+\fancyhf{}
+\fancyhead[RO,LE]{\footnotesize{\leftmark}}
+\fancyhead[LO,RE]{\thepage}
+
+\pagestyle{fancy}
+
+\renewcommand\maketitle{
+\begin{titlepage}
+
+ \begin{center}
+ \begin{figure}[htpb]
+\rule{1 \textwidth}{1pt}\\
+ \smallskip  
+ \end{figure}
+
+\vfill
+
+\textbf{ \begin{huge}
+Developing a Predator Prey Simulation
+\end{huge}}
+
+\vspace{0.4cm}
+
+\begin{Large}
+ \textit{Programming Skills}
+\end{Large}
+
+\vspace{1cm}
+
+
+\begin{tabular}{ccc}
+\large{Diamantis Dakaris, Ewen Lawson Gillies, Michal Kawalec, Claude Schmidt} \vspace{0.15cm}\\
+\large{\textit{University of Edinburgh, UK}}\\
+\end{tabular}
+
+
+
+
+  
+\vspace{0.7cm}
+\large{Something here?}\\
+\vspace{0.7cm}
+\includegraphics[width=0.33\textwidth]{edinburgh_crest.jpg}\\
+\vspace{0.7cm}
+\Large{7th of November 2013}
+
+\end{center}
+
+\vfill
+
+\begin{abstract}
+
+The aim of this project is to develop the essential programming skills through a group project 
+
+\end{abstract}
+
+
+\vfill
+
+
+  \begin{center}
+ \rule{1 \textwidth}{1pt}\\
+ \end{center}
+
+
+
+\end{titlepage}}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+\setcounter{page}{1}
+
+
+
+\section{Introduction}
+The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  $\texttt{git}$ was used to track the progress of the project.  Once a working simulation was written in $\texttt{C++}$, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different simulation programs.  
+
+%Maybe introduce mathematics here
+
+\section{Group Coordination}
+
+As with any software development, the planning played a big role in the final product.  Through regular meetings, emails, task management websites, and revision control repositories, plans were set and efforts were coordinated to ensure an efficient and productive group effort.  
+
+\subsection{Assignment of tasks to group members}
+
+In order to increase efficiency and productivity, the division of labour was determined very early on.  This division was based primarily on the existing skills set of each member.  Each member was mandated to some of the coding.   The more experienced coders edited the work of the less experienced once in a hierarchal order.  The most experienced then explained his reasoning to the rest of the group, giving them an opportunity for further input into the final code.  This ensured both an optimal simulation, coding experience, and supportive feedback for each member.  The breakdown of the tasks and responsibilities for each member in order of coding previous experience in $\texttt{C++}$ are as follows.
+\\
+
+\noindent\textbf{Michal Kawalec:}  Due to his experience in revision control and software development, Michal set up the structure of the simulation and submitted this structure to a repository on \url{https://www.github.com/?}.  This structure included the header files and source files appropriately formatted with empty functions.  Michal also conducted all final edits, adapting the other members ideas to the optimal syntax.  (OTHER STUFF)
+\\
+
+\noindent\textbf{Claude  Schmidt:}   WIth a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor, as well as (OTHER STUFF).  He also provided the group with the structure and planning needed for optimal time management.  
+\\
+
+\noindent{\textbf{Ewen Gillies:}  Given his experience in numerical solutions to partial differential equations, Ewen was tasked with writing the integrating function and dealing with the boundary cells.  Since he lacked experience in $\texttt{C++}$, any additional structural ideas ideas were relayed to the more experience coders for optimal syntax.  He then reviewed this code to ensure all ideas were properly expressed.  Additionally, he was tasked with compiling the group report.
+\\
+
+\noindent{\textbf{Diamantis Dakaris:}}  Using his strong mathematical background, Diamantis conducted the preliminary analysis of the equation at hand, as well as the intermediate and final analysis of the output.  He also wrote the initial output function, which was then extrapolated to the final one.  As a relatively inexperienced coder, Diamantis was able to offer effective continual feedback on readability and the logical structure of the code, ensuring that all levels of coders would be able to read code and reproduce the results.  He also generated several of the input land maps for the simulation.
+
+\subsection{Coordination}
+
+The main method of group coordination and planning was through regular meetings.  Full group meetings were held at least once per week, where new ideas and current progress could be discussed.  During these meetings, smaller meetings between two or three members were organized where code would be peer edited or written by several members at once.
+
+The members of the group agreed to use Trello\footnote{This tool is found at: \url{https://www.trello.com}} in order to ensure flexibility in task assignment and adaptability in the testing and debugging phases.  This tool consists of four communal lists that each group can edit.  These lists include To Do, Review, Doing, and Done.  By adding items to the to do list, shifting them to doing, and placing them in done, group efforts were easily and effective coordinated without any overlap.
+
+\section{Design} 
+Description of your design.
+
+\subsection{Programming Language}
+Description of the programming language you used and how useful it was.
+
+\subsection{Revision Control}Revision control Description of the revision control you used, how you used it and how useful it was.
+\subsection{Build tools}
+Description of the build tools you used and your views on the strengths and weaknesses of these.
+\subsection{Testing}
+Description of what testing you did and any test frameworks you used.
+
+\subsection{Debugging}
+ Description of how you did any debugging and any tools you used.
+ 
+ \subsection{Testing}Performance tests and analysis Description on the performance experiments you did and an analysisof the results of these.
+ 
+ \section{Conclusion}Conclusions Some brief conclusions.
+ \subsection{Further Works}
+ Ideas for further work, or what you would have done if you had had more time.
+
+\end{document}
+
+
+\bibliography{references}{}
+\bibliographystyle{unsrt}
+
+
+
