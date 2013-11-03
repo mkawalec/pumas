@@ -93,7 +93,7 @@ namespace PUMA {
      */
     Simulator::~Simulator() 
     {
-        free(halo_cell);
+        delete halo_cell;
     }
 
     /** This function returns the averages of puma and hare
