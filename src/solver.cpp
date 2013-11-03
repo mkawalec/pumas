@@ -26,7 +26,7 @@ PUMA::Simulator* initialize(std::ifstream *map_input)
 
     PUMA::Simulator *simulation = 
         new PUMA::Simulator(size_x, size_y, land_map);
-    delete[] land_map;
+    //delete[] land_map;
 
     return simulation;
 }
