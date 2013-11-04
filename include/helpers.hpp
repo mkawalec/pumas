@@ -1,7 +1,12 @@
 #ifndef PUMA_helpers_h
 #define PUMA_helpers_h
 
+#include <utility>
+
 namespace PUMA {
+    /// A convenience typedef
+    typedef std::pair<double, double> average_densities;
+
     /** The basic stucture holding information about a landscape
      *  tile. If an element is_land, then pumas and hares can migrate
      *  to it and breed on it.
@@ -9,10 +14,6 @@ namespace PUMA {
     struct landscape {
         double hare_density, puma_density;
         bool is_land;
-    };
-
-    struct average_densities { 
-        double hares, pumas;
     };
 
     /** Structure containing RGB colors

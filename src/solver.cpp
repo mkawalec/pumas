@@ -261,7 +261,7 @@ int main(int argc, char *argv[])
 
             PUMA::average_densities averages = simulation->get_averages();
             std::cout << "Average hare and puma densities after " << i / print_every 
-                << " frames are " << averages.hares << " and " << averages.pumas
+                << " frames are " << averages.first << " and " << averages.second
                 << " respectively." << std::endl;
         }
 

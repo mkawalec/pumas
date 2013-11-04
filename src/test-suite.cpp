@@ -96,12 +96,12 @@ BOOST_AUTO_TEST_CASE(check_average)
     TestSimulator tested(2, 50, landmap1, 0.000213);
     tested.set_densities_const(3.0, 2.0, 2, 50);
     average_densities av = tested.get_averages();
-    BOOST_CHECK(av.hares == 3.0);
-    BOOST_CHECK(av.pumas == 2.0);
+    BOOST_CHECK(av.first == 3.0);
+    BOOST_CHECK(av.second == 2.0);
     tested.set_densities_const(0.0, 0.0, 2, 25);
     av = tested.get_averages();
-    BOOST_CHECK(av.hares == 1.5);
-    BOOST_CHECK(av.pumas == 1.0);
+    BOOST_CHECK(av.first == 1.5);
+    BOOST_CHECK(av.second == 1.0);
 
     delete[] landmap1;
 }
@@ -142,8 +142,8 @@ BOOST_AUTO_TEST_CASE(check_migration_rate)
      *  Which shouldn't be the case.
      **/
     average_densities av = tested.get_averages();
-    BOOST_CHECK(abs(av.hares - 1.5) < 1e-15);
-    BOOST_CHECK(abs(av.pumas - 1.0) < 1e-15);
+    BOOST_CHECK(abs(av.first - 1.5) < 1e-15);
+    BOOST_CHECK(abs(av.second - 1.0) < 1e-15);
 
     delete[] landmap1;
 }

@@ -66,6 +66,9 @@ namespace PUMA {
 
         /** \brief Calculates the average densities of pumas/hares
          *  over all land cells of the current state. 
+         *
+         *  \return a pair of numbers, first of which is a hare 
+         *      density, the second puma density
          */
         average_densities get_averages();
 

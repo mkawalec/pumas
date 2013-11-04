@@ -15,14 +15,14 @@ namespace PUMA {
      * All diffusion constants are initialized to the
      * default values given on the problem sheet. 
      *
-     * @param dim_x defines the x-dimension of the landmap.
+     * \param dim_x defines the x-dimension of the landmap.
      *
-     * @param dim_y defines the y-dimension of the landmap.
+     * \param dim_y defines the y-dimension of the landmap.
      *
-     * @param land_map defines a pointer to a boolean list where true signifies land 
+     * \param land_map defines a pointer to a boolean list where true signifies land 
      * and false signifies false.
      *
-     * @params dt defines the time stepsize used in the simulation.
+     * \param dt defines the time stepsize used in the simulation.
      **/
     Simulator::Simulator(size_t dim_x, size_t dim_y, bool *land_map) : 
         size_x(dim_x), size_y(dim_y)
@@ -96,27 +96,24 @@ namespace PUMA {
         delete halo_cell;
     }
 
-    /** This function returns the averages of puma and hare
-     *  densities of the current state 
-     **/
     average_densities Simulator::get_averages() 
     {
         average_densities av;
-        av.hares = 0.0;
-        av.pumas = 0.0;
+        av.first = 0.0;
+        av.second = 0.0;
         size_t landcells = 0;
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
                 if (current_state[index].is_land) {
                     ++landcells;
-                    av.hares += current_state[index].hare_density;
-                    av.pumas += current_state[index].puma_density;
+                    av.first += current_state[index].hare_density;
+                    av.second += current_state[index].puma_density;
                 }
             }
         }
-        av.hares = av.hares / (double) landcells;
-        av.pumas = av.pumas / (double) landcells;
+        av.first = av.first / (double) landcells;
+        av.second = av.second / (double) landcells;
         return av;
     }
 
@@ -180,6 +177,7 @@ namespace PUMA {
         }
     }
 
+    /*****          TestSimulator           *****/
     void TestSimulator::set_densities_const(double hare, double puma, size_t x_dim, size_t y_dim)
     {
         for (int j = 0; (unsigned)j < y_dim; ++j) {
