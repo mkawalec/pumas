@@ -66,7 +66,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
          po::value<std::string>(output_fn)->default_value("output"),
          "the main output file, or hares output file for methods requiring auxiliary outputs")
         ("aux,auxiliary-output",
-         po::value<std::string>(aux_output_fn)->default_value(""),
+         po::value<std::string>(aux_output_fn),
          "auxiliary output file, ie. puma output file, used by some output methods")
         ("output-format,f",
          po::value<std::string>(&output_method)->default_value("vmd"),
@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
 
     if (!split_files) {
         output.open(output_fn);
-        if (aux_output_fn != "") aux_output.open(aux_output_fn);
+        if (aux_output_fn.length() > 0) aux_output.open(aux_output_fn);
     }
 
     // The main loop
@@ -235,12 +235,14 @@ int main(int argc, char *argv[])
                 output_number << std::setfill('0') << i / print_every;
 
                 output.open(output_fn + output_number.str());
-
-                aux_output.open(aux_output_fn + output_number.str());
+                if (aux_output_fn.length() > 0) 
+                    aux_output.open(aux_output_fn + output_number.str());
+                
                 simulation->serialize(&output, &aux_output);
 
                 output.close();
-                aux_output.close();
+                if (aux_output_fn.length() > 0)
+                    aux_output.close();
             } else {
                 simulation->serialize(&output, &aux_output);
             }
