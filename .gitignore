@@ -16,4 +16,11 @@
 .*.sw*
 tags
 build
+
+# Latex
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
 *.pdf
