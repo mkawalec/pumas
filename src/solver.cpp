@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
@@ -60,28 +61,28 @@ PUMA::Simulator* read_params(int argc, char *argv[],
         ("data-file,d", po::value<std::string>(&input_data_filename),
             "file with input parameters")
         ("output,o", 
-            po::value<std::string>(output_fn)->default_value("output"),
-            "the main output file, or hares output file for methods requiring auxiliary outputs")
+         po::value<std::string>(output_fn)->default_value("output"),
+         "the main output file, or hares output file for methods requiring auxiliary outputs")
         ("aux,auxiliary-output",
-            po::value<std::string>(aux_output_fn)->default_value(""),
-            "auxiliary output file, ie. puma output file, used by some output methods")
+         po::value<std::string>(aux_output_fn)->default_value(""),
+         "auxiliary output file, ie. puma output file, used by some output methods")
         ("output-format,f",
-            po::value<std::string>(&output_method)->default_value("vmd"),
-            ("The currently available output methods are: \n" + 
-            output_methods_desc).c_str())
+         po::value<std::string>(&output_method)->default_value("vmd"),
+         ("The currently available output methods are: \n" + 
+         output_methods_desc).c_str())
         ("notify-after,n", po::value<int>(notify_after)->default_value(30), 
-            "print progress to stdout every n frames. Set to -1 to "
-            "mute progress messages")
+         "print progress to stdout every n frames. Set to -1 to "
+         "mute progress messages")
         ;
 
     po::options_description simulation_opts("Simulation options");
     simulation_opts.add_options()
         ("end_time,e", po::value<double>(end_time)->default_value(1000),
-            "time at which the simulation ends")
+         "time at which the simulation ends")
         ("dt", po::value<double>(dt)->default_value(0.01), 
-            "interval between computation steps")
+         "interval between computation steps")
         ("print-every,p", po::value<size_t>(print_every)->default_value(100), 
-            "number of iterations between two output frames")
+         "number of iterations between two output frames")
         ;
 
     po::options_description simulation_params("Simulation parameters");
@@ -103,7 +104,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     po::options_description hidden_opts("Hidden parameters");
     hidden_opts.add_options()
         ("input-file,I", po::value<std::string>(&input_filename),
-            "input file containing a landmap")
+         "input file containing a landmap")
         ;
 
     po::options_description cmdline_opts;
@@ -118,13 +119,13 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     po::options_description visible_opts;
     visible_opts.add(generic_opts).add(file_opts).
         add(simulation_opts).add(simulation_params);
-    
+
     po::positional_options_description p;
     p.add("input-file", -1);
 
     po::variables_map vm;
     po::store(po::command_line_parser(argc, argv).
-        options(cmdline_opts).positional(p).run(), vm);
+            options(cmdline_opts).positional(p).run(), vm);
     po::notify(vm);
 
     /* If an input file was provided, load the options
@@ -196,13 +197,12 @@ int main(int argc, char *argv[])
         std::cerr << "The serializer you asked for could not be found\n";
         return -1;
     }
+// The main loop
 
     std::ofstream output, aux_output;
-    output.open(output_fn);
-    if (aux_output_fn != "") aux_output.open(aux_output_fn);
-
     average_densities averages;
 
+<<<<<<< HEAD
     // The main loop
     for (size_t i = 0; i * dt < end_time; ++i) {
         simulation->apply_step();
@@ -214,9 +214,58 @@ int main(int argc, char *argv[])
             std::cout << "Average hare and puma densities after " << i / print_every 
                 << " frames are " << averages.hares << " and " << averages.pumas
                 << " respectively." << std::endl;
-        }
+=======
+    if (simulation->current_serializer->name == "plainppm") {
 
-        if (i%print_every == 0) simulation->serialize(&output, &aux_output);
+        int n = 0;
+            for (size_t i = 0; i * dt < end_time; ++i) {
+            simulation->apply_step();
+            
+            averages = simulation->get_averages();
+            if (i%(print_every * notify_after) == 0) { 
+                std::cout << i / print_every << " frames had been written" 
+                    << std::endl;
+                std::cout << "Average hare and puma densities after " << i / print_every 
+                    << " frames are " << averages.hares << " and " << averages.pumas
+                    << " respectively." << std::endl;
+            }
+            
+            if (i%print_every == 0) {
+                std::ostringstream output_number;
+                output_number.width(4);
+                ++n;
+                std::string name1;
+                output_number << n;
+                output_number.fill('48');
+                output.open(output_fn + output_number.str());
+                aux_output.open(aux_output_fn + output_number.str());
+                simulation->serialize(&output, &aux_output);
+                output.close();
+                aux_output.close();
+
+            }
+        }
+    }
+    else {
+        output.open(output_fn);
+        if (aux_output_fn != "") aux_output.open(aux_output_fn);
+
+        // The main loop
+        for (size_t i = 0; i * dt < end_time; ++i) {
+            simulation->apply_step();
+
+            averages = simulation->get_averages();
+            if (i%(print_every * notify_after) == 0) { 
+                std::cout << i / print_every << " frames had been written" 
+                    << std::endl;
+                std::cout << "Average hare and puma densities after " << i / print_every 
+                    << " frames are " << averages.hares << " and " << averages.pumas
+                    << " respectively." << std::endl;
+            }
+
+            if (i%print_every == 0) simulation->serialize(&output, &aux_output);
+>>>>>>> 1bc5867c292edccb7be6211e4d98803eec56b9e4
+        }
     }
 
     return 0;
