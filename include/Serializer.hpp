@@ -131,8 +131,10 @@ namespace PUMA {
                 std::ofstream *nothing, 
                 boost::shared_array<landscape> current_state,
                 size_t size_x, size_t size_y);
+    private:
+        rgb HSVtoRGB();
     };
-
+    
 }
 
 #endif
