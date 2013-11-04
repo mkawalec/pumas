@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
@@ -37,7 +38,8 @@ PUMA::Simulator* initialize(std::ifstream *map_input)
 PUMA::Simulator* read_params(int argc, char *argv[],
         double *dt, double *end_time,
         size_t *print_every, int *notify_after,
-        std::string *output_fn, std::string *aux_output_fn)
+        std::string *output_fn, std::string *aux_output_fn,
+        bool *split_files)
 {
     double r, a, b, m, k, l;
     std::string output_methods_desc="", output_method,
@@ -59,7 +61,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     po::options_description file_opts("IO options");
     file_opts.add_options()
         ("data-file,d", po::value<std::string>(&input_data_filename),
-            "file with input parameters")
+         "file with input parameters")
         ("output,o", 
          po::value<std::string>(output_fn)->default_value("output"),
          "the main output file, or hares output file for methods requiring auxiliary outputs")
@@ -69,10 +71,12 @@ PUMA::Simulator* read_params(int argc, char *argv[],
         ("output-format,f",
          po::value<std::string>(&output_method)->default_value("vmd"),
          ("The currently available output methods are: \n" + 
-         output_methods_desc).c_str())
+          output_methods_desc).c_str())
         ("notify-after,n", po::value<int>(notify_after)->default_value(30), 
          "print progress to stdout every n frames. Set to -1 to "
          "mute progress messages")
+        ("split-files", po::value<bool>(split_files)->default_value(false),
+         "print each frame in a separate output file")
         ;
 
     po::options_description simulation_opts("Simulation options");
@@ -88,17 +92,17 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     po::options_description simulation_params("Simulation parameters");
     simulation_params.add_options()
         ("r,r", po::value<double>(&r)->default_value(0.08), 
-            "birth rate of hares")
+         "birth rate of hares")
         ("a,a", po::value<double>(&a)->default_value(0.04),
-            "predation rate at which pumas eat hares")
+         "predation rate at which pumas eat hares")
         ("b,b", po::value<double>(&b)->default_value(0.02),
-            "birth rate of pumas per one hare eaten")
+         "birth rate of pumas per one hare eaten")
         ("m,m", po::value<double>(&m)->default_value(0.06),
-            "puma mortality rate")
+         "puma mortality rate")
         ("k,k", po::value<double>(&k)->default_value(0.2),
-            "diffusion rate for hares")
+         "diffusion rate for hares")
         ("l,l", po::value<double>(&l)->default_value(0.2),
-            "diffusion rate for pumas")
+         "diffusion rate for pumas")
         ;
 
     po::options_description hidden_opts("Hidden parameters");
@@ -183,6 +187,7 @@ int main(int argc, char *argv[])
 
     // Command line parameters
     int notify_after;
+    bool split_files;
     size_t print_every;
     double dt, end_time;
     std::string output_fn, aux_output_fn;
@@ -190,67 +195,55 @@ int main(int argc, char *argv[])
 
     try {
         simulation = read_params(argc, argv, &dt, &end_time, 
-                &print_every, &notify_after, &output_fn, &aux_output_fn);
+                &print_every, &notify_after, &output_fn, &aux_output_fn,
+                &split_files);
     } catch (const PUMA::ProgramDeathRequest& e) {
         return 0;
     } catch (const PUMA::SerializerNotFound& e) {
         std::cerr << "The serializer you asked for could not be found\n";
         return -1;
     }
-// The main loop
 
     std::ofstream output, aux_output;
-    average_densities averages;
+    if (simulation->current_serializer->name == "plainppm")
+        split_files = true;
 
-    if (simulation->current_serializer->name == "plainppm") {
-
-        int n = 0;
-            for (size_t i = 0; i * dt < end_time; ++i) {
-            simulation->apply_step();
-            
-            averages = simulation->get_averages();
-            if (i%(print_every * notify_after) == 0) { 
-                std::cout << i / print_every << " frames had been written" 
-                    << std::endl;
-                std::cout << "Average hare and puma densities after " << i / print_every 
-                    << " frames are " << averages.hares << " and " << averages.pumas
-                    << " respectively." << std::endl;
-            }
-            
-            if (i%print_every == 0) {
-                std::ostringstream output_number;
-                output_number.width(4);
-                ++n;
-                std::string name1;
-                output_number << n;
-                output_number.fill('48');
-                output.open(output_fn + output_number.str());
-                aux_output.open(aux_output_fn + output_number.str());
-                simulation->serialize(&output, &aux_output);
-                output.close();
-                aux_output.close();
-
-            }
-        }
-    }
-    else {
+    if (!split_files) {
         output.open(output_fn);
         if (aux_output_fn != "") aux_output.open(aux_output_fn);
+    }
 
-        // The main loop
-        for (size_t i = 0; i * dt < end_time; ++i) {
-            simulation->apply_step();
+    // The main loop
+    for (size_t i = 0; i * dt < end_time; ++i) {
+        simulation->apply_step();
 
-            averages = simulation->get_averages();
-            if (i%(print_every * notify_after) == 0) { 
-                std::cout << i / print_every << " frames had been written" 
-                    << std::endl;
-                std::cout << "Average hare and puma densities after " << i / print_every 
-                    << " frames are " << averages.hares << " and " << averages.pumas
-                    << " respectively." << std::endl;
+        if (notify_after != -1 && i%(print_every * notify_after) == 0) { 
+            std::cout << i / print_every << " frames had been written\n";
+
+            average_densities averages = simulation->get_averages();
+            std::cout << "Average hare and puma densities after " << i / print_every 
+                << " frames are " << averages.hares << " and " << averages.pumas
+                << " respectively." << std::endl;
+        }
+
+        if (i%print_every == 0) {
+            if (split_files) {
+                std::ostringstream output_number;
+                std::string name1;
+
+                output_number.width(log(end_time/(dt * print_every ))/log(10) + 1);
+                output_number << std::setfill('0') << i / print_every;
+
+                output.open(output_fn + output_number.str());
+
+                aux_output.open(aux_output_fn + output_number.str());
+                simulation->serialize(&output, &aux_output);
+
+                output.close();
+                aux_output.close();
+            } else {
+                simulation->serialize(&output, &aux_output);
             }
-
-            if (i%print_every == 0) simulation->serialize(&output, &aux_output);
         }
     }
 
