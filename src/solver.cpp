@@ -79,6 +79,9 @@ PUMA::Simulator* read_params(int argc, char *argv[],
             (*it)->description + "\n\n";
     }
 
+    /* Define different parameter groups,
+     * for decent presentation and easey management
+     */
     po::options_description generic_opts("Generic options");
     generic_opts.add_options()
         ("version,v", "print program version and exit")
@@ -215,7 +218,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 int main(int argc, char *argv[])
 {
     // Speeds up IO when there is a lot of IO to be done,
-    // at the cost of making printf/scanf nonsafe
+    // at the cost of making printf/scanf nonsafe to use
     std::ios_base::sync_with_stdio(0);
 
     // Parameters for the application
