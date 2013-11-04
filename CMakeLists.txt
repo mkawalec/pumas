@@ -19,21 +19,14 @@ endif(DOXYGEN_FOUND)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     message(status "Setting GCC flags")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -static -g -Wall -Wextra -W -pedantic -std=c++0x")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2  -g -Wall -Wextra -W -pedantic -std=c++0x")
 else()
     message(status "Setting MSVC flags")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHc-")
 endif()
 
-
-set(Boost_USE_STATIC_LIBS        ON)
-set(Boost_USE_MULTITHREADED      ON)
-#set(Boost_USE_STATIC_RUNTIME     ON)
-#set(BOOST_ALL_DYN_LINK           OFF)   # force dynamic linking for all libraries
-unset(Boost_INCLUDE_DIR CACHE)
-unset(Boost_LIBRARY_DIR CACHE)
 find_package(Boost 1.53 COMPONENTS unit_test_framework program_options random REQUIRED)
-#ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK) 
+ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK) 
 message(status "** Boost Include: ${Boost_INCLUDE_DIR}")
 message(status "** Boost Libraries: ${Boost_LIBRARY_DIRS}")
 message(status "** Boost Libraries: ${Boost_LIBRARIES}")
@@ -44,3 +37,8 @@ LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 target_link_libraries(solver -lm ${Boost_LIBRARIES})
 target_link_libraries(test-suite ${Boost_LIBRARIES})
 
+
+set(Boost_USE_STATIC_LIBS        OFF)
+set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME     OFF)
+set(BOOST_ALL_DYN_LINK           ON)   # force dynamic linking for all libraries
