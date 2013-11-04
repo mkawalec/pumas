@@ -11,6 +11,8 @@
 #include <boost/program_options/positional_options.hpp>
 namespace po = boost::program_options;
 
+const std::string version = "0.0.1";
+
 PUMA::Simulator* initialize(std::ifstream *map_input)
 {
     size_t size_x, size_y;
@@ -26,7 +28,7 @@ PUMA::Simulator* initialize(std::ifstream *map_input)
 
     PUMA::Simulator *simulation = 
         new PUMA::Simulator(size_x, size_y, land_map);
-    //delete[] land_map;
+    delete[] land_map;
 
     return simulation;
 }
@@ -38,7 +40,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 {
     double r, a, b, m, k, l;
     std::string output_methods_desc="", output_method,
-        input_filename;
+        input_filename, input_data_filename;
 
     std::list<PUMA::Serializer*>::iterator it;
     for (it = PUMA::Serializer::output_methods.begin();
@@ -55,6 +57,8 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 
     po::options_description file_opts("IO options");
     file_opts.add_options()
+        ("data-file,d", po::value<std::string>(&input_data_filename),
+            "file with input parameters")
         ("output,o", 
             po::value<std::string>(output_fn)->default_value("output"),
             "the main output file, or hares output file for methods requiring auxiliary outputs")
@@ -81,17 +85,17 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 
     po::options_description simulation_params("Simulation parameters");
     simulation_params.add_options()
-        ("r", po::value<double>(&r)->default_value(0.08), 
+        (",r", po::value<double>(&r)->default_value(0.08), 
             "birth rate of hares")
-        ("a", po::value<double>(&a)->default_value(0.04),
+        (",a", po::value<double>(&a)->default_value(0.04),
             "predation rate at which pumas eat hares")
-        ("b", po::value<double>(&b)->default_value(0.02),
+        (",b", po::value<double>(&b)->default_value(0.02),
             "birth rate of pumas per one hare eaten")
-        ("m", po::value<double>(&m)->default_value(0.06),
+        (",m", po::value<double>(&m)->default_value(0.06),
             "puma mortality rate")
-        ("k", po::value<double>(&k)->default_value(0.2),
+        (",k", po::value<double>(&k)->default_value(0.2),
             "diffusion rate for hares")
-        ("l", po::value<double>(&l)->default_value(0.2),
+        (",l", po::value<double>(&l)->default_value(0.2),
             "diffusion rate for pumas")
         ;
 
@@ -124,6 +128,10 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 
     if (vm.count("help")) {
         std::cerr << visible_opts << std::endl;
+        throw PUMA::ProgramDeathRequest();
+    } else if (vm.count("version")) {
+        std::cerr << "The version running is " << 
+            version << std::endl;
         throw PUMA::ProgramDeathRequest();
     } else if (!vm.count("input-file")) {
         std::cerr << "You need to provide an input file\n";
