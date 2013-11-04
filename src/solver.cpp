@@ -69,6 +69,9 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     std::string output_methods_desc="", output_method,
         input_filename, input_data_filename;
 
+    /* Build an information string for different Serializers
+     * from their names and descriptions
+     */
     std::list<PUMA::Serializer*>::iterator it;
     for (it = PUMA::Serializer::output_methods.begin();
             it != PUMA::Serializer::output_methods.end(); ++it) {
@@ -135,6 +138,11 @@ PUMA::Simulator* read_params(int argc, char *argv[],
          "input file containing a landmap")
         ;
 
+    /* Group the command line options in more
+     * convenient groups, as we don't want the input
+     * file option to be visible and generic options
+     * should only be callable from the command line
+     */
     po::options_description cmdline_opts;
     cmdline_opts.add(generic_opts).add(file_opts).
         add(simulation_opts).add(simulation_params).
@@ -172,6 +180,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
         po::notify(vm);
     }
 
+    // Handle generic options
     if (vm.count("help")) {
         std::cerr << visible_opts << std::endl;
         throw PUMA::ProgramDeathRequest();
@@ -209,7 +218,7 @@ int main(int argc, char *argv[])
     // at the cost of making printf/scanf nonsafe
     std::ios_base::sync_with_stdio(0);
 
-    // Command line parameters
+    // Parameters for the application
     int notify_after;
     bool split_files;
     size_t print_every;
@@ -217,6 +226,9 @@ int main(int argc, char *argv[])
     std::string output_fn, aux_output_fn;
     PUMA::Simulator *simulation = NULL;
 
+    /* Initialize the simulation, stopping execution
+     * in case of nonrecoverable errors
+     */
     try {
         simulation = read_params(argc, argv, &dt, &end_time, 
                 &print_every, &notify_after, &output_fn, &aux_output_fn,
@@ -241,6 +253,9 @@ int main(int argc, char *argv[])
     for (size_t i = 0; i * dt < end_time; ++i) {
         simulation->apply_step();
 
+        /* Only print a notification message if they are
+         * not turned off. Print a new one every notify_after frames
+         */
         if (notify_after != -1 && i%(print_every * notify_after) == 0) { 
             std::cout << i / print_every << " frames had been written\n";
 
@@ -251,6 +266,12 @@ int main(int argc, char *argv[])
         }
 
         if (i%print_every == 0) {
+            /* If file splitting is requested (either by the user or the
+             * currently used Serializer) name the consecutive output
+             * pad file number with zeros.
+             *
+             * Otherwise, just serialize into output file(s)
+             */
             if (split_files) {
                 std::ostringstream output_number;
                 std::string name1;
@@ -271,6 +292,12 @@ int main(int argc, char *argv[])
                 simulation->serialize(&output, &aux_output);
             }
         }
+    }
+
+    // Close the output files, if they require closing
+    if (!split_files) {
+        output.close();
+        if (aux_output_fn.length() > 0) aux_output.close();
     }
 
     return 0;
