@@ -35,7 +35,7 @@ PUMA::Simulator* initialize(std::ifstream *map_input)
 
 PUMA::Simulator* read_params(int argc, char *argv[],
         double *dt, double *end_time,
-        size_t *print_every, size_t *notify_after,
+        size_t *print_every, int *notify_after,
         std::string *output_fn, std::string *aux_output_fn)
 {
     double r, a, b, m, k, l;
@@ -69,8 +69,9 @@ PUMA::Simulator* read_params(int argc, char *argv[],
             po::value<std::string>(&output_method)->default_value("vmd"),
             ("The currently available output methods are: \n" + 
             output_methods_desc).c_str())
-        ("notify-after,n", po::value<size_t>(notify_after)->default_value(30), 
-            "print progress to stdout every n frames")
+        ("notify-after,n", po::value<int>(notify_after)->default_value(30), 
+            "print progress to stdout every n frames. Set to -1 to "
+            "mute progress messages")
         ;
 
     po::options_description simulation_opts("Simulation options");
@@ -180,7 +181,8 @@ int main(int argc, char *argv[])
     std::ios_base::sync_with_stdio(0);
 
     // Command line parameters
-    size_t print_every, notify_after;
+    int notify_after;
+    size_t print_every;
     double dt, end_time;
     std::string output_fn, aux_output_fn;
     PUMA::Simulator *simulation = NULL;
@@ -206,7 +208,7 @@ int main(int argc, char *argv[])
         simulation->apply_step();
 
         averages = simulation->get_averages();
-        if (i%(print_every * notify_after) == 0) { 
+        if (notify_after != -1 && i%(print_every * notify_after) == 0) { 
             std::cout << i / print_every << " frames had been written" 
                 << std::endl;
             std::cout << "Average hare and puma densities after " << i / print_every 
