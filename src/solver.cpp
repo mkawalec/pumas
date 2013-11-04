@@ -202,19 +202,6 @@ int main(int argc, char *argv[])
     std::ofstream output, aux_output;
     average_densities averages;
 
-<<<<<<< HEAD
-    // The main loop
-    for (size_t i = 0; i * dt < end_time; ++i) {
-        simulation->apply_step();
-
-        averages = simulation->get_averages();
-        if (notify_after != -1 && i%(print_every * notify_after) == 0) { 
-            std::cout << i / print_every << " frames had been written" 
-                << std::endl;
-            std::cout << "Average hare and puma densities after " << i / print_every 
-                << " frames are " << averages.hares << " and " << averages.pumas
-                << " respectively." << std::endl;
-=======
     if (simulation->current_serializer->name == "plainppm") {
 
         int n = 0;
@@ -264,7 +251,6 @@ int main(int argc, char *argv[])
             }
 
             if (i%print_every == 0) simulation->serialize(&output, &aux_output);
->>>>>>> 1bc5867c292edccb7be6211e4d98803eec56b9e4
         }
     }
 
