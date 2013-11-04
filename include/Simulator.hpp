@@ -64,6 +64,8 @@ namespace PUMA {
          */
         double r, a, b, m, k, l;
 
+        average_densities * av;
+
         /** \brief Calculates the average densities of pumas/hares
          *  over all land cells of the current state. 
          */
@@ -84,7 +86,6 @@ namespace PUMA {
     class TestSimulator : public Simulator {
     protected:
         double dt;
-
     public:
         TestSimulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) :
             Simulator(dim_x, dim_y, land_map), dt(dt) {};

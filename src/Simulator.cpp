@@ -60,6 +60,9 @@ namespace PUMA {
         halo_cell->hare_density = 0.0;
         halo_cell->is_land = false;
 
+        // Allocating memory for average densities
+        av = new average_densities;
+
         // Allocating memory for current and temporary states.
         current_state.reset(new landscape[dim_x * dim_y]);
         temp_state.reset(new landscape[dim_x * dim_y]);
@@ -94,6 +97,7 @@ namespace PUMA {
     Simulator::~Simulator() 
     {
         delete halo_cell;
+        delete av;
     }
 
     /** This function returns the averages of puma and hare
@@ -101,7 +105,6 @@ namespace PUMA {
      **/
     average_densities Simulator::get_averages() 
     {
-        average_densities * av;
         av->hares = 0.0;
         av->pumas = 0.0;
         size_t landcells = 0;
@@ -117,7 +120,7 @@ namespace PUMA {
         }
         av->hares = av->hares / (double) landcells;
         av->pumas = av->pumas / (double) landcells;
-        return *av;
+        return *this->av;
     }
 
     void Simulator::apply_step() 
