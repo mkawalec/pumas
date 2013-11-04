@@ -64,8 +64,6 @@ namespace PUMA {
          */
         double r, a, b, m, k, l;
 
-        average_densities * av;
-
         /** \brief Calculates the average densities of pumas/hares
          *  over all land cells of the current state. 
          */
