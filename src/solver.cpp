@@ -259,7 +259,7 @@ int main(int argc, char *argv[])
         if (notify_after != -1 && i%(print_every * notify_after) == 0) { 
             std::cout << i / print_every << " frames had been written\n";
 
-            average_densities averages = simulation->get_averages();
+            PUMA::average_densities averages = simulation->get_averages();
             std::cout << "Average hare and puma densities after " << i / print_every 
                 << " frames are " << averages.hares << " and " << averages.pumas
                 << " respectively." << std::endl;
