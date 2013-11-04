@@ -15,6 +15,12 @@ namespace po = boost::program_options;
 
 const std::string version = "0.0.1";
 
+/** \brief Creates a Simulator instance and initializes
+ *      it with input data
+ *  \param map_input pointer to a stream from which an
+ *      input map can be read
+ *  \return pointer to the created Simulator instance
+ */
 PUMA::Simulator* initialize(std::ifstream *map_input)
 {
     size_t size_x, size_y;
@@ -35,6 +41,24 @@ PUMA::Simulator* initialize(std::ifstream *map_input)
     return simulation;
 }
 
+/** \brief Parses command line and config file params
+ *      and sets the required values
+ *  \param argc number of command line arguments
+ *  \param argv array containing the command line arguments
+ *  \param dt interval between loop iterations
+ *  \param end_time time at which simulation ends
+ *  \param print_every number of interations after which
+ *      an output frame is printed
+ *  \param notify_after number of frames after which
+ *      a progress notification is printed
+ *  \param output_fn filename of the main output file
+ *  \param aux_output_fn filename of an auxiliary output
+ *      file
+ *  \param split_files if set to true each new frame will
+ *      be printed in a separate file
+ *  \return pointer to a completely set up Simulator
+ *      instance
+ */
 PUMA::Simulator* read_params(int argc, char *argv[],
         double *dt, double *end_time,
         size_t *print_every, int *notify_after,
