@@ -205,7 +205,7 @@ int main(int argc, char *argv[])
     }
 
     std::ofstream output, aux_output;
-    if (simulation->current_serializer->name == "plainppm")
+    if (simulation->current_serializer->force_files_split)
         split_files = true;
 
     if (!split_files) {

@@ -55,6 +55,9 @@ namespace PUMA {
         /// Output value scaling
         double scale;
 
+        // If set files splitting will be forced
+        bool force_files_split;
+
         /** \brief Writes the puma/hare densities to
          *      the specified output stream(s)
          *  \param output_hares a pointer to an output stream
@@ -124,8 +127,8 @@ namespace PUMA {
         PlainPPMSerializer();
         ~PlainPPMSerializer() { remove_instance(this); };
 
-        void serialize(std::ofstream *output_hares, 
-                std::ofstream *output_pumas, 
+        void serialize(std::ofstream *output, 
+                std::ofstream *nothing, 
                 boost::shared_array<landscape> current_state,
                 size_t size_x, size_t size_y);
     };
