@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  2 NOV 2013 19:52
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  4 NOV 2013 02:31
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -909,15 +909,15 @@ File: ucsencs.def 2003/11/29 Fixes to fontencodings LGR, T3
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(89.62709pt, 418.25368pt, 89.6271pt)
-* v-part:(T,H,B)=(101.40665pt, 686.7347pt, 56.9055pt)
+* h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)
+* v-part:(T,H,B)=(85.35826pt, 702.78308pt, 56.9055pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=418.25368pt
-* \textheight=686.7347pt
-* \oddsidemargin=17.3571pt
-* \evensidemargin=17.3571pt
-* \topmargin=-7.86334pt
+* \textwidth=455.24411pt
+* \textheight=702.78308pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-23.91173pt
 * \headheight=15.0pt
 * \headsep=25.0pt
 * \topskip=11.0pt
@@ -1053,7 +1053,7 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 \c_siunitx_mathtt_int=\count232
 
-<edinburgh_crest.jpg, id=47, 120.45pt x 119.4864pt>
+<edinburgh_crest.jpg, id=91, 120.45pt x 119.4864pt>
 File: edinburgh_crest.jpg Graphic file (type jpg)
  <use edinburgh_crest.jpg>
 [1
@@ -1079,25 +1079,25 @@ File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 131.
+(hyperref)                be the same. Added a new anchor on input line 139.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 136--138
+Underfull \hbox (badness 10000) in paragraph at lines 141--143
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 139--141
+Underfull \hbox (badness 10000) in paragraph at lines 144--146
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--144
+Underfull \hbox (badness 10000) in paragraph at lines 147--149
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--152
 
  []
 
@@ -1105,61 +1105,82 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.147 \subsection{Coordination}
-                                [1]
+l.154 
+       [1]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 156.
+(hyperref)                be the same. Added a new anchor on input line 165.
+
+[2]
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 225.
+
+[3]
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 248.
 
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 178.
+(hyperref)                be the same. Added a new anchor on input line 254.
+
+[4]
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 275.
+
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 282.
 
 
 Package caption Warning: Unused \captionsetup[subscheme] on input line 113.
 See the caption package documentation for explanation.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 181.
-[2] [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 181.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 285.
+[5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 285.
  (./programmingskillz.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 181.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 285.
 Package rerunfilecheck Info: File `programmingskillz.out' has not changed.
-(rerunfilecheck)             Checksum: EB968AA784559ED4A404372C8D76A666;763.
- )
-(\end occurred inside a group at level 1)
-
-### simple group (level 1) entered at line 142 ({)
-### bottom level 
+(rerunfilecheck)             Checksum: ACC38C5309AA10C9C7C31368E18064E7;1522.
+ ) 
 Here is how much of TeX's memory you used:
- 16505 strings out of 493747
- 301186 string characters out of 3143546
- 350885 words of memory out of 3000000
- 19408 multiletter control sequences out of 15000+200000
- 24699 words of font info for 69 fonts, out of 3000000 for 9000
+ 16543 strings out of 493747
+ 301673 string characters out of 3143546
+ 356247 words of memory out of 3000000
+ 19433 multiletter control sequences out of 15000+200000
+ 25015 words of font info for 70 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 45i,11n,43p,752b,794s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/cm-super/cm
--super-t1.enc}</usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/s
-fbx1000.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfb
-x1095.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx1
-200.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx144
-0.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx2074.
-pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pf
-b></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb>
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></
-usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></us
-r/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/
-local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/lo
-cal/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/loca
-l/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/
-texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></usr/local/te
-xlive/2010/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texl
-ive/2010/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on programmingskillz.pdf (5 pages, 463759 bytes).
+ 45i,11n,43p,1106b,785s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
+ocal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
+cal/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/loca
+l/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/
+texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/te
+xlive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texl
+ive/2010/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/local/texliv
+e/2010/texmf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/
+2010/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/local/texlive/20
+10/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2010
+/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2010/t
+exmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2010/tex
+mf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2010/texmf
+-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2010/texmf-d
+ist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2010/texmf-dist/
+fonts/type1/public/cm-super/sfti1440.pfb></usr/local/texlive/2010/texmf-dist/fo
+nts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2010/texmf-dist/font
+s/type1/public/cm-super/sftt1095.pfb>
+Output written on programmingskillz.pdf (7 pages, 578222 bytes).
 PDF statistics:
- 157 PDF objects out of 1000 (max. 8388607)
- 131 compressed objects within 2 object streams
- 9 named destinations out of 1000 (max. 500000)
- 110 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 273 PDF objects out of 1000 (max. 8388607)
+ 238 compressed objects within 3 object streams
+ 21 named destinations out of 1000 (max. 500000)
+ 214 words of extra memory for PDF output out of 10000 (max. 10000000)
 
