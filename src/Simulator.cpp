@@ -39,7 +39,7 @@ namespace PUMA {
 
         current_serializer = NULL;
         dt = 0.01;
-	
+
         // The value too small is also illegal, we want to filter
         // these out too
         if (dt < 1e-15) {
@@ -73,7 +73,7 @@ namespace PUMA {
                 size_t index = j * dim_x + i;
                 current_state[index].is_land = land_map[index];
                 temp_state[index].is_land = land_map[index];
-                
+
                 if (current_state[index].is_land) {
                     current_state[index].hare_density = random_data(rng);
                     current_state[index].puma_density = random_data(rng);
@@ -101,39 +101,39 @@ namespace PUMA {
      **/
     average_densities Simulator::get_averages() 
     {
-        average_densities av;
-        av.hares = 0.0;
-        av.pumas = 0.0;
-        size_t nLand = 0;
+        average_densities * av;
+        av->hares = 0.0;
+        av->pumas = 0.0;
+        size_t landcells = 0;
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
                 if (current_state[index].is_land) {
-                    ++ nLand;
-                    av.hares += current_state[index].hare_density;
-                    av.pumas += current_state[index].puma_density;
+                    ++ landcells;
+                    av->hares += current_state[index].hare_density;
+                    av->pumas += current_state[index].puma_density;
                 }
             }
         }
-        av.hares = av.hares / (double) nLand;
-        av.pumas = av.pumas / (double) nLand;
-        return av;
+        av->hares = av->hares / (double) landcells;
+        av->pumas = av->pumas / (double) landcells;
+        return *av;
     }
 
     void Simulator::apply_step() 
     {
         temp_state.swap(current_state);
-        
+
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
-                
-                size_t nLand = get_cell(i + 1, j)->is_land + 
-                       get_cell(i - 1, j)->is_land +
-                       get_cell(i, j + 1)->is_land +
-                       get_cell(i, j - 1)->is_land;
 
                 if (current_state[index].is_land) {
+                    size_t nLand = get_cell(i + 1, j)->is_land + 
+                        get_cell(i - 1, j)->is_land +
+                        get_cell(i, j + 1)->is_land +
+                        get_cell(i, j - 1)->is_land;
+
                     current_state[index].hare_density = get_cell(i, j)->hare_density
                         + dt * (r * get_cell(i, j)->hare_density
                                 - a * get_cell(i, j)->hare_density * get_cell(i,j)->puma_density
@@ -185,7 +185,7 @@ namespace PUMA {
         for (int j = 0; (unsigned)j < y_dim; ++j) {
             for (int i = 0; (unsigned)i < x_dim; ++i) {
                 size_t index = j * size_x + i;
-                
+
                 current_state[index].hare_density = hare;
                 current_state[index].puma_density = puma;
             }
