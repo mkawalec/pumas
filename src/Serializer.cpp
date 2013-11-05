@@ -121,6 +121,9 @@ namespace PUMA {
         Serializer::output_methods.push_back(this);
     }
 
+    /**This code is partially taken from 
+     * Ref: http://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb
+     */
     rgb PlainPPMSerializer::densitiesToRGB(double hare_density, double puma_density)
     {
 
@@ -129,7 +132,6 @@ namespace PUMA {
         double max_difference = 2.5;
         rgb RGB;
 
-        // TODO: this needs to change
         H = ((hare_density - puma_density) / max_difference + 0.5) * 6.0;
 
         v = 0.6;
