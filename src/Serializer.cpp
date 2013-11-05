@@ -199,7 +199,14 @@ namespace PUMA {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
 
-                colours = densitiesToRGB(current_state[index].hare_density, current_state[index].puma_density);
+                if (!current_state[index].is_land) {
+                        colours.r = 0; 
+                        colours.g = 0;
+                        colours.b = 250;
+                }
+                else {
+                        colours = densitiesToRGB(current_state[index].hare_density, current_state[index].puma_density);
+                }
                 *output << colours.r << " " << colours.g << " " << colours.b << std::endl;
             }
         }
