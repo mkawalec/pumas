@@ -20,15 +20,15 @@ namespace PUMA {
     }
 
     Serializer* Serializer::choose_output_method(std::string name)
-            throw(SerializerNotFound)
-    {
-        for (std::list<Serializer*>::iterator it=output_methods.begin(); 
-                it != output_methods.end(); ++it) {
-            if ((*it)->name == name) return *it;
-        }
+        throw(SerializerNotFound)
+        {
+            for (std::list<Serializer*>::iterator it=output_methods.begin(); 
+                    it != output_methods.end(); ++it) {
+                if ((*it)->name == name) return *it;
+            }
 
-        throw SerializerNotFound("Serializer " + name + " is not found");
-    }
+            throw SerializerNotFound("Serializer " + name + " is not found");
+        }
 
     /* ****             GnuplotSerializer           **** */
 
@@ -36,7 +36,7 @@ namespace PUMA {
     {
         name = "gnuplot";
         description = "Outputs to Gnuplot compatible text format. " 
-                      "Requires the auxiliary output file";
+            "Requires the auxiliary output file";
         Serializer::output_methods.push_back(this);
     }
 
@@ -89,12 +89,12 @@ namespace PUMA {
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
-    
+
                 *output << "S " << i << " " << j << " " << 
                     current_state[index].hare_density * scale << std::endl;
                 *output << "H " << i << " " << j << " " <<
                     current_state[index].puma_density * scale << std::endl;
-                
+
                 if (current_state[index].is_land) *output << "C ";
                 else *output << "O ";
 
@@ -103,7 +103,7 @@ namespace PUMA {
             }
         }
     }
-               
+
     VMDSerializer vmd_serializer_instance;
 
     /* ****             PlainPPMSerializer               **** */
@@ -112,11 +112,67 @@ namespace PUMA {
     {
         name = "plainppm";
         description = "Outputs Plain PPM file. "
-                      "Requires the auxiliary output file.";
+            "Requires the auxiliary output file.";
         scale = 10.0;
         force_files_split = true;
 
         Serializer::output_methods.push_back(this);
+    }
+
+    rgb PlainPPMSerializer::densitiesToRGB(double hare_density, double puma_density)
+    {
+
+        double v ,s ,H, x, y, z, remH;
+        int floorH;
+        double max_difference = 2.0;
+        rgb RGB;
+
+        // TODO: this needs to change
+        H = std::abs(hare_density - puma_density) / max_difference * 6.0;
+
+        v = 0.8;
+        s = 0.8;
+        floorH = (int)H;
+        remH = H - floorH;
+
+        x = v * (1.0 - s);
+        y = v * (1.0 - (s * remH));
+        z = v * (1.0 - (s * (1.0 - remH)));
+
+        switch(floorH) {
+            case 0:
+                RGB.r = (int)(v * 255);
+                RGB.g = (int)(z * 255);
+                RGB.b = (int)(x * 255);
+                break;
+            case 1:
+                RGB.r = (int)(y * 255);
+                RGB.g = (int)(v * 255);
+                RGB.b = (int)(x * 255);
+                break;
+            case 2:
+                RGB.r = (int)(x * 255);
+                RGB.g = (int)(v * 255);
+                RGB.b = (int)(z * 255);
+                break;
+            case 3:
+                RGB.r = (int)(x * 255);
+                RGB.g = (int)(y * 255);
+                RGB.b = (int)(v * 255);
+                break;
+            case 4:
+                RGB.r = (int)(z * 255);
+                RGB.g = (int)(x * 255);
+                RGB.b = (int)(v * 255);
+                break;
+            case 5:
+            default:
+                RGB.r = (int)(v * 255);
+                RGB.g = (int)(x * 255);
+                RGB.b = (int)(y * 255);
+                break;
+        }
+        return RGB;
     }
 
     void PlainPPMSerializer::serialize(std::ofstream *output, 
@@ -124,6 +180,7 @@ namespace PUMA {
             size_t size_x, size_t size_y)
     {
         ignore(nothing);
+        rgb colours;
 
         //PlainPPM magic number
         *output << "P3" << std::endl;
@@ -138,11 +195,12 @@ namespace PUMA {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
 
-                *output << current_state[index].hare_density << std::endl;
+                colours = densitiesToRGB(current_state[index].hare_density, current_state[index].puma_density);
+                *output << colours.r << " " << colours.g << " " << colours.b << std::endl;
             }
         }
     }
-               
+
     PlainPPMSerializer plainppm_serializer_instance;
 
 }
