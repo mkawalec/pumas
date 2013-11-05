@@ -65,6 +65,7 @@ namespace PUMA {
     {
         name = "vmd";
         description = "Outputs to VMD compatible XYZ file format";
+        extension = "xyz";
         scale = 10.0;
 
         Serializer::output_methods.push_back(this);
@@ -112,7 +113,8 @@ namespace PUMA {
     {
         name = "plainppm";
         description = "Outputs Plain PPM file. "
-            "Requires the auxiliary output file.";
+                      "Requires the auxiliary output file.";
+        extension = "ppm";
         scale = 10.0;
         force_files_split = true;
 

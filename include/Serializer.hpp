@@ -52,6 +52,9 @@ namespace PUMA {
         /// Human-readable Serializer description
         std::string description;
 
+        /// A suggested extension for a given serializer
+        std::string extension;
+
         /// Output value scaling
         double scale;
 

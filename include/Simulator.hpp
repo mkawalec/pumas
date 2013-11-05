@@ -106,8 +106,8 @@ namespace PUMA {
         virtual void serialize(std::ofstream *main_output, std::ofstream *aux_output=NULL);
     };
 
-    /** Used for tests to provide a more
-     *  in-depth access to Simulator internals
+    /** \brief Used for tests to provide a more
+     *      in-depth access to Simulator internals
      */
     class TestSimulator : public Simulator {
     protected:
