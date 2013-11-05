@@ -166,13 +166,13 @@ namespace PUMA {
             return &temp_state[j * size_x + i];
     }
 
-    void Simulator::serialize(std::ofstream *output_hares, std::ofstream *output_pumas)
+    void Simulator::serialize(std::ofstream *main_output, std::ofstream *aux_output)
     {
         if (current_serializer == NULL) {
-            Serializer::output_methods.front()->serialize(output_hares, output_pumas, current_state,
+            Serializer::output_methods.front()->serialize(main_output, aux_output, current_state,
                     size_x, size_y);
         } else {
-            current_serializer->serialize(output_hares, output_pumas, current_state,
+            current_serializer->serialize(main_output, aux_output, current_state,
                     size_x, size_y);
         }
     }

@@ -79,7 +79,11 @@ namespace PUMA {
         /* Set the number of particles to be three times
          * the number of coordinates (one for simulation
          * plane, one for hare density and one for pumas
-         * density
+         * density). 
+         *
+         * Then print XYZ file, with hares as sulfur atoms,
+         * pumas as hydrogen, land as carbon and water as
+         * oxygen.
          */
         *output << 3 * size_x * size_y - 1<< std::endl;
         for (int j = 0; (unsigned)j < size_y; ++j) {
@@ -91,8 +95,8 @@ namespace PUMA {
                 *output << "H " << i << " " << j << " " <<
                     current_state[index].puma_density * scale << std::endl;
                 
-                if (current_state[index].is_land) *output << "O ";
-                else *output << "C ";
+                if (current_state[index].is_land) *output << "C ";
+                else *output << "O ";
 
                 *output << i << " " << j << " 0" << std::endl;
 

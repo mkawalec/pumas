@@ -119,9 +119,16 @@ namespace PUMA {
                 size_t size_x, size_t size_y);
     };
 
-    /** \brief Outputs to a PlainPPM format
-     */
+    /// \brief Outputs to a PlainPPM format
     class PlainPPMSerializer : public Serializer {
+
+    private:
+        /** \brief converts color values in HSV space
+         *      to ones in RGB.
+         *
+         *  \return a triplet of RGB values
+         */
+        rgb HSVtoRGB();
 
     public:
         PlainPPMSerializer();
@@ -131,10 +138,7 @@ namespace PUMA {
                 std::ofstream *nothing, 
                 boost::shared_array<landscape> current_state,
                 size_t size_x, size_t size_y);
-    private:
-        rgb HSVtoRGB();
     };
-    
 }
 
 #endif

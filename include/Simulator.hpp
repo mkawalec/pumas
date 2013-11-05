@@ -81,7 +81,13 @@ namespace PUMA {
         virtual void apply_step();
         Serializer* current_serializer;
 
-        virtual void serialize(std::ofstream *output_hares, std::ofstream *output_pumas);
+        /** \brief dispatches serialization to one of
+         *      serializers available at runtime
+         *  \param main_output main output stream
+         *  \param aux_output some output methods require a
+         *      second output stream
+         */
+        virtual void serialize(std::ofstream *main_output, std::ofstream *aux_output=NULL);
     };
 
     class TestSimulator : public Simulator {
