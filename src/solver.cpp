@@ -63,7 +63,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
         double *dt, double *end_time,
         size_t *print_every, int *notify_after,
         std::string *output_fn, std::string *aux_output_fn,
-        bool *split_files)
+        std::string *output_extension, bool *split_files)
 {
     double r, a, b, m, k, l;
     std::string output_methods_desc="", output_method,
@@ -102,6 +102,9 @@ PUMA::Simulator* read_params(int argc, char *argv[],
          po::value<std::string>(&output_method)->default_value("vmd"),
          ("The currently available output methods are: \n" + 
           output_methods_desc).c_str())
+        ("output-extention,e",
+          po::value<std::string>(output_extension),
+          "override an output method defined output extension")
         ("notify-after,n", po::value<int>(notify_after)->default_value(30), 
          "print progress to stdout every n frames. Set to -1 to "
          "mute progress messages")
@@ -226,7 +229,7 @@ int main(int argc, char *argv[])
     bool split_files;
     size_t print_every;
     double dt, end_time;
-    std::string output_fn, aux_output_fn;
+    std::string output_fn, aux_output_fn, output_extension;
     PUMA::Simulator *simulation = NULL;
 
     /* Initialize the simulation, stopping execution
@@ -235,7 +238,7 @@ int main(int argc, char *argv[])
     try {
         simulation = read_params(argc, argv, &dt, &end_time, 
                 &print_every, &notify_after, &output_fn, &aux_output_fn,
-                &split_files);
+                &output_extension, &split_files);
     } catch (const PUMA::ProgramDeathRequest& e) {
         return 0;
     } catch (const PUMA::SerializerNotFound& e) {
@@ -247,9 +250,13 @@ int main(int argc, char *argv[])
     if (simulation->current_serializer->force_files_split)
         split_files = true;
 
+    if (output_extension.length() == 0)
+        output_extension = simulation->current_serializer->extension;
+
     if (!split_files) {
-        output.open(output_fn);
-        if (aux_output_fn.length() > 0) aux_output.open(aux_output_fn);
+        output.open(output_fn + '.' + output_extension);
+        if (aux_output_fn.length() > 0) 
+            aux_output.open(aux_output_fn + '.' + output_extension);
     }
 
     // The main loop
@@ -282,9 +289,10 @@ int main(int argc, char *argv[])
                 output_number.width(log(end_time/(dt * print_every ))/log(10) + 1);
                 output_number << std::setfill('0') << i / print_every;
 
-                output.open(output_fn + output_number.str());
+                output.open(output_fn + output_number.str() + '.' + output_extension);
                 if (aux_output_fn.length() > 0) 
-                    aux_output.open(aux_output_fn + output_number.str());
+                    aux_output.open(aux_output_fn + output_number.str() + 
+                            '.' + output_extension);
                 
                 simulation->serialize(&output, &aux_output);
 
