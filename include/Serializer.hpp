@@ -131,7 +131,7 @@ namespace PUMA {
          *
          *  \return a triplet of RGB values
          */
-        rgb HSVtoRGB();
+        rgb densitiesToRGB(double hare_density, double puma_density);
 
     public:
         PlainPPMSerializer();
