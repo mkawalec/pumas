@@ -37,10 +37,17 @@ namespace PUMA {
         /// X and Y sizes of the simulation area
         size_t size_x, size_y;
 
-        /** A proxy function that enables easy implementation
-         *  of boundary conditions
+        /** \brief A proxy function enabling easy implementation
+         *      of boundary conditions
+         *  \param x X coordinate of requested cell
+         *  \param y Y coordinate of requested cell
+         *  \return pointer to a cell at these coordinates
+         *
+         *  If there is no cell at given coordinates it retuns
+         *  a pointer to a special empty cell that acts
+         *  as a water cell for all intents and purposes.
          */
-        inline landscape* get_cell(int i, int j);
+        inline landscape* get_cell(int x, int y);
 
         /** A special 'empty cell' used as a nonexistent cell
          *  in the boundary conditions checker

@@ -153,17 +153,12 @@ namespace PUMA {
     }
 
 
-    /** Returns a pointer to a cell at given coordinates.
-     *  If there is no cell at the given coordinates (due to the
-     *  boundary conditions), returns a pointer to a special 'empty cell',
-     *  what acts as a water cell for all intents and purposes.
-     */
-    landscape* Simulator::get_cell(int i, int j)
+    landscape* Simulator::get_cell(int x, int y)
     {
-        if (i < 0 || (unsigned)i >= size_x || j < 0 || (unsigned)j >= size_y) 
+        if (x < 0 || (unsigned)x >= size_x || y < 0 || (unsigned)y >= size_y) 
             return halo_cell;
         else
-            return &temp_state[j * size_x + i];
+            return &temp_state[y * size_x + x];
     }
 
     void Simulator::serialize(std::ofstream *main_output, std::ofstream *aux_output)
