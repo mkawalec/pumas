@@ -14,16 +14,15 @@ namespace PUMA {
      *  The Simulator class simulates a 
      *  Predator (pumas) - Prey (hares) system on a landmap
      *  that consists of discrete land and water cells.
-     *  The Simulation takes into account birth rates, predation rates
+     *  The Simulation takes into account birth rates, predation rates,
      *  mortality rates of both predators and prey as well as 
      *  migration rates from cell to cell.
-     *
      */
-
     class Simulator {
     protected:
-        /** Pointer to the current state of simulation.
-         *  When referencing, take into account that it 
+        /** \brief Pointer to the current state of simulation.
+         *
+         *  \warning When referencing, take into account that it 
          *  **does not** point to the same place in memory
          *  at all times
          */
@@ -49,12 +48,17 @@ namespace PUMA {
         landscape* halo_cell;
 
     public:
-        // This should read in the data and throw an exception(s)
-        // if the input data is misformed (ie. dim_x || dim_y == 0 etc)
+        /** \brief initializes a simulation instance with some
+         *      input data
+         *  \param dim_x size in X dimension of the supplied land_map
+         *  \param dim_y size in Y dimension of land_map
+         *  \param land_map a 1D array of X*Y elements specifying
+         *      which tiles are land and which water
+         */
         Simulator(size_t dim_x, size_t dim_y, bool *land_map);
         ~Simulator();
 
-        /** These are the diffusion constants used in the differential equation
+        /** \brief diffusion constants used in the differential equation
          * r = Birth rate of hares
          * a = Predation rate at which pumas ear hares
          * b = Birth rate of pumas per one hare eaten
@@ -79,6 +83,10 @@ namespace PUMA {
          *  landscape. 
          */
         virtual void apply_step();
+
+        /** If set its value is used as a pointer to currently
+         *  used serializer class
+         */
         Serializer* current_serializer;
 
         /** \brief dispatches serialization to one of
@@ -90,6 +98,9 @@ namespace PUMA {
         virtual void serialize(std::ofstream *main_output, std::ofstream *aux_output=NULL);
     };
 
+    /** Used for tests to provide a more
+     *  in-depth access to Simulator internals
+     */
     class TestSimulator : public Simulator {
     protected:
         double dt;
@@ -98,7 +109,22 @@ namespace PUMA {
             Simulator(dim_x, dim_y, land_map), dt(dt) {};
 
         void set_densities_const(double hare, double puma, size_t x_dim, size_t y_dim);
+
+        /** \brief provides access to the current state
+         *  \return a pointer to current state
+         *
+         *  \warning the pointer becomes invalid after
+         *      apply_step is ran!
+         */
         boost::shared_array<landscape> get_current();
+
+        /** \brief provides access to the temprorary
+         *      simulation state
+         *  \return a pointer to temprorary state
+         *
+         *  \warning the pointer becomes invalid after
+         *      apply_step is ran!
+         */
         boost::shared_array<landscape> get_temp();
     };
 }
