@@ -80,7 +80,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     }
 
     /* Define different parameter groups,
-     * for decent presentation and easey management
+     * for decent presentation and easy management
      */
     po::options_description generic_opts("Generic options");
     generic_opts.add_options()

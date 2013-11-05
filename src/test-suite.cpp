@@ -7,6 +7,9 @@ using namespace boost;
 using namespace PUMA;
 using namespace std;
 
+/** Checks if applying a step changes
+ *  contents of a land map
+ */
 BOOST_AUTO_TEST_CASE(check_update)
 {
     /// Creates test landmap with only land
@@ -30,6 +33,9 @@ BOOST_AUTO_TEST_CASE(check_update)
     delete[] landmap1;
 }
 
+/** Checks if the landmap was parsed
+ *  correctly by Simulator constructor
+ */
 BOOST_AUTO_TEST_CASE(check_landmap)
 {
     /// Creates test landmap with only land
@@ -47,6 +53,9 @@ BOOST_AUTO_TEST_CASE(check_landmap)
     delete[] landmap1;
 }
 
+/** Tests whether pumas or hares migrate through water, 
+ *  which they shouldn't
+ */
 BOOST_AUTO_TEST_CASE(check_no_migration_through_water)
 {
     /** Creates test landmap that consists of a large island
@@ -65,7 +74,6 @@ BOOST_AUTO_TEST_CASE(check_no_migration_through_water)
 
     TestSimulator tested(8, 8, landmap1, 0.000213);
     
-    /// Tests whether pumas or hares migrate through water, which they shouldn't
     for (int step = 0; step < 20; ++step) 
     {
         tested.apply_step();
@@ -85,6 +93,9 @@ BOOST_AUTO_TEST_CASE(check_no_migration_through_water)
     delete[] landmap1;
 }
 
+/** Tests whether get_average actually returns 
+ *  the average of the densities
+ */
 BOOST_AUTO_TEST_CASE(check_average)
 {
     /// Creates test landmap with only land
@@ -92,20 +103,26 @@ BOOST_AUTO_TEST_CASE(check_average)
     for (size_t i = 0; i < 100; ++i)
         landmap1[i] = true;
 
-    /// Tests whether get_average actually returns the average of the densities
     TestSimulator tested(2, 50, landmap1, 0.000213);
+
     tested.set_densities_const(3.0, 2.0, 2, 50);
     average_densities av = tested.get_averages();
+
     BOOST_CHECK(av.first == 3.0);
     BOOST_CHECK(av.second == 2.0);
+
     tested.set_densities_const(0.0, 0.0, 2, 25);
     av = tested.get_averages();
+
     BOOST_CHECK(av.first == 1.5);
     BOOST_CHECK(av.second == 1.0);
 
     delete[] landmap1;
 }
 
+/** Check if the implementation of the migration
+ *  part of the equation is correct.
+ */
 BOOST_AUTO_TEST_CASE(check_migration_rate)
 {
     /// Creates test landmap with only land
@@ -148,8 +165,9 @@ BOOST_AUTO_TEST_CASE(check_migration_rate)
     delete[] landmap1;
 }
 
+/// Create the test suite itself
 test_suite *init_unit_test_suite(int, char *[])
 {
-    framework::master_test_suite().p_name.value = "PUMAS unit test";
+    framework::master_test_suite().p_name.value = "PUMA unit test";
     return 0;
 }
