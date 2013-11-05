@@ -5,8 +5,8 @@
 
 namespace PUMA {
 
-    /** The exception base class, every PUMA
-     *  exception should inherit from it
+    /** \brief The exception base class, every PUMA
+     *      exception should inherit from it
      */
     struct Exception {
         std::string what() { return message;}
@@ -19,8 +19,8 @@ namespace PUMA {
         Exception() { message = "";}
     };
 
-    /** Exception thrown when a variable has an
-     *  illegal value.
+    /** \brief thrown when a variable has an
+     *      illegal value.
      *
      *  The gcc version we are compiling against
      *  has no support for constructor inheritance,
@@ -31,11 +31,20 @@ namespace PUMA {
         IllegalValue() : Exception() {};
     };
 
+    /** \brief thrown if the requested
+     *      serializer class cannot be found
+     */
     struct SerializerNotFound : public Exception {
         SerializerNotFound(std::string msg) : Exception(msg) {};
         SerializerNotFound() : Exception() {};
     };
 
+    /** \brief thrown if a non-main function wants
+     *      to terminate program execution.
+     *
+     *  It's suggested to catch this exception and
+     *  terminate gracefully
+     */
     struct ProgramDeathRequest : public Exception {
         ProgramDeathRequest(std::string msg) : Exception(msg) {}
         ProgramDeathRequest() : Exception() {};
