@@ -124,14 +124,14 @@ namespace PUMA {
 
         double v ,s ,H, x, y, z, remH;
         int floorH;
-        double max_difference = 2.0;
+        double max_difference = 2.5;
         rgb RGB;
 
         // TODO: this needs to change
-        H = std::abs(hare_density - puma_density) / max_difference * 6.0;
+        H = ((hare_density - puma_density) / max_difference + 0.5) * 6.0;
 
-        v = 0.8;
-        s = 0.8;
+        v = 0.6;
+        s = 0.7;
         floorH = (int)H;
         remH = H - floorH;
 
