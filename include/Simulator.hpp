@@ -83,8 +83,9 @@ namespace PUMA {
          */
         average_densities get_averages();
 
-        /** \brief Applies the next time step to the Simulation
-         *  which is based on a discretization of two coupled 
+        /** \brief Applies the next time step to the Simulation.
+         *
+         *  Based on a discretization of two coupled 
          *  partial differential equations linking pumas and hares 
          *  in a predator prey model that includes diffusion over some 
          *  landscape. 

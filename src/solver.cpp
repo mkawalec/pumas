@@ -270,8 +270,8 @@ int main(int argc, char *argv[])
 
         if (i%print_every == 0) {
             /* If file splitting is requested (either by the user or the
-             * currently used Serializer) name the consecutive output
-             * pad file number with zeros.
+             * currently used Serializer) pad the consecutive output
+             * files numbers with zeros.
              *
              * Otherwise, just serialize into output file(s)
              */

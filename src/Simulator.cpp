@@ -102,6 +102,7 @@ namespace PUMA {
         av.first = 0.0;
         av.second = 0.0;
         size_t landcells = 0;
+
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
@@ -112,6 +113,7 @@ namespace PUMA {
                 }
             }
         }
+
         av.first = av.first / (double) landcells;
         av.second = av.second / (double) landcells;
         return av;
@@ -164,11 +166,11 @@ namespace PUMA {
     void Simulator::serialize(std::ofstream *main_output, std::ofstream *aux_output)
     {
         if (current_serializer == NULL) {
-            Serializer::output_methods.front()->serialize(main_output, aux_output, current_state,
-                    size_x, size_y);
+            Serializer::output_methods.front()->serialize(main_output, 
+                    aux_output, current_state, size_x, size_y);
         } else {
-            current_serializer->serialize(main_output, aux_output, current_state,
-                    size_x, size_y);
+            current_serializer->serialize(main_output, aux_output, 
+                    current_state, size_x, size_y);
         }
     }
 
@@ -184,6 +186,7 @@ namespace PUMA {
             }
         }
     }
+
     boost::shared_array<landscape> TestSimulator::get_current()
     {
         return current_state;
