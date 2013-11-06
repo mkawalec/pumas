@@ -160,7 +160,7 @@ The members of the group agreed to use \texttt{Trello}\footnote{This tool is fou
 
 \section{Design} 
 
-This simulation has three major comments: Input, Siumlation, and Output.  It is designed to accept and ASCII file that determines the land map of the simulation.  The parameters that dominate the population of both hares and pumas can also be adjusted, although default values are provided.  The simulation is then initialized, run for a set amount of time steps, and closed.  At each time step, the population of hares and pumas is printed to one of several available output types.  These outputs can then be visualized, plotted, and analyzed.
+This simulation has three major comments: Input, Simulation, and Output.  It is designed to accept and ASCII file that determines the land map of the simulation.  The parameters that dominate the population of both hares and pumas can also be adjusted, although default values are provided.  The simulation is then initialized, run for a set amount of time steps, and closed.  At each time step, the population of hares and pumas is printed to one of several available output types.  These outputs can then be visualized, plotted, and analyzed.
 
 \subsection{Input}
 
@@ -212,7 +212,7 @@ These file maps can be generated in any way that respects the description above.
 
 \subsubsection{Sample Input Syntax}\label{syntax}
 
-All input parameters and files are set at program launch using the syntax \texttt{./solver -\{name\} \{value\} \emph{land\_map\_name}.txt}.  For example, the following line sets the birth rate of hares to 0.1 and the time step to 0.05, leaving the rest as default values, and reads in a file named \texttt{island.txt}.
+All input parameters and files are set at program launch using the syntax \texttt{./solver -\{name\} \{value\} \emph{land\_map\_name}.dat}.  For example, the following line sets the birth rate of hares to 0.1 and the time step to 0.05, leaving the rest as default values, and reads in a file named \texttt{island.dat}.
 %MICHAL Double check syntax
 
 \vspace{5pt}
@@ -220,7 +220,7 @@ All input parameters and files are set at program launch using the syntax \textt
 
 \subsection{Simulation}
 
-The structure of the simulation itself is straightforward.  The \texttt{Simulator.cpp} class contains the majority of the computation and simulation properties.  The \texttt{solver.cpp} class contains the main function, along with passing all input parameters and files to the constructor in the \texttt{Simulator.cpp} class.  The results of the simulation passed to the \texttt{Serializer.cpp} class for printing.  These results can then be visualized.  For more on in-depth discussion of output, see Section \ref{output}.
+The structure of the simulation itself is straightforward.  The \texttt{Simulator.cpp} class contains the majority of the computation and simulation properties.  The \texttt{solver.cpp} file contains the main function, along with an input parameters parser and \texttt{Simulator} class instantiation.  The results of the simulation passed to the \texttt{Serializer.cpp} class for printing.  These results can then be visualized.  For more on in-depth discussion of output, see Section \ref{output}.
 
 \subsubsection{Initialization}
 
@@ -240,6 +240,11 @@ The  \texttt{apply\_step} function starts by switch the contents of the  \texttt
 .  
 
 A key part of the \texttt{apply\_step} function is that it accesses all cells through the \texttt{get\_cell} function.  For all defined cells on the map, it returns the value of the \texttt{temp\_state}, as expected.  For all cells outside the limits of the system, it returns the \texttt{halo\_cell} which was initialized in the constructor.  Since all cells outside the system are defined to have a zero population, this is a cost effective way of setting the vanishing boundary conditions.
+
+% In a sense yes, but the main point of get_cell is that it enables 
+% very easy change in the boundary conditions - you just change the
+% get_cell proxy. The space savings are diminishing with increasing
+% map size, in in the UK case we are saving just 0.1%
 
 After the system is moved forward one time step, the average populations across all land cells are calculated.  These averages are printed to the terminal every \texttt{n} frames with the total data passed to the serializer every \texttt{p} frames, as defined in \ref{tb:parameters}.
 
