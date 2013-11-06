@@ -170,29 +170,35 @@ The simulation must read in an input land map.  This land map is intended to rep
 
 The input parameters can be set by the user, otherwise the default values are automatically used.  These parameters are divided into three categories: simulation parameters, simulation options, and input/output options.  The simulation parameters include the scaling factors of the terms in the coupled partial differential equations \eqref{hares} and \eqref{pumas}.  The simulation options include the size of the time step, the frequency of the output, and the time at which the simulation ends.  The Input/Output parameters include the output file names, the output file format, and the frequency at which the progress of the simulation is printed to the terminal.  
 
-All of the parameters are set using the \texttt{boost/program\_options} library, using the traditional syntax.  See Section \ref{syntax} for an example.  \ref{tb:parameters}, below, contains a list of the simulation parameters and their default values.
+All of the parameters are set using the \texttt{boost/program\_options} library, using the traditional syntax.  See Section~\ref{syntax} for an example.~\ref{tb:parameters}, below, contains a list of the simulation parameters and their default values.
 
 \begin{table}
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
 \textbf{Type} & \textbf{Name} & \textbf{Description} & \textbf{Default} \\ \hline
+\multirow{2}{*}{Generic options}
+ & \texttt{-h, --help} & Show help message  & N/A \\
+ & \texttt{-v, --version} & Show program version & N/A \\
+\multirow{7}{*}{Input/Output Options} 
+ & \texttt{-d, --data-file} & Location of parameters file & none \\
+ & \texttt{-o, --output} & Filename of the main output file & \texttt{output} \\
+ & \texttt{-a, --aux} & Filename of the auxiliary output file & none \\
+ & \texttt{-f, --output-format}  &  Format of the output (\texttt{vmd, gnuplot, ppm}) & \texttt{vmd} \\
+ & \texttt{-e, --output-extension} & Overrides output extension set by chosen Serializer & none \\
+ & \texttt{-n, --notify-after} & Output frames between printing progress to terminal & 30 \\
+ & \texttt{--split-files} & If set to true (1), each frame will be saved in a separate file. Setting to true overrides Serializer-requested value & 0 \\
 \multirow{6}{*}{Simulation Parameters} 
- & \texttt{r} & Birth rate of hares & 0.08 \\
- & \texttt{a} & Predation rate at which pumas eat hares & 0.04\\
- & \texttt{b} & Birth rate of pumas per hare eaten & 0.02 \\
- & \texttt{m} & Mortality rate of pumas & 0.06 \\ 
- & \texttt{k} & Diffusion rate of hares  & 0.2 \\ 
- & \texttt{l} & Diffusion rate of pumas & 0.2 \\ \hline
+ & \texttt{-r, --r} & Birth rate of hares & 0.08 \\
+ & \texttt{-a, --a} & Predation rate at which pumas eat hares & 0.04\\
+ & \texttt{-b, --b} & Birth rate of pumas per hare eaten & 0.02 \\
+ & \texttt{-m, --m} & Mortality rate of pumas & 0.06 \\ 
+ & \texttt{-k, --k} & Diffusion rate of hares  & 0.2 \\ 
+ & \texttt{-l, --l} & Diffusion rate of pumas & 0.2 \\ \hline
 \multirow{3}{*}{Simulation Options} 
- & \texttt{e} & End time & 1000 \\
- & \texttt{dt} & Time step & 0.01\\
- & \texttt{p} & Iterations between outputs & 100\\ \hline
-\multirow{4}{*}{Input/Output Options} 
- & \texttt{o} & Output file name for the hare population & \texttt{output} \\
- & \texttt{a} & Output file name for the puma population & \texttt{output} \\
- & \texttt{f}  &  Format of the output (\texttt{vmd, gnuplot, ppm}) & \texttt{vmd} \\
- & \texttt{n} & Frames between printing progress to terminal & 30 \\
+ & \texttt{-e, --end-time} & End time & 1000 \\
+ & \texttt{--dt} & Time step & 0.01\\
+ & \texttt{-p, --print-every} & Iterations between output frames & 100\\ \hline
 \hline
 \end{tabular}
 \caption{A table of input parameters and their default values.}
@@ -203,7 +209,7 @@ All of the parameters are set using the \texttt{boost/program\_options} library,
 
 \subsubsection{Land Map}
 
-The surface is discretised to have an $x$ and $y$ dimension, denoted \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y} depending on where it is called.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in the \texttt{solver.cpp} class.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section \ref{syntax}.
+The surface is discretised to have an $x$ and $y$ dimension, denoted \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y} depending on where it is called.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in the \texttt{solver.cpp} class.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section~\ref{syntax}.
 
 These file maps can be generated in any way that respects the description above.  The ones included in the submission were generated using \texttt{Gimp}\footnote{This freely distributed software is available here: \url{http://www.gimp.org}}.  The advantage of using this program is it allows the user to draw the desired land map in black and white, and then outputs this file directly to the desired \texttt{ASCII} format.  Likewise, arbitrary image files can be opened, changed to black and white, and outputted to the desired land map format.
 
