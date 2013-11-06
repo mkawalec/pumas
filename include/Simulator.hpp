@@ -47,7 +47,7 @@ namespace PUMA {
          *  a pointer to a special empty cell that acts
          *  as a water cell for all intents and purposes.
          */
-        inline landscape* get_cell(int x, int y);
+        virtual landscape* get_cell(int x, int y);
 
         /** A special 'empty cell' used as a nonexistent cell
          *  in the boundary conditions checker
