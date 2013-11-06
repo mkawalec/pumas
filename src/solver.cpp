@@ -13,7 +13,7 @@
 #include <boost/program_options/positional_options.hpp>
 namespace po = boost::program_options;
 
-const std::string version = "0.0.1";
+const std::string version = "1.0";
 
 /** \brief Creates a Simulator instance and initializes
  *      it with input data
