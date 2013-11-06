@@ -4,8 +4,9 @@ include_directories(src include)
 set(HEADER_FILES include/helpers.hpp include/Serializer.hpp include/Simulator.hpp)
 
 message(status "${CMAKE_CURRENT_SOURCE_DIR}")
-add_executable(solver src/solver.cpp src/Simulator.cpp src/Serializer.cpp ${HEADER_FILES})
-add_executable(test-suite src/test-suite.cpp src/Simulator.cpp src/Serializer.cpp ${HEADER_FILES})
+add_executable(solver src/helpers.cpp src/solver.cpp src/Simulator.cpp src/Serializer.cpp ${HEADER_FILES})
+add_executable(test-suite src/helpers.cpp src/test-suite.cpp src/Simulator.cpp
+    src/Serializer.cpp ${HEADER_FILES})
 
 find_package(Doxygen)
 if(DOXYGEN_FOUND)

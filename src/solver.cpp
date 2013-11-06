@@ -1,6 +1,7 @@
 #include "Serializer.hpp"
 #include "Simulator.hpp"
 #include "exceptions.hpp"
+#include "helpers.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -221,6 +222,9 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 
 int main(int argc, char *argv[])
 {
+    // Starts Stopwatch
+    double start_time = PUMA::get_time_micro_s();
+
     // Speeds up IO when there is a lot of IO to be done,
     // at the cost of making printf/scanf nonsafe to use
     std::ios_base::sync_with_stdio(0);
@@ -311,6 +315,9 @@ int main(int argc, char *argv[])
         output.close();
         if (aux_output_fn.length() > 0) aux_output.close();
     }
+
+    // Outputs the total runtime
+    PUMA::format_time(PUMA::get_time_micro_s() - start_time); 
 
     return 0;
 }

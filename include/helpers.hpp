@@ -2,6 +2,8 @@
 #define PUMA_helpers_h
 
 #include <utility>
+#include <sys/time.h>
+#include <iostream>
 
 namespace PUMA {
     /// A convenience typedef
@@ -23,7 +25,11 @@ namespace PUMA {
         double r, g, b;
     };
 
-    /** \breif A function template accepting any
+    double get_time_micro_s();
+
+    void format_time(double microsecs);
+
+    /** \brief A function template accepting any
      *      parameter and doing nothing to it. 
      *
      *  Useful for explicit marking of a parameter as unused,
