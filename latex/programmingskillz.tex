@@ -120,7 +120,7 @@ The aim of this project is to develop the essential programming skills through a
 
 
 \section{Introduction}
-The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  $\texttt{git}$ was used to track the progress of the project.  Once a working simulation was written in $\texttt{C++}$, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different simulation programs.  
+The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  $\texttt{git}$ was used for revision control.  Once a working simulation was written, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different simulation programs.  
 
 For reference, the coupled partial differential equations that dictate the time evolution of the populations of pumas and hares are included below.  $H$ is the population of hares, $P$ is the population of pumas, $x,y,$ and $t$ are space and time coordinates respectively, and $r,a,k,b,m$ and $l$ are scaling parameters, as discussion in Section \ref{params}.
 
@@ -138,13 +138,13 @@ As with any software development, the planning played a big role in the final pr
 
 \subsection{Group Members Reponsiblities}
 
-In order to increase efficiency and productivity, the division of labour was determined very early on.  This division was based primarily on the existing skills set of each member.  Each member was mandated to some of the coding.   The more experienced coders edited the work of the less experienced once in a hierarchal order.  The most experienced then explained his reasoning to the rest of the group, giving them an opportunity for further input into the final code.  This ensured both an optimal simulation, coding experience, and supportive feedback for each member.  The breakdown of the tasks and responsibilities for each member in order of coding previous experience in $\texttt{C++}$ are as follows.
+In order to increase efficiency and productivity, the division of labour was determined very early on.  This division was based primarily on the existing skills set of each member.  Each member was mandated to some of the coding. The more experienced coders edited the work of the less experienced once in a hierarchical order. The most experienced then explained his reasoning to the rest of the group, giving them an opportunity for further input into the final code.  This ensured both an optimal simulation, coding experience, and supportive feedback for each member.  The breakdown of the tasks and responsibilities for each member in order of coding previous experience in $\texttt{C++}$ are as follows.
 \\
 
-\noindent\textbf{Michal Kawalec:}  Due to his experience in revision control and software development, Michal set up the structure of the simulation and submitted this structure to a repository on \url{https://www.github.com/?}.  This structure included the header files and source files appropriately formatted with empty functions.  Michal also conducted all final edits, adapting the other members ideas to the optimal syntax.  (OTHER STUFF)
+\noindent\textbf{Michal Kawalec:}  Due to his experience in software development and project management, Michal set up the structure of the simulation and submitted this structure to a repository on \url{https://github.com/mkawalec/pumas}.  This structure included the header files and source files appropriately formatted with empty functions as well as the build system configuration. Michal also conducted all final edits, adapting the other members ideas to the optimal syntax.
 \\
 
-\noindent\textbf{Claude  Schmidt:}   WIth a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor, as well as (OTHER STUFF).  He also provided the group with the structure and planning needed for optimal time management.  
+\noindent\textbf{Claude  Schmidt:}   With a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor, as well as (OTHER STUFF).  He also provided the group with the structure and planning needed for optimal time management.  
 \\
 
 \noindent{\textbf{Ewen Gillies:}  Given his experience in numerical solutions to partial differential equations, Ewen was tasked with writing the integrating function and dealing with the boundary cells.  Since he lacked experience in $\texttt{C++}$, any additional structural ideas ideas were relayed to the more experience coders for optimal syntax.  He then reviewed this code to ensure all ideas were properly expressed.  Additionally, he was tasked with compiling the group report.
@@ -154,23 +154,46 @@ In order to increase efficiency and productivity, the division of labour was det
 
 \subsection{Coordination}
 
-The main method of group coordination and planning was through regular meetings.  Full group meetings were held at least once per week, where new ideas and current progress could be discussed.  During these meetings, smaller meetings between two or three members were organized where code would be peer edited or written by several members at once.
+The main method of group coordination and planning was through regular meetings.  
+Full group meetings were held at least once per week, where new ideas and current progress could be discussed.  
+During these meetings, smaller meetings between two or three members were organized where code would be peer edited or written by several members at once.
 
-The members of the group agreed to use \texttt{Trello}\footnote{This tool is found at: \url{https://www.trello.com}} in order to ensure flexibility in task assignment and adaptability in the testing and debugging phases.  This tool consists of four communal lists that each group can edit.  These lists include To Do, Review, Doing, and Done.  By adding items to the to do list, shifting them to doing, and placing them in done, group efforts were easily and effective coordinated without any overlap.
+The members of the group agreed to use \texttt{Trello}\footnote{This tool is found at: \url{https://www.trello.com}} in order to ensure flexibility in task assignment and adaptability in the testing and debugging phases.  
+This tool consists of four communal lists that each person can edit.  
+These lists include To Do, Review, Doing, and Done.  
+By adding items to the to do list, shifting them to doing, and placing them in done, group efforts were easily and effective coordinated without any overlap.
 
 \section{Design} 
 
-This simulation has three major comments: Input, Simulation, and Output.  It is designed to accept and ASCII file that determines the land map of the simulation.  The parameters that dominate the population of both hares and pumas can also be adjusted, although default values are provided.  The simulation is then initialized, run for a set amount of time steps, and closed.  At each time step, the population of hares and pumas is printed to one of several available output types.  These outputs can then be visualized, plotted, and analyzed.
+This simulation has three major comments: Input, Simulation, and Output.  
+It is designed to accept an ASCII file that determines the land map on which the simulation takes place.  
+The parameters that determine time evolution of both hares and pumas can also be adjusted, although default values are provided.  
+The simulation is then initialized, run for a set amount of time steps, and properly finalised.  
+Every \texttt{-p} time steps, the population of hares and pumas is printed to an output file using one of the available output methods.  
+These outputs can then be visualized, plotted, and analyzed.
 
 \subsection{Input}
 
-The simulation must read in an input land map.  This land map is intended to represent the two dimensional surface on which the simulation takes place.  This surface can either be land, where hare and puma populations are allowed, or water, where they do not exist.  The user has the option of setting the parameters that dictate the dynamics of the system as well, although default values are automatically provided.  All input parameters and land maps are read-in in the \texttt{solver.cpp} class.
+The simulation must read in an input land map.  
+This land map is intended to represent the two dimensional surface on which the simulation takes place.  
+This surface can either be land, where hare and puma populations are allowed, or water, where they do not exist.  
+The user has the option of setting the parameters that dictate the dynamics of the system as well, although default values are automatically provided.  
 
 \subsubsection{Parameters}\label{params}
 
-The input parameters can be set by the user, otherwise the default values are automatically used.  These parameters are divided into three categories: simulation parameters, simulation options, and input/output options.  The simulation parameters include the scaling factors of the terms in the coupled partial differential equations \eqref{hares} and \eqref{pumas}.  The simulation options include the size of the time step, the frequency of the output, and the time at which the simulation ends.  The Input/Output parameters include the output file names, the output file format, and the frequency at which the progress of the simulation is printed to the terminal.  
+The input parameters can be set by the user, otherwise the default values are automatically used.  
+These parameters are divided into four categories: generic options, simulation parameters, simulation options, and input/output options.  
+The simulation parameters include the scaling factors of the terms in the coupled partial differential equations \eqref{hares} and \eqref{pumas}.  
+The simulation options include the size of the time step, the frequency of the output, and the time at which the simulation ends.  
+The Input/Output parameters include the output file names, the output file format, and the frequency at which the progress of the simulation is printed to the terminal.  
 
-All of the parameters are set using the \texttt{boost/program\_options} library, using the traditional syntax.  See Section~\ref{syntax} for an example.~\ref{tb:parameters}, below, contains a list of the simulation parameters and their default values.
+All of the parameters are set using the \texttt{boost/program\_options} library, using the traditional syntax. 
+See Section~\ref{syntax} for an example.~\ref{tb:parameters}, below, contains a list of the simulation parameters and their default values. 
+Note that shorthand parameters can be combined, so parameter \texttt{-oa output} is a valid sequence.
+
+Parameter groups other than the Generic options can be set from a configuration file. 
+It uses the same parameter names as the command line, with a slightly different syntax. 
+For syntax example, please see \texttt{contrib/example.cfg}
 
 \begin{table}
 \centering
@@ -178,7 +201,7 @@ All of the parameters are set using the \texttt{boost/program\_options} library,
 \hline
 \textbf{Type} & \textbf{Name} & \textbf{Description} & \textbf{Default} \\ \hline
 \multirow{2}{*}{Generic options}
- & \texttt{-h, --help} & Show help message  & N/A \\
+ & \texttt{-h, --help} & Show help message & N/A \\
  & \texttt{-v, --version} & Show program version & N/A \\
 \multirow{7}{*}{Input/Output Options} 
  & \texttt{-d, --data-file} & Location of parameters file & none \\
