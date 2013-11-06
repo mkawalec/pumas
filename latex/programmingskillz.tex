@@ -23,6 +23,7 @@
 \usepackage[floatrow]{chemstyle}
 \usepackage{enumitem}
 \usepackage{multicol}
+\usepackage{pbox}
 \usepackage{cite}
 \usepackage{titlesec}
 \usepackage[makeroom]{cancel}
@@ -120,7 +121,7 @@ The aim of this project is to develop the essential programming skills through a
 
 
 \section{Introduction}
-The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  $\texttt{git}$ was used for revision control.  Once a working simulation was written, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different simulation programs.  
+The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  This group opted write the program in \texttt{C++}.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  The revision control software $\texttt{git}$ was used for to track the progress of the program.  Once a working simulation was written, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different visualization programs.  
 
 For reference, the coupled partial differential equations that dictate the time evolution of the populations of pumas and hares are included below.  $H$ is the population of hares, $P$ is the population of pumas, $x,y,$ and $t$ are space and time coordinates respectively, and $r,a,k,b,m$ and $l$ are scaling parameters, as discussion in Section \ref{params}.
 
@@ -136,9 +137,9 @@ For reference, the coupled partial differential equations that dictate the time 
 
 As with any software development, the planning played a big role in the final product.  Through regular meetings, emails, task management websites, and revision control repositories, plans were set and efforts were coordinated to ensure an efficient and productive group effort.  
 
-\subsection{Group Members Reponsiblities}
+\subsection{Group Members Responsibilities}
 
-In order to increase efficiency and productivity, the division of labour was determined very early on.  This division was based primarily on the existing skills set of each member.  Each member was mandated to some of the coding. The more experienced coders edited the work of the less experienced once in a hierarchical order. The most experienced then explained his reasoning to the rest of the group, giving them an opportunity for further input into the final code.  This ensured both an optimal simulation, coding experience, and supportive feedback for each member.  The breakdown of the tasks and responsibilities for each member in order of coding previous experience in $\texttt{C++}$ are as follows.
+In order to increase efficiency and productivity, the division of labour was determined very early on.  This division was based primarily on the existing skills set of each member.  Each member was mandated to some of the coding. The more experienced coders edited the work of the less experienced once in a hierarchical order. The most experienced then explained his reasoning to the rest of the group, giving them an opportunity for further input into the final code.  This ensured both an optimal simulation, learning experience, and supportive feedback for each member.  The breakdown of the tasks and responsibilities for each member in order of coding previous experience in $\texttt{C++}$ are as follows.
 \\
 
 \noindent\textbf{Michal Kawalec:}  Due to his experience in software development and project management, Michal set up the structure of the simulation and submitted this structure to a repository on \url{https://github.com/mkawalec/pumas}.  This structure included the header files and source files appropriately formatted with empty functions as well as the build system configuration. Michal also conducted all final edits, adapting the other members ideas to the optimal syntax.
@@ -160,69 +161,74 @@ During these meetings, smaller meetings between two or three members were organi
 
 The members of the group agreed to use \texttt{Trello}\footnote{This tool is found at: \url{https://www.trello.com}} in order to ensure flexibility in task assignment and adaptability in the testing and debugging phases.  
 This tool consists of four communal lists that each person can edit.  
-These lists include To Do, Review, Doing, and Done.  
+These lists include \emph{To Do, Review, Doing,} and \emph{Done. }
 By adding items to the to do list, shifting them to doing, and placing them in done, group efforts were easily and effective coordinated without any overlap.
 
 \section{Design} 
 
 This simulation has three major comments: Input, Simulation, and Output.  
-It is designed to accept an ASCII file that determines the land map on which the simulation takes place.  
-The parameters that determine time evolution of both hares and pumas can also be adjusted, although default values are provided.  
+It is designed to accept an ASCII file that determines the land map of the simulation.
+The parameters that dictate the time evolution of the hare and puma populations can also be adjusted, although default values are provided.  
 The simulation is then initialized, run for a set amount of time steps, and properly finalised.  
-Every \texttt{-p} time steps, the population of hares and pumas is printed to an output file using one of the available output methods.  
+A a regular interval of time steps, the population of hares and pumas is printed to an output file using one of the available output methods.  
 These outputs can then be visualized, plotted, and analyzed.
 
 \subsection{Input}
 
 The simulation must read in an input land map.  
-This land map is intended to represent the two dimensional surface on which the simulation takes place.  
+This land map represents the two dimensional surface on which the simulation takes place.  
 This surface can either be land, where hare and puma populations are allowed, or water, where they do not exist.  
 The user has the option of setting the parameters that dictate the dynamics of the system as well, although default values are automatically provided.  
+The land map and all input parameters are initially parsed by \texttt{solver.cpp}.
 
 \subsubsection{Parameters}\label{params}
 
-The input parameters can be set by the user, otherwise the default values are automatically used.  
-These parameters are divided into four categories: generic options, simulation parameters, simulation options, and input/output options.  
+The input parameters can be set by the user, otherwise the default values are automatically initialized.  
+These parameters are divided into four categories: generic options, simulation parameters, simulation options, and input/output options.
+The generic options include displaying a help menu and the version of the simulation.  
 The simulation parameters include the scaling factors of the terms in the coupled partial differential equations \eqref{hares} and \eqref{pumas}.  
 The simulation options include the size of the time step, the frequency of the output, and the time at which the simulation ends.  
-The Input/Output parameters include the output file names, the output file format, and the frequency at which the progress of the simulation is printed to the terminal.  
+The input/output options include the output names, extensions, and formats as well as the frequency at which the progress of the simulation is printed to the terminal.  
 
 All of the parameters are set using the \texttt{boost/program\_options} library, using the traditional syntax. 
 See Section~\ref{syntax} for an example.~\ref{tb:parameters}, below, contains a list of the simulation parameters and their default values. 
 Note that shorthand parameters can be combined, so parameter \texttt{-oa output} is a valid sequence.
 
-Parameter groups other than the Generic options can be set from a configuration file. 
-It uses the same parameter names as the command line, with a slightly different syntax. 
-For syntax example, please see \texttt{contrib/example.cfg}
+Parameter sets other than the Generic options can be set from a configuration file. 
+This format uses the same parameter names as the command line, with a slightly different syntax. 
+For an example, please see the \texttt{contrib/example.cfg} in the supporting documents.
 
 \begin{table}
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
 \textbf{Type} & \textbf{Name} & \textbf{Description} & \textbf{Default} \\ \hline
-\multirow{2}{*}{Generic options}
- & \texttt{-h, --help} & Show help message & N/A \\
- & \texttt{-v, --version} & Show program version & N/A \\
-\multirow{7}{*}{Input/Output Options} 
- & \texttt{-d, --data-file} & Location of parameters file & none \\
- & \texttt{-o, --output} & Filename of the main output file & \texttt{output} \\
- & \texttt{-a, --aux} & Filename of the auxiliary output file & none \\
- & \texttt{-f, --output-format}  &  Format of the output (\texttt{vmd, gnuplot, ppm}) & \texttt{vmd} \\
- & \texttt{-e, --output-extension} & Overrides output extension set by chosen Serializer & none \\
- & \texttt{-n, --notify-after} & Output frames between printing progress to terminal & 30 \\
- & \texttt{--split-files} & If set to true (1), each frame will be saved in a separate file. Setting to true overrides Serializer-requested value & 0 \\
-\multirow{6}{*}{Simulation Parameters} 
- & \texttt{-r, --r} & Birth rate of hares & 0.08 \\
- & \texttt{-a, --a} & Predation rate at which pumas eat hares & 0.04\\
- & \texttt{-b, --b} & Birth rate of pumas per hare eaten & 0.02 \\
- & \texttt{-m, --m} & Mortality rate of pumas & 0.06 \\ 
- & \texttt{-k, --k} & Diffusion rate of hares  & 0.2 \\ 
- & \texttt{-l, --l} & Diffusion rate of pumas & 0.2 \\ \hline
-\multirow{3}{*}{Simulation Options} 
- & \texttt{-e, --end-time} & End time & 1000 \\
- & \texttt{--dt} & Time step & 0.01\\
- & \texttt{-p, --print-every} & Iterations between output frames & 100\\ \hline
-\hline
+\multirow{2}{*}{\pbox{10cm}{Generic \\ Options}}
+ & \texttt{-h, -{}-help} & Show help message & N/A \\
+ & \texttt{-v, -{}-version} & Show program version & N/A \\ \hline
+\multirow{6}{*}{\pbox{10cm}{Simulation \\ Parameters}} 
+ & \texttt{-r, -{}-r} & Birth rate of hares & 0.08 \\
+ & \texttt{-a, -{}-a} & Rate at which pumas eat hares & 0.04\\
+ & \texttt{-b, -{}-b} & Birth rate of pumas per hare eaten & 0.02 \\
+ & \texttt{-m, -{}-m} & Mortality rate of pumas & 0.06 \\ 
+ & \texttt{-k, -{}-k} & Diffusion rate of hares  & 0.2 \\ 
+ & \texttt{-l, -{}-l} & Diffusion rate of pumas & 0.2 \\ \hline
+\multirow{3}{*}{\pbox{10cm}{Simulation \\ Options}} 
+ & \texttt{-e, -{}-end-time} & End time & 1000 \\
+ & \texttt{-{}-dt} & Time step & 0.01\\
+ & \texttt{-p, -{}-print-every} & Iterations between output frames & 100\\ \hline
+ \multirow{7}{*}{\pbox{10cm}{\ \\ \ \\ \ \\ Input/Output \\ Options}} 
+ & \texttt{-d, -{}-data-file} & Location of parameters file & none \\
+ & \texttt{-o, -{}-output} & Filename of the main output file & \texttt{output} \\
+ & \texttt{-a, -{}-aux} & Filename of the auxiliary output file & none \\
+ & \texttt{-f, -{}-output-format}  &  Format of the output& \texttt{vmd} \\
+  & &  (\texttt{vmd, gnuplot, ppm})   &  \\ 
+ & \texttt{-e, -{}-output-extension} & Overrides the output extension & none \\
+ & \texttt{-n, -{}-notify-after} & Output frames between printing  & 30 \\
+  & & progress to terminal.  &  \\ 
+ & \texttt{--split-files} & Forces the serializer to print each & \texttt{false} \\ 
+ & & time frame to a new file.  &  \\ \hline
+
 \end{tabular}
 \caption{A table of input parameters and their default values.}
 \label{tb:parameters}
@@ -232,7 +238,7 @@ For syntax example, please see \texttt{contrib/example.cfg}
 
 \subsubsection{Land Map}
 
-The surface is discretised to have an $x$ and $y$ dimension, denoted \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y} depending on where it is called.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in the \texttt{solver.cpp} class.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section~\ref{syntax}.
+The surface is discretised to have an $x$ and $y$ dimension, denoted interchangeably as \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y}.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in \texttt{solver.cpp}.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section~\ref{syntax}.
 
 These file maps can be generated in any way that respects the description above.  The ones included in the submission were generated using \texttt{Gimp}\footnote{This freely distributed software is available here: \url{http://www.gimp.org}}.  The advantage of using this program is it allows the user to draw the desired land map in black and white, and then outputs this file directly to the desired \texttt{ASCII} format.  Likewise, arbitrary image files can be opened, changed to black and white, and outputted to the desired land map format.
 
@@ -249,15 +255,15 @@ All input parameters and files are set at program launch using the syntax \textt
 
 \subsection{Simulation}
 
-The structure of the simulation itself is straightforward.  The \texttt{Simulator.cpp} class contains the majority of the computation and simulation properties.  The \texttt{solver.cpp} file contains the main function, along with an input parameters parser and \texttt{Simulator} class instantiation.  The results of the simulation passed to the \texttt{Serializer.cpp} class for printing.  These results can then be visualized.  For more on in-depth discussion of output, see Section \ref{output}.
+The structure of the simulation itself is straightforward.  \texttt{Simulator.cpp} contains the majority of the computation and simulation properties.  The \texttt{solver.cpp} file contains the main function, along with an input parameters parser and \texttt{Simulator} class instantiation.  The results of the simulation passed to \texttt{Serializer.cpp} for printing.  These results can then be visualized.  For more on in-depth discussion of output, see Section \ref{output}.
 
 \subsubsection{Initialization}
 
-The simulation starts by reading in all input parameters and the land map file in the \texttt{solver.cpp} class.  First, the land map input file accessed by the \texttt{initialize} function.  Its first two entires are used to define the dimensions of the simulation as per the input file format.  The rest of the entries are stored in \texttt{land\_map} which is as a one dimensional boolean array with ($\texttt{dim\_x} \times \texttt{dim\_y}$) elements.  In this array, a value of \texttt{true} corresponds to a land entry, whereas \texttt{false} corresponds to a water entry.  The function then constructs a simulation via the \texttt{Simulator.cpp} class with the appropriate dimensions and land/water entries.  
+The simulation starts by parsing all input parameters and the land map file in the \texttt{solver.cpp} class.  First, the land map input file accessed by the \texttt{initialize} function.  As per the input file format, the first two entires are used to define the dimensions of the simulation .  The rest of the entries are stored in the one dimensional boolean \texttt{land\_map} array which has ($\texttt{dim\_x} \times \texttt{dim\_y}$) elements.  In this array, a value of \texttt{true} corresponds to a land entry, whereas \texttt{false} corresponds to a water entry.  The function then constructs a \texttt{Simulator}, as defined in the \texttt{Simulator.cpp} file, with the appropriate dimensions and land/water entries.  
 
 \subsubsection{Construction}
 
-The \texttt{Simulator.cpp} constructor effectively starts by allocating enough memory for store the information of two subsequent time steps.  These states are  referred to as \texttt{current\_state} and \texttt{temp\_state}.  Using the \texttt{boost} library, they each defined as a \texttt{shared\_array}\footnote{See section (REF) for a discussion of \texttt{shared\_arrays}}} of \texttt{landscape} entries.  The \texttt{landscape} structure\footnote{This structure is defined in \texttt{\textbackslash include\textbackslash helper.hpp}} stores information about the cell including whether it is land or water, the hare population, and the puma population. The boolean \texttt{land\_map} array is copied on to both states.  The land cells in the \texttt{current\_state} are then given a random\footnote{The random number generator is seeded according to the start time to ensure unique results for each run.} population of hares and pumas between 0 and 5, whereas the water cells are set to zero.  All cells in the \texttt{temp\_state} are initialized to zero.
+The \texttt{Simulator} constructor effectively starts by allocating enough memory for store the information of two subsequent time steps.  These states are  referred to as \texttt{current\_state} and \texttt{temp\_state}.  Using the \texttt{boost} library, they each defined as a \texttt{shared\_array}\footnote{See section (REF) for a discussion of \texttt{shared\_arrays}}} of \texttt{landscape} entries.  The \texttt{landscape} structure\footnote{This structure is defined in \texttt{\textbackslash include\textbackslash helper.hpp}} stores information about the cell including whether it is land or water, the hare population, and the puma population. The boolean \texttt{land\_map} array is copied on to both states.  The land cells in the \texttt{current\_state} are then given a random\footnote{The random number generator is seeded according to the start time to ensure unique results for each run.} population of hares and pumas between 0 and 5, whereas the water cells are set to zero.  All cells in the \texttt{temp\_state} are initialized to zero.
 
 The simulation is built with default values for all parameters.  After the constructor is called, the \texttt{solver.cpp} class reads any user set values and sets the simulator values accordingly, including the output type.
 
@@ -279,32 +285,55 @@ After the system is moved forward one time step, the average populations across 
 
 \subsection{Output}\label{output}
 
-The output of the simulation is handled by the \texttt{Serializer.cpp} class.  This class defines three . one of which is chosen in the \texttt{solver.cpp} class, passed to the \texttt{Simulator.cpp} class
+The output of the simulation is handled by the \texttt{Serializer.cpp} file.  This file defines three output formats, each with its own class.  One format is chosen as a parameter of the current simulation.  The main loop tells the \texttt{Simulator.cpp} class to print, which then passes all the information to the \texttt{Serializer.cpp} where it is properly formatted.   This is intended to maximize flexibility in adding, removing, and choosing available output formats.  Once the output file has been generated, it can be visualized using one of several visualizers.
 
 \subsubsection{Serializer}
 
+\texttt{Serializer.cpp} is designed to effectively handle the output file format and nothing else.  It defines a class for all available output format.  These classes are all named and pointed to using a list of pointers.  \texttt{Simulator.cpp} defines a pointer to a \texttt{Serializer.cpp} class called \texttt{current\_serializer}.  Strictly speaking, the simulator is initialized as pointing to nothing.  It is then set to point to the desired format class in \texttt{solver.cpp} via the \texttt{Serializer::choose\_output\_method(}\emph{string}\texttt{)} function.  This function checks its argument against the names of the formats pointed to in the list, returning the appropriate pointer in the event of a match.  If none match, then the program returns an error.  In the event that the function is never called, \texttt{Simulator.cpp} sets \texttt{current\_serializer} to point to the first pointer of the list of available serializers.  
+
+Once the  \texttt{current\_serializer} is set, \texttt{Simulator.cpp}  knows to where pass all the output data.  In the main loop, \texttt{solver.cpp}  opens two out streams, which are then passed to the \texttt{Simulator::serialize} function.  This function passes these out streams, as well as the \texttt{current\_state} and dimensions of the system to the address of the \texttt{current\_serializer} pointer, which is a class defined in \texttt{Serializer.cpp}.  This class then handles all formatting, and prints the contents of the current state to the appropriate stream.
+
+For the purposes of this simple simulation, this output method is over engineered.  Its true strength and simplicity is only realized when the simulation has more than one output type.  By including \texttt{Serializer.cpp}, the output method is adaptable, scaleable, and separates concerns.  Should a new format be needed, only \texttt{Serializer.cpp} and its header file need to be edited.  The motivation to include several output types was to test the outputs using several visualization methods.
+
 \subsubsection{Visualisation}
+
+A key part of any simulation is the ability to visualize the results.  
 
 \section{Tools and Frameworks}
 
 \subsection{Programming Language}
 Description of the programming language you used and how useful it was.
+
+\subsubsection{Boost}
+
 %NAMESPACES
 %MEMORY MANAGEMENT
 %POINTERS
 %BOOST SHARED ARRAYS
 
-\subsection{Revision Control}
-Revision control Description of the revision control you used, how you used it and how useful it was.
-
 \subsection{Build tools}
-Description of the build tools you used and your views on the strengths and weaknesses of these.
+
+CMake: 
+Strength: Portability, works on all operating systems, it prints progress when building, details progress, uses ``find'' scripts that only require a user to supply the name of what should be included, no path needed, abstracting away nasty, system specific / local variables.
+Minus:  Requires installation of CMake, ex: not available in scilinux 2.8
+
+\subsection{Revision Control}
+
+
+
 
 \subsection{Testing}
-Description of what testing you did and any test frameworks you used.
+
+Testing frame works: 
+Strengths:
+Weaknesses: 
+Performance profiling KCashGrind and ValGrind
 
 \subsection{Debugging}
- Description of how you did any debugging and any tools you used.
+
+Debugging frame works: 
+Strengths:
+Weaknesses: 
  
  \section{Analysis}
  
@@ -319,6 +348,7 @@ Conclusions Some brief conclusions.
  Ideas for further work, or what you would have done if you had had more time.
 
 \end{document}
+
 
 \bibliography{references}{}
 \bibliographystyle{unsrt}
