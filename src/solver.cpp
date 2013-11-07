@@ -103,7 +103,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
          po::value<std::string>(&output_method)->default_value("vmd"),
          ("The currently available output methods are: \n" + 
           output_methods_desc).c_str())
-        ("output-extension,e",
+        ("output-extension,x",
           po::value<std::string>(output_extension),
           "override an output method defined output extension")
         ("notify-after,n", po::value<int>(notify_after)->default_value(30), 

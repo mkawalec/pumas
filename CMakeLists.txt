@@ -4,9 +4,9 @@ include_directories(src include)
 set(HEADER_FILES include/helpers.hpp include/Serializer.hpp include/Simulator.hpp)
 
 message(status "${CMAKE_CURRENT_SOURCE_DIR}")
-add_executable(solver src/helpers.cpp src/solver.cpp src/Simulator.cpp src/Serializer.cpp ${HEADER_FILES})
-add_executable(test-suite src/helpers.cpp src/test-suite.cpp src/Simulator.cpp
-    src/Serializer.cpp ${HEADER_FILES})
+add_executable(solver src/solver.cpp src/Simulator.cpp src/Serializer.cpp src/helpers.cpp ${HEADER_FILES})
+add_executable(test-suite src/test-suite.cpp src/Simulator.cpp
+    src/Serializer.cpp src/helpers.cpp ${HEADER_FILES})
 
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
@@ -20,10 +20,10 @@ endif(DOXYGEN_FOUND)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     message(status "Setting GCC flags")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g -Wall -Wextra -W -pedantic -std=c++0x")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -Wextra -W -pedantic -std=c++0x")
 else()
-    message(status "Setting MSVC flags")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHc-")
+    message(status "GCC not found!")
+    return()
 endif()
 
 unset(Boost_INCLUDE_DIR CACHE)
