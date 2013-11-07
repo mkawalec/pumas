@@ -236,14 +236,17 @@ For an example, please see the \texttt{contrib/example.cfg} in the supporting do
 \label{tb:parameters}
 \end{table}
 
+%MICHAL will add text input option for all input params.
 
 \subsubsection{Land Map}
 
 The surface is discretised to have an $x$ and $y$ dimension, denoted interchangeably as \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y}.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in \texttt{solver.cpp}.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section \ref{syntax}.
 
-These file maps can be generated in any way that respects the description above.  The ones included in the submission were generated using \texttt{Gimp}\footnote{This freely distributed software is available here: \url{http://www.gimp.org}}.  The advantage of using this program is it allows the user to draw the desired land map in black and white, and then outputs this file to a portable anymap (PNM) format.  This file is then transferred to the desired \texttt{ASCII} format using the \texttt{pnm2dat} program.  Likewise, arbitrary image files can be opened, changed to black and white, and outputted to the desired land map format.
+These file maps can be generated in any way that respects the description above.  The ones included in the submission were generated using \texttt{Gimp}\footnote{This freely distributed software is available here: \url{http://www.gimp.org}}.  The advantage of using this program is it allows the user to draw the desired land map in black and white, and then outputs this file directly to the desired \texttt{ASCII} format, including the dimensions in the first line.  Likewise, arbitrary image files can be opened, changed to black and white, and outputted to the desired land map format.
 
- 
+  
+%CLAUDE do you need to put in the first two lines by hand?
+
 \subsubsection{Sample Input Syntax}\label{syntax}
 
 All input parameters and files are set at program launch using the syntax \texttt{./solver -\{name\} \{value\} \emph{land\_map\_name}.dat}.  For example, the following line sets the birth rate of hares to 0.1 and the time step to 0.05, leaving the rest as default values, and reads in a file named \texttt{island.dat}.
@@ -297,13 +300,14 @@ For the purposes of this simple simulation, this output method is over engineere
 
 A key part of any simulation is the ability to visualize the results.  This program has been configured to output file types usable for three visualization program.  These visualizers are \texttt{Visual Molecular Dynamics, Gnuplot} and \texttt{Imagemagick}, the last of which is used to visualize PPM files.  Each of these programs have their strengths and weaknesses, as discussed below. 
 
-The most informative of the three is \texttt{Visual Molecular Dynamics, VMD}.  While this visualizer is intended to model molecule interactions, it accepts an \texttt{XYZ} file type, where the location of each particle is written in Cartesian coordinates for every time step.  The populations of pumas and hares can be stored as the $z$ coordinate of a ``particle,'' with the $x$ and $y$ coordinates representing which cell they are in.  The main advantage of this visualizer is that it allows for a 3D visualization of the data.  This visualization can then be rendered to a video file format, which is both compact and portable.  The disadvantage is that it is computationally intense to process large maps and render high quality videos.  
+The most informative of the three is \texttt{Visual Molecular Dynamics, VMD}.  While this visualizer is intended to model molecule interactions, it accepts an \texttt{XYZ} file type, where the location of each particle in Cartesian coordinates is written for every time step.  The main advantage of this visualizer is that it allows for a 3D visualization of the data.  This visualization can then be rendered to a video file format, which is both compact and portable.  The disadvantage is that it is computationally intense to process large maps and render high quality videos.  
 
-The easiest viewer is \texttt{Gnuplot}.  This visualizer (MORE)
-
-The most portable visualization is when the populations are printed directly to a Portable Pixmap (PPM) format.  This generates image files directly from the \texttt{Serializer}, which are readable by nearly all systems and imaging processing software.  These files were processed by \texttt{imagemagick} to create a \texttt{.gif} moving image.  The difficulty with this output is that it is difficult to recover any kind of scale from the resulting images.  The only conclusive evidence they offer is whether or not a steady state is reached.  
+The easiest viewer is \texttt{Gnuplot}.  This visualizer 
 
 
+GNUPLOT:
+
+PPM:  imagemagick, convert, convert -h
 
 \section{Tools and Frameworks}
 
@@ -311,7 +315,7 @@ Introduce this stuff
 
 \subsection{Programming Language}
 
-\texttt{C++11} was the primary programming language used to write this simulation.  This is the most current version of \texttt{C++}.  With this programming language, the program utilizes a main function that calls upon methods contained in independent library\footnote{These files are not a formal \texttt{C++} ``library,'' but do behave like one.}.  This library can easily be utilized by a different main function with equal success.  A new simulator obeying a different partial differential equation can be produced inheriting from a \texttt{Simulator} class and overloading the \texttt{apply\_step} function.  Likewise, the boundary conditions are easily changed by overloading the \texttt{get\_cell} function.  In order to ensure there are no clashes with existing libraries, the simulator defines its own namespace, \texttt{PUMA}.  These properties ensure this library is reusable, extendable, and self contained.  
+For this simulation, \texttt{C++11} was used as the primary programming language.  This is the most current version of \texttt{C++}.  With this programming language, the program utilizes a main function that calls upon any methods contained in independent library\footnote{These files are not a formal \texttt{C++} ``library,'' but do behave like one.}.  This library can easily be utilized by a different main function with equal success.  A new simulator obeying a different partial differential equation can be produced inheriting from a \texttt{Simulator} class and overloading the \texttt{apply\_step} function.  Likewise, the boundary conditions are easily changed by overloading the \texttt{get\_cell} function.  In order to ensure there are no clashes with existing libraries, the simulator defines its own namespace, \texttt{PUMA}.  These properties ensure this library is reusable, extendable, and self contained.  
 
 \subsubsection{Complier}
 
@@ -377,7 +381,6 @@ Conclusions Some brief conclusions.
 
 \subsubsection{Environmental Variables}
 
-\subsubsection{Clean Up VMD output}
 
 
 \newpage
