@@ -121,7 +121,7 @@ The aim of this project is to develop the essential programming skills through a
 
 
 \section{Introduction}
-The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  This group opted write the program in \texttt{C++}.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  The revision control software $\texttt{git}$ was used for to track the progress of the program.  Once a working simulation was written, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different visualization programs.  
+The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  This group opted write the program in \texttt{C++}.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  The revision control software $\texttt{git}$ was used to streamline the collaborative efforts of the group.  Once a working simulation was written, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different visualization programs.  
 
 For reference, the coupled partial differential equations that dictate the time evolution of the populations of pumas and hares are included below.  $H$ is the population of hares, $P$ is the population of pumas, $x,y,$ and $t$ are space and time coordinates respectively, and $r,a,k,b,m$ and $l$ are scaling parameters, as discussion in Section \ref{params}.
 
@@ -238,9 +238,9 @@ For an example, please see the \texttt{contrib/example.cfg} in the supporting do
 
 \subsubsection{Land Map}
 
-The surface is discretised to have an $x$ and $y$ dimension, denoted interchangeably as \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y}.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in \texttt{solver.cpp}.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section~\ref{syntax}.
+The surface is discretised to have an $x$ and $y$ dimension, denoted interchangeably as \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y}.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in \texttt{solver.cpp}.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section \ref{syntax}.
 
-These file maps can be generated in any way that respects the description above.  The ones included in the submission were generated using \texttt{Gimp}\footnote{This freely distributed software is available here: \url{http://www.gimp.org}}.  The advantage of using this program is it allows the user to draw the desired land map in black and white, and then outputs this file directly to the desired \texttt{ASCII} format.  Likewise, arbitrary image files can be opened, changed to black and white, and outputted to the desired land map format.
+These file maps can be generated in any way that respects the description above.  The ones included in the submission were generated using \texttt{Gimp}\footnote{This freely distributed software is available here: \url{http://www.gimp.org}}.  The advantage of using this program is it allows the user to draw the desired land map in black and white, and then outputs this file directly to the desired \texttt{ASCII} format, including the dimensions in the first line.  Likewise, arbitrary image files can be opened, changed to black and white, and outputted to the desired land map format.
 
   
 %CLAUDE do you need to put in the first two lines by hand?
@@ -263,18 +263,18 @@ The simulation starts by parsing all input parameters and the land map file in t
 
 \subsubsection{Construction}
 
-The \texttt{Simulator} constructor effectively starts by allocating enough memory for store the information of two subsequent time steps.  These states are  referred to as \texttt{current\_state} and \texttt{temp\_state}.  Using the \texttt{boost} library, they each defined as a \texttt{shared\_array}\footnote{See section (REF) for a discussion of \texttt{shared\_arrays}}} of \texttt{landscape} entries.  The \texttt{landscape} structure\footnote{This structure is defined in \texttt{\textbackslash include\textbackslash helper.hpp}} stores information about the cell including whether it is land or water, the hare population, and the puma population. The boolean \texttt{land\_map} array is copied on to both states.  The land cells in the \texttt{current\_state} are then given a random\footnote{The random number generator is seeded according to the start time to ensure unique results for each run.} population of hares and pumas between 0 and 5, whereas the water cells are set to zero.  All cells in the \texttt{temp\_state} are initialized to zero.
+The \texttt{Simulator} constructor effectively starts by allocating enough memory for store the information of two subsequent time steps.  These states are  referred to as \texttt{current\_state} and \texttt{temp\_state}.  Using the \texttt{boost} library, they each defined as a \texttt{shared\_array}\footnote{See section (REF) for a discussion of \texttt{shared\_arrays}}} of \texttt{landscape} entries.  The \texttt{landscape} structure\footnote{This structure is defined in \texttt{\textbackslash include\textbackslash helper.hpp}} stores information about the cell including whether it is land or water, the hare population, and the puma population. The boolean \texttt{land\_map} array is copied on to both states.  The land cells in the \texttt{current\_state} are then given a random\footnote{The random number generator is seeded according to the start time to ensure unique results for each run.} population of hares and pumas between 0 and 5, whereas the water cells are set to 0.  All cells in the \texttt{temp\_state} are initialized to zero.
 
 The simulation is built with default values for all parameters.  After the constructor is called, the \texttt{solver.cpp} class reads any user set values and sets the simulator values accordingly, including the output type.
 
 \subsubsection{Calculation}
 
-After declaring some output streams and initializing an \texttt{average\_densities} structure\footnote{This structure stores one double for average hare density and one for average puma density, as defined in \texttt{\textbackslash include\textbackslash helper.hpp}.}, the simulation moves into the main calculation loop.  This loop is defined to iterate the simulation from the initial time to the final time in increments of the defined time step (REPHRASE).  Most of the work is done in the \texttt{apply\_step} function, as defined in the \texttt{Simulator.cpp} class.  
+After declaring some output streams and initializing an \texttt{average\_densities} structure\footnote{This structure stores one double for average hare density and one for average puma density, as defined in \texttt{\textbackslash include\textbackslash helper.hpp}.}, the simulation moves into the main calculation loop.  This loop is defined to iterate the simulation from the initial time to the final time in the defined time-step increments.  Most of the work is done in the \texttt{apply\_step} function, as defined in \texttt{Simulator.cpp}.  
 
-The  \texttt{apply\_step} function starts by switch the contents of the  \texttt{current\_state} and the \texttt{temp\_state}.  It then opens a loop through all the sites in the system.  At each site, it counts the number of neighboring cells that are land for use in the discretized partial differential equations.  If the site is land, the values in \texttt{temp\_state} are used to calculate the updated populations according to equations \eqref{hares} and \eqref{pumas} (REF), which are then stored in \texttt{current\_state}.  These values have a minimum value of zero::q
+The  \texttt{apply\_step} function starts by switching the contents of the  \texttt{current\_state} and the \texttt{temp\_state}.  It then opens a loop through all the sites in the system.  If the site is a land cell, it counts the number of neighboring land cells for use in the discretized partial differential equations.  The values in \texttt{temp\_state} are used to calculate the updated populations according to equations \eqref{hares} and \eqref{pumas} (REF), which are then stored in \texttt{current\_state}.  These values have a minimum value of zero.  All water cells are skipped so that their populations remain at zero.
 .  
 
-A key part of the \texttt{apply\_step} function is that it accesses all cells through the \texttt{get\_cell} function.  For all defined cells on the map, it returns the value of the \texttt{temp\_state}, as expected.  For all cells outside the limits of the system, it returns the \texttt{halo\_cell} which was initialized in the constructor.  Since all cells outside the system are defined to have a zero population, this is a cost effective way of setting the vanishing boundary conditions.
+A key part of the \texttt{apply\_step} function is that it accesses all cells through the \texttt{get\_cell} function.  For all defined cells on the map, it returns the value of the \texttt{temp\_state}, as expected.  For all cells outside the limits of the system, it returns the \texttt{halo\_cell} which was initialized in the constructor.  Since all cells outside the system are defined to have a zero population, this is a cost effective way of setting and changing the boundary conditions.
 
 % In a sense yes, but the main point of get_cell is that it enables 
 % very easy change in the boundary conditions - you just change the
@@ -289,7 +289,7 @@ The output of the simulation is handled by the \texttt{Serializer.cpp} file.  Th
 
 \subsubsection{Serializer}
 
-\texttt{Serializer.cpp} is designed to effectively handle the output file format and nothing else.  It defines a class for all available output format.  These classes are all named and pointed to using a list of pointers.  \texttt{Simulator.cpp} defines a pointer to a \texttt{Serializer.cpp} class called \texttt{current\_serializer}.  Strictly speaking, the simulator is initialized as pointing to nothing.  It is then set to point to the desired format class in \texttt{solver.cpp} via the \texttt{Serializer::choose\_output\_method(}\emph{string}\texttt{)} function.  This function checks its argument against the names of the formats pointed to in the list, returning the appropriate pointer in the event of a match.  If none match, then the program returns an error.  In the event that the function is never called, \texttt{Simulator.cpp} sets \texttt{current\_serializer} to point to the first pointer of the list of available serializers.  
+\texttt{Serializer.cpp} is designed to effectively handle the output file format and nothing else.  It defines a class for all available output format.  These classes are all named and pointed to using a list of pointers.  \texttt{Simulator.cpp} defines a pointer to a \texttt{Serializer.cpp} class called \texttt{current\_serializer}.  Strictly speaking, the simulator is initialized as pointing to nothing.  It is then set to point to the desired format class in \texttt{solver.cpp} via the \texttt{choose\_output\_method(}\emph{arg}\texttt{)} function.  This function checks its argument against the names of the formats pointed to in the list, returning the appropriate pointer in the event of a match.  If none match, then the program returns an error.  In the event that the function is never called, \texttt{Simulator.cpp} sets \texttt{current\_serializer} to point to the first pointer of the list of available serializers.  
 
 Once the  \texttt{current\_serializer} is set, \texttt{Simulator.cpp}  knows to where pass all the output data.  In the main loop, \texttt{solver.cpp}  opens two out streams, which are then passed to the \texttt{Simulator::serialize} function.  This function passes these out streams, as well as the \texttt{current\_state} and dimensions of the system to the address of the \texttt{current\_serializer} pointer, which is a class defined in \texttt{Serializer.cpp}.  This class then handles all formatting, and prints the contents of the current state to the appropriate stream.
 
@@ -297,49 +297,77 @@ For the purposes of this simple simulation, this output method is over engineere
 
 \subsubsection{Visualisation}
 
-A key part of any simulation is the ability to visualize the results.  
+A key part of any simulation is the ability to visualize the results.  This program has been configured to output file types usable for three visualization program. 
+
+VMD: live animation pipe, output formats, "new molecule," file type, CPK, 0 bond radius,
+
+GNUPLOT:
+
+PPM:  imagemagick, convert, convert -h
 
 \section{Tools and Frameworks}
 
+Introduce this stuff
+
 \subsection{Programming Language}
-Description of the programming language you used and how useful it was.
+
+For this simulation, \texttt{C++11} was used as the primary programming language.  This is the most current version of \texttt{C++}.  With this programming language, the program utilizes a main function that calls upon an methods contained in independent library\footnote{These files are not a formal \texttt{C++} ``library,'' but do behave like one.}.  This library can easily be utilized by a different main function with equal success.  A new simulator obeying a different partial differential equation can be produced inheriting from a \texttt{Simulator} class and overloading the \texttt{apply\_step} function.  Likewise, the boundary conditions are easily changed by overloading the \texttt{get\_cell} function.  In order to ensure there are no clashes with existing libraries, the simulator defines its own namespace, \texttt{PUMA}.  These properties ensure this library is reusable, extendable, and self contained.  
+
+\subsubsection{Complier}
+
+The simulation was compiled with \texttt{gcc} version 4.6, which is the most widely available version on current \texttt{Linux} distributions.  This is to ensure that the program can run on many platforms.  Unfortunately, only the features of \texttt{C++11} implemented in this version of \texttt{gcc} were used.  For example, the newer version of \texttt{gcc}, version 4.8, supports constructor inheritance, which would have been useful in defining the constructors in \texttt{exceptions.hpp}.  Instead, a constructor and destructor needed to be defined for each exception. 
+
+%SOMETHING ELSE
 
 \subsubsection{Boost}
 
-%NAMESPACES
-%MEMORY MANAGEMENT
-%POINTERS
-%BOOST SHARED ARRAYS
+\texttt{Boost} is one of the most widely used, reviewed, and tested \texttt{C++} libraries.  It greatly improved the memory management, parsing methods, and standard functions  available to the simulation.   It also provided a unit testing framework, as discussed in Section \ref{test}.  
 
-\subsection{Build tools}
+To improve memory management, \texttt{boost::shared\_array} was used.  This object is an instance of a \emph{smart pointer}.  Smart pointers ensure that an object is automatically removed from memory once all references to that object go out of scope.  This is to say that once all smart pointers to an object are no longer available to the simulation, this object is removed from memory.  This property is especially useful when dealing with the large arrays found in \texttt{Simulator.cpp}.  
+%Additionally, the \texttt{swap} function of the \texttt{shared\_array} was very useful in the \texttt{apply\_step} function.  This function swaps the address of two 
 
-CMake: 
-Strength: Portability, works on all operating systems, it prints progress when building, details progress, uses ``find'' scripts that only require a user to supply the name of what should be included, no path needed, abstracting away nasty, system specific / local variables.
-Minus:  Requires installation of CMake, ex: not available in scilinux 2.8
+Using \texttt{Boost}, the program options can be defined, grouped, and easily set at runtime.  This library also enables configuration files to be used with little added code.  The program options are also conveniently stored and displayed in a help menu, which can also be displayed at runtime.  
+
+Finally, the \texttt{Boost} was used to define a Mersenne-Twister random number generator.  This random number generator is seeded with the current time up to a microsecond.  This is to ensure a unique seed for all simulator classes, even when they are instantiated within a small time frame.  The Mersenne-Twister generator more random, long period, and because it is widely tested and used.  (REF)
+
+\subsection{Build}
+
+In order to build the simulation, a \texttt{Makefile} must be generated.  \texttt{CMake} was used to abstract this process, ensuring that it is as system independent as possible.   This is done using \texttt{find} scripts, which only require the user to supply the names the needed include files.  The paths to these files are determined, and printed to the \texttt{Makefile}.  Additionally, \texttt{CMake} prints the the build process, detailing the progress and any errors. (REF) %Minus:  Requires installation of CMake 2.8, ex: not available in scilinux 
 
 \subsection{Revision Control}
 
+The revision control software \texttt{git} was used to streamline group editing of the source code and coordinate efforts between group members.  This software based on a decentralized repository structure, which is favorable to a centralized repository structure.  By decentralizing, the development no longer has a single point of failure.  In addition, decentralized structures allow for easy write privilege management and allow changes can be committed offline.
+
+\texttt{git} was chosen over the popular decentralized alternatives because it is the mostly widely supported and fasted available.  Using \texttt{git} meant that the free online repository \texttt{GitHub} could be used.  Using this software, changes could be tracked and visualized.  It was one of the most important lines of communication between group members.
 
 
+\subsection{Testing}\label{test}
 
-\subsection{Testing}
+All unit testing was done with \texttt{boost::UNIT\_TEST}.  This library is included in \texttt{boost} and provides the basic functionality needed for the program.  Tests were included in a \texttt{test\_suite.cpp} file.  The first of these tests ensure that the simulator can be constructed and that the land map is parsed correctly.  The next set ensures that the \texttt{apply\_step} function effects the populations of the land cells, but do not effect the populations of the water cells.  To test the output, the \texttt{test\_suite} turns off all birth and death rate terms to ensure the diffusion of populations works correctly.   
 
-Testing frame works: 
-Strengths:
-Weaknesses: 
-Performance profiling KCashGrind and ValGrind
+Performance profiling was used to optimize the simulation.  This profiling was done with \texttt{Valgrind} using the \texttt{Callgrind} tool.  This tool provided an estimate of the time spent on each function.  The \texttt{Kcachegrind} tool visualized this information, as shown below in \ref{fig:pref}.
+
+%INSERT FIG PREF
+
+The performance profiling reveal that 95\% of the computation was devoted to printing the output, with less than 1\% spent on \texttt{apply\_step}.  This motivated the group to decrease the default time step and print frequency by a factor of 100.  This greatly improved the accuracy of the simulation without significantly increasing the computation time.  
 
 \subsection{Debugging}
 
-Debugging frame works: 
-Strengths:
-Weaknesses: 
+The simulation was debugged using \texttt{gdb}.  In order to do so, the program was compiled with the \texttt{-g} flag.  By setting break points, the components simulation were compartmentalized so that sources of error could found.  For example, the \texttt{halo\_cell} structure was not properly instantiated the first time.  A break point allowed the group to review the contents of the cell before the program crashed, revealing this error.   
+
+To ensure that there were no memory leaks in the program, the \texttt{memcheck} tool from \texttt{Valgrind} was used.  This tool revealed that boolean \texttt{land\_map} array was not destructed after it had been parsed to \texttt{current\_state} and \texttt{temp\_state}.  
+ 
+ \subsection{Documentation}
+
  
  \section{Analysis}
  
  \subsection{Testing}
 Performance tests and analysis Description on the performance experiments you did and an analysis
 of the results of these.
+
+stabilization of decreasing time step
+ 
  
  \section{Conclusion}
 Conclusions Some brief conclusions.
@@ -354,6 +382,9 @@ Conclusions Some brief conclusions.
 \bibliographystyle{unsrt}
 
 
-%TO DO: reobserve nLand param in apply_step.  has same name in averages
-
+%TO DO
+%  reobserve nLand param in apply_step.  has same name in averages
+%  discretize equations
+% HOW TO USE PROGRAM appendix
+% 
 
