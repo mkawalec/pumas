@@ -103,7 +103,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
          po::value<std::string>(&output_method)->default_value("vmd"),
          ("The currently available output methods are: \n" + 
           output_methods_desc).c_str())
-        ("output-extension,e",
+        ("output-extension,x",
           po::value<std::string>(output_extension),
           "override an output method defined output extension")
         ("notify-after,n", po::value<int>(notify_after)->default_value(30), 
@@ -222,9 +222,6 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 
 int main(int argc, char *argv[])
 {
-    // Starts Stopwatch
-    double start_time = PUMA::get_time_micro_s();
-
     // Speeds up IO when there is a lot of IO to be done,
     // at the cost of making printf/scanf nonsafe to use
     std::ios_base::sync_with_stdio(0);
@@ -263,6 +260,9 @@ int main(int argc, char *argv[])
         if (aux_output_fn.length() > 0) 
             aux_output.open(aux_output_fn + '.' + output_extension);
     }
+
+    // Starts Stopwatch
+    long start_time = PUMA::get_time_micro_s();
 
     // The main loop
     for (size_t i = 0; i * dt < end_time; ++i) {

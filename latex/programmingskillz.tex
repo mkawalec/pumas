@@ -76,7 +76,7 @@ Developing a Predator Prey Simulation
 
 
 \begin{tabular}{ccc}
-\large{Diamantis Dakaris, Ewen Lawson Gillies, Michal Kawalec, Claude Schmidt} \vspace{0.15cm}\\
+\large{Diamantis Dakaris, Ewen Lawson Gillies, Michal Kawalec, Claude Schmit} \vspace{0.15cm}\\
 \large{\textit{University of Edinburgh, UK}}\\
 \end{tabular}
 
@@ -147,7 +147,7 @@ In order to increase efficiency and productivity, the division of labour was det
 \noindent\textbf{Michal Kawalec:}  Due to his experience in software development and project management, Michal set up the structure of the simulation and submitted this structure to a repository on \url{https://github.com/mkawalec/pumas}.  This structure included the header files and source files appropriately formatted with empty functions as well as the build system configuration. Michal also conducted all final edits, adapting the other members ideas to the optimal syntax.
 \\
 
-\noindent\textbf{Claude  Schmidt:}   With a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor, as well as (OTHER STUFF).  He also provided the group with the structure and planning needed for optimal time management.  
+\noindent\textbf{Claude  Schmit:}   With a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor. Once the main simulation was set up, he extended the test framework and included various sanity checks into the test-suite. After moving to a more advanced output structure, Claude was tasked to implement the \texttt{PlainPPMSerializer} and its dependencies. Having a first working version, it was his job to create various landmaps on which he then ran the simulation. He also provided the group with the structure and planning needed for optimal time management.  
 \\
 
 \noindent{\textbf{Ewen Gillies:}  Given his experience in numerical solutions to partial differential equations, Ewen was tasked with writing the integrating function and dealing with the boundary cells.  Since he lacked experience in $\texttt{C++}$, any additional structural ideas ideas were relayed to the more experience coders for optimal syntax.  He then reviewed this code to ensure all ideas were properly expressed.  Additionally, he was tasked with compiling the group report.
@@ -172,7 +172,7 @@ This simulation has three major comments: Input, Simulation, and Output.
 It is designed to accept an ASCII file that determines the land map of the simulation.
 The parameters that dictate the time evolution of the hare and puma populations can also be adjusted, although default values are provided.  
 The simulation is then initialized, run for a set amount of time steps, and properly finalised.  
-A a regular interval of time steps, the population of hares and pumas is printed to an output file using one of the available output methods.  
+In a regular interval of time steps, the population of hares and pumas is printed to an output file using one of the available output methods.  
 These outputs can then be visualized, plotted, and analyzed.
 
 \subsection{Input}
@@ -258,7 +258,7 @@ The structure of the simulation itself is straightforward.  \texttt{Simulator.cp
 
 \subsubsection{Initialization}
 
-The simulation starts by parsing all input parameters and the land map file in the \texttt{solver.cpp} class.  First, the land map input file accessed by the \texttt{initialize} function.  As per the input file format, the first two entires are used to define the dimensions of the simulation .  The rest of the entries are stored in the one dimensional boolean \texttt{land\_map} array which has ($\texttt{dim\_x} \times \texttt{dim\_y}$) elements.  In this array, a value of \texttt{true} corresponds to a land entry, whereas \texttt{false} corresponds to a water entry.  The function then constructs a \texttt{Simulator}, as defined in the \texttt{Simulator.cpp} file, with the appropriate dimensions and land/water entries.  
+The simulation starts by parsing all input parameters and the land map file in the \texttt{solver.cpp} class.  First, the land map input file accessed by the \texttt{initialize} function.  As per the input file format, the first two entries are used to define the dimensions of the simulation .  The rest of the entries are stored in the one dimensional boolean \texttt{land\_map} array which has ($\texttt{dim\_x} \times \texttt{dim\_y}$) elements.  In this array, a value of \texttt{true} corresponds to a land entry, whereas \texttt{false} corresponds to a water entry.  The function then constructs a \texttt{Simulator}, as defined in the \texttt{Simulator.cpp} file, with the appropriate dimensions and land/water entries.  
 
 \subsubsection{Construction}
 
@@ -268,10 +268,9 @@ The simulation is built with default values for all parameters.  After the const
 
 \subsubsection{Calculation}
 
-After declaring some output streams and initializing an \texttt{average\_densities} structure\footnote{This structure stores one double for average hare density and one for average puma density, as defined in \texttt{\textbackslash include\textbackslash helper.hpp}.}, the simulation moves into the main calculation loop.  This loop is defined to iterate the simulation from the initial time to the final time in the defined time-step increments.  Most of the work is done in the \texttt{apply\_step} function, as defined in \texttt{Simulator.cpp}.  
+After declaring some output streams and initializing an \texttt{average\_densities} structure\footnote{We use a convenient \texttt{typedef} to store the information for average hare density and average puma density, see the definition in \texttt{\textbackslash include\textbackslash helper.hpp}.}, the simulation moves into the main calculation loop.  This loop is defined to iterate the simulation from the initial time to the final time in the defined time-step increments.  Most of the work is done in the \texttt{apply\_step} function, as defined in \texttt{Simulator.cpp}.  
 
 The  \texttt{apply\_step} function starts by switching the contents of the  \texttt{current\_state} and the \texttt{temp\_state}.  It then opens a loop through all the sites in the system.  If the site is a land cell, it counts the number of neighboring land cells for use in the discretized partial differential equations.  The values in \texttt{temp\_state} are used to calculate the updated populations according to equations \eqref{hares} and \eqref{pumas} (REF), which are then stored in \texttt{current\_state}.  These values have a minimum value of zero.  All water cells are skipped so that their populations remain at zero.
-.  
 
 A key part of the \texttt{apply\_step} function is that it accesses all cells through the \texttt{get\_cell} function.  For all defined cells on the map, it returns the value of the \texttt{temp\_state}, as expected.  For all cells outside the limits of the system, it returns the \texttt{halo\_cell} which was initialized in the constructor.  Since all cells outside the system are defined to have a zero population, this is a cost effective way of setting and changing the boundary conditions.
 
@@ -288,9 +287,9 @@ The output of the simulation is handled by the \texttt{Serializer.cpp} file.  Th
 
 \subsubsection{Serializer}
 
-\texttt{Serializer.cpp} is designed to effectively handle the output file format and nothing else.  It defines a class for all available output format.  These classes are all named and pointed to using a list of pointers.  \texttt{Simulator.cpp} defines a pointer to a \texttt{Serializer.cpp} class called \texttt{current\_serializer}.  Strictly speaking, the simulator is initialized as pointing to nothing.  It is then set to point to the desired format class in \texttt{solver.cpp} via the \texttt{choose\_output\_method(}\emph{arg}\texttt{)} function.  This function checks its argument against the names of the formats pointed to in the list, returning the appropriate pointer in the event of a match.  If none match, then the program returns an error.  In the event that the function is never called, \texttt{Simulator.cpp} sets \texttt{current\_serializer} to point to the first pointer of the list of available serializers.  
+\texttt{Serializer.cpp} is designed to effectively handle the output file format and nothing else.  It defines a class for all available output formats.  These classes are all named and pointed to using a list of pointers.  \texttt{Simulator.cpp} defines a pointer to a \texttt{Serializer.cpp} class called \texttt{current\_serializer}.  Strictly speaking, the simulator is initialized as pointing to nothing.  It is then set to point to the desired format class in \texttt{solver.cpp} via the \texttt{choose\_output\_method(}\emph{arg}\texttt{)} function.  This function checks its argument against the names of the formats pointed to in the list, returning the appropriate pointer in the event of a match.  If none match, then the program returns an error.  In the event that the function is never called, \texttt{Simulator.cpp} sets \texttt{current\_serializer} to point to the first pointer of the list of available serializers.  
 
-Once the  \texttt{current\_serializer} is set, \texttt{Simulator.cpp}  knows to where pass all the output data.  In the main loop, \texttt{solver.cpp}  opens two out streams, which are then passed to the \texttt{Simulator::serialize} function.  This function passes these out streams, as well as the \texttt{current\_state} and dimensions of the system to the address of the \texttt{current\_serializer} pointer, which is a class defined in \texttt{Serializer.cpp}.  This class then handles all formatting, and prints the contents of the current state to the appropriate stream.
+Once the  \texttt{current\_serializer} is set, \texttt{Simulator.cpp}  knows where to pass all the output data.  In the main loop, \texttt{solver.cpp}  opens two out streams, which are then passed to the \texttt{Simulator::serialize} function.  This function passes these out streams, as well as the \texttt{current\_state} and dimensions of the system to the address of the \texttt{current\_serializer} pointer, which is a class defined in \texttt{Serializer.cpp}.  This class then handles all formatting, and prints the contents of the current state to the appropriate stream.
 
 For the purposes of this simple simulation, this output method is over engineered.  Its true strength and simplicity is only realized when the simulation has more than one output type.  By including \texttt{Serializer.cpp}, the output method is adaptable, scaleable, and separates concerns.  Should a new format be needed, only \texttt{Serializer.cpp} and its header file need to be edited.  The motivation to include several output types was to test the outputs using several visualization methods.
 
@@ -312,7 +311,7 @@ Introduce this stuff
 
 \subsection{Programming Language}
 
-\texttt{C++11} was the primary programming language used to write this simulation.  This is the most current version of \texttt{C++}.  With this programming language, the program utilizes a main function that calls upon an methods contained in independent library\footnote{These files are not a formal \texttt{C++} ``library,'' but do behave like one.}.  This library can easily be utilized by a different main function with equal success.  A new simulator obeying a different partial differential equation can be produced inheriting from a \texttt{Simulator} class and overloading the \texttt{apply\_step} function.  Likewise, the boundary conditions are easily changed by overloading the \texttt{get\_cell} function.  In order to ensure there are no clashes with existing libraries, the simulator defines its own namespace, \texttt{PUMA}.  These properties ensure this library is reusable, extendable, and self contained.  
+\texttt{C++11} was the primary programming language used to write this simulation.  This is the most current version of \texttt{C++}.  With this programming language, the program utilizes a main function that calls upon methods contained in independent library\footnote{These files are not a formal \texttt{C++} ``library,'' but do behave like one.}.  This library can easily be utilized by a different main function with equal success.  A new simulator obeying a different partial differential equation can be produced inheriting from a \texttt{Simulator} class and overloading the \texttt{apply\_step} function.  Likewise, the boundary conditions are easily changed by overloading the \texttt{get\_cell} function.  In order to ensure there are no clashes with existing libraries, the simulator defines its own namespace, \texttt{PUMA}.  These properties ensure this library is reusable, extendable, and self contained.  
 
 \subsubsection{Complier}
 
@@ -360,6 +359,7 @@ To ensure that there were no memory leaks in the program, the \texttt{memcheck} 
  
  \subsection{Documentation}
 
+In order to document our code, we opted for the \texttt{Doxygen}\footnote{See \url{http://www.doxygen.org} for details.} documentation generator. This tool reads the source files and generates documentation according to the comments inside the \texttt{C++} code, as long as these follow the necessary syntax. \texttt{Doxygen} then creates the documentation in various output formats. One such output is an easy to navigate \texttt{html} page that is readable by most web-browsers. It also provides a \LaTeX  script that can be run to produce a concise user manual. The resulting documentation shows the class structure that is used in the source code as well as a description of all functions, structures, and variables used. The use of \texttt{Doxygen} allowed us to focus on producing a working product without having to worry about also writing documentation, as we could readily produce this as a side product by sensible commenting.   
  
  \section{Analysis}
  

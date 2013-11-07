@@ -31,7 +31,7 @@ namespace PUMA {
     /** \brief function that determines the current 
      *      system time in micro seconds
      */
-    double get_time_micro_s();
+    long get_time_micro_s();
 
     /** \brief formats a number of microseconds into a
      *      a more readable form
@@ -40,7 +40,7 @@ namespace PUMA {
      *  \param microsecs the number of microseconds
      *      to be formatted
      */
-    void format_time(double microsecs);
+    void format_time(long microsecs);
 
     /** \brief A function template accepting any
      *      parameter and doing nothing to it. 
