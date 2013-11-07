@@ -96,6 +96,9 @@ namespace PUMA {
         delete halo_cell;
     }
 
+    /** Determines average values of hare and puma densities
+     *  accross all land cells.
+     */
     average_densities Simulator::get_averages() 
     {
         average_densities av;
@@ -119,10 +122,15 @@ namespace PUMA {
         return av;
     }
 
+    /// Applies a step in the simulation 
     void Simulator::apply_step() 
     {
+        // specifies last state
         temp_state.swap(current_state);
-
+        
+        /* applies step of the differential equation 
+         * which  models the process
+         */
         for (int j = 0; (unsigned)j < size_y; ++j) {
             for (int i = 0; (unsigned)i < size_x; ++i) {
                 size_t index = j * size_x + i;
@@ -147,6 +155,7 @@ namespace PUMA {
                                         + get_cell(i, j - 1)->puma_density + get_cell(i, j + 1)->puma_density)
                                     - nLand * get_cell(i, j)->puma_density));
 
+                    // forces positive densities
                     if (current_state[index].hare_density < 0.0) current_state[index].hare_density = 0.0;
                     if (current_state[index].puma_density < 0.0) current_state[index].puma_density = 0.0;
                 }
@@ -155,6 +164,7 @@ namespace PUMA {
     }
 
 
+    /// Gets x,y cell of the previous timestep
     landscape* Simulator::get_cell(int x, int y)
     {
         if (x < 0 || (unsigned)x >= size_x || y < 0 || (unsigned)y >= size_y) 
@@ -163,6 +173,7 @@ namespace PUMA {
             return &temp_state[y * size_x + x];
     }
 
+    /// Applies serialization of data to output files
     void Simulator::serialize(std::ofstream *main_output, std::ofstream *aux_output)
     {
         if (current_serializer == NULL) {

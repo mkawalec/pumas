@@ -20,13 +20,26 @@ namespace PUMA {
         bool is_land;
     };
 
-    /// \brief Structure containing RGB colors
+    /** \brief Structure containing RGB colours
+     *
+     *  Useful structure when converting data to colours
+     */
     struct rgb {
         double r, g, b;
     };
 
+    /** \brief function that determines the current 
+     *      system time in micro seconds
+     */
     double get_time_micro_s();
 
+    /** \brief formats a number of microseconds into a
+     *      a more readable form
+     *
+     *  formats microseconds to "h:m:s:ms:us"
+     *  \param microsecs the number of microseconds
+     *      to be formatted
+     */
     void format_time(double microsecs);
 
     /** \brief A function template accepting any
