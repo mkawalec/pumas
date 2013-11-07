@@ -54,7 +54,9 @@ namespace PUMA {
             }
             *output_hares << std::endl;
             *output_pumas << std::endl;
-        }
+        }  
+        *output_hares << std::endl;
+        *output_pumas << std::endl;
     }
 
     GnuplotSerializer gnuplot_serializer_instance;
@@ -113,7 +115,7 @@ namespace PUMA {
     {
         name = "plainppm";
         description = "Outputs Plain PPM file. "
-                      "Requires the auxiliary output file.";
+            "Requires the auxiliary output file.";
         extension = "ppm";
         scale = 10.0;
         force_files_split = true;
@@ -200,12 +202,12 @@ namespace PUMA {
                 size_t index = j * size_x + i;
 
                 if (!current_state[index].is_land) {
-                        colours.r = 0; 
-                        colours.g = 0;
-                        colours.b = 250;
+                    colours.r = 0; 
+                    colours.g = 0;
+                    colours.b = 250;
                 }
                 else {
-                        colours = densitiesToRGB(current_state[index].hare_density, current_state[index].puma_density);
+                    colours = densitiesToRGB(current_state[index].hare_density, current_state[index].puma_density);
                 }
                 *output << colours.r << " " << colours.g << " " << colours.b << std::endl;
             }

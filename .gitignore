@@ -16,6 +16,8 @@
 .*.sw*
 tags
 build
+.DS_Store
+
 
 # Latex
 *.aux

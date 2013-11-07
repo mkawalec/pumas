@@ -147,7 +147,7 @@ In order to increase efficiency and productivity, the division of labour was det
 \noindent\textbf{Michal Kawalec:}  Due to his experience in software development and project management, Michal set up the structure of the simulation and submitted this structure to a repository on \url{https://github.com/mkawalec/pumas}.  This structure included the header files and source files appropriately formatted with empty functions as well as the build system configuration. Michal also conducted all final edits, adapting the other members ideas to the optimal syntax.
 \\
 
-\noindent\textbf{Claude  Schmit:}   With a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor. Once the main simulation was set up, he extended the test framework and included various sanity checks into the test-suite. After moving to a more advanced output structure, Claude was tasked to implement the \texttt{PlainPPMSerializer} and its dependencies. Having a first working version, it was his job to create various landmaps on which he then ran the simulation. He also provided the group with the structure and planning needed for optimal time management.  
+\noindent\textbf{Claude  Schmidt:}   With a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor, as well as (OTHER STUFF).  He also provided the group with the structure and planning needed for optimal time management.  
 \\
 
 \noindent{\textbf{Ewen Gillies:}  Given his experience in numerical solutions to partial differential equations, Ewen was tasked with writing the integrating function and dealing with the boundary cells.  Since he lacked experience in $\texttt{C++}$, any additional structural ideas ideas were relayed to the more experience coders for optimal syntax.  He then reviewed this code to ensure all ideas were properly expressed.  Additionally, he was tasked with compiling the group report.
@@ -312,7 +312,7 @@ Introduce this stuff
 
 \subsection{Programming Language}
 
-\texttt{C++11} was the primary programming language used to write this simulation.  This is the most current version of \texttt{C++}.  Using this programming language, the simulation is designed to be  reusable, extendable, and self contained. In order to do so, it utilizes a main function that calls upon methods contained in independent library\footnote{These files are not a formal \texttt{C++} ``library,'' but do behave like one.}.  This library can easily be utilized by a different main function with equal success.  A new simulator obeying a different partial differential equation can be produced inheriting from a \texttt{Simulator} class and overloading the \texttt{apply\_step} function.  Likewise, the boundary conditions are easily changed by overloading the \texttt{get\_cell} function.  In order to ensure there are no clashes with existing libraries, the simulator defines its own namespace, \texttt{PUMA}.   
+\texttt{C++11} was the primary programming language used to write this simulation.  This is the most current version of \texttt{C++}.  Using this programming language, the simulation is designed to be  reusable, extendable, and self contained. In order to do so, it utilizes a main function that calls upon any methods contained in independent library\footnote{These files are not a formal \texttt{C++} ``library,'' but do behave like one.}.  This library can easily be utilized by a different main function with equal success.  A new simulator obeying a different partial differential equation can be produced inheriting from a \texttt{Simulator} class and overloading the \texttt{apply\_step} function.  Likewise, the boundary conditions are easily changed by overloading the \texttt{get\_cell} function.  In order to ensure there are no clashes with existing libraries, the simulator defines its own namespace, \texttt{PUMA}.   
 
 \subsubsection{Complier}
 
@@ -360,7 +360,6 @@ To ensure that there were no memory leaks in the program, the \texttt{memcheck} 
  
  \subsection{Documentation}
 
-In order to document our code, we opted for the \texttt{Doxygen}\footnote{See \url{http://www.doxygen.org} for details.} documentation generator. This tool reads the source files and generates documentation according to the comments inside the \texttt{C++} code, as long as these follow the necessary syntax. \texttt{Doxygen} then creates the documentation in various output formats. One such output is an easy to navigate \texttt{html} page that is readable by most web-browsers. It also provides a \LaTeX  script that can be run to produce a concise user manual. The resulting documentation shows the class structure that is used in the source code as well as a description of all functions, structures, and variables used. The use of \texttt{Doxygen} allowed us to focus on producing a working product without having to worry about also writing documentation, as we could readily produce this as a side product by sensible commenting.   
  
  \section{Analysis}
  
