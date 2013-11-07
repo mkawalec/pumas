@@ -126,10 +126,10 @@ namespace PUMA {
     class PlainPPMSerializer : public Serializer {
 
     private:
-        /** \brief converts color values in HSV space
+        /** \brief converts colour values in HSV space
          *      to ones in RGB.
          *
-         *  \return a triplet of RGB values
+         *  \return a triplet of RGB colour values
          */
         rgb densitiesToRGB(double hare_density, double puma_density);
 
@@ -137,6 +137,17 @@ namespace PUMA {
         PlainPPMSerializer();
         ~PlainPPMSerializer() { remove_instance(this); };
 
+        /** \brief Writes the puma/hare densities to
+         *      the specified output stream
+         *  \param output_hares a pointer to an output stream
+         *      to which densities of hares will go
+         *  \param nothing an unused pointer to the second,
+         *      unneeded output stream
+         *  \param current_state contains the simulation state
+         *      that will be serialized
+         *  \param size_x X dimension of current_state
+         *  \param size_y Y dimension of current_state
+         */      
         void serialize(std::ofstream *output, 
                 std::ofstream *nothing, 
                 boost::shared_array<landscape> current_state,

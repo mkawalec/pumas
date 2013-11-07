@@ -65,15 +65,18 @@ namespace PUMA {
         Simulator(size_t dim_x, size_t dim_y, bool *land_map);
         ~Simulator();
 
-        /** \brief diffusion constants used in the differential equation
-         * r = Birth rate of hares
-         * a = Predation rate at which pumas ear hares
-         * b = Birth rate of pumas per one hare eaten
-         * m = Puma mortality rate
-         * k = Diffusion rate for hares
-         * l = Diffusion rate for pumas
-         */
-        double r, a, b, m, k, l;
+        /// Birth rate of hares
+        double r;
+        /// Predation rate at which pumas eat hares
+        double  a;
+        /// birth rate of pumas per one hare eaten
+        double b;
+        /// puma mortality rate
+        double m;
+        /// Diffusion rate for hares
+        double k;
+        /// Diffusion ratefor pumas
+        double l;
 
         /** \brief Calculates the average densities of pumas/hares
          *  over all land cells of the current state. 
@@ -116,6 +119,17 @@ namespace PUMA {
         TestSimulator(size_t dim_x, size_t dim_y, bool *land_map, double dt) :
             Simulator(dim_x, dim_y, land_map), dt(dt) {};
 
+        /** \brief allows manually setting the densities of pumas
+         *  and hares on a rectangular grid of points
+         *  \param hare value that the hare density
+         *      should be set to
+         *  \param puma value that the puma density 
+         *      should be set to
+         *  \param x_dim x dimension of the rectangle 
+         *      in which this change is to be applied
+         *  \param y_dim y dimension of the rectangle 
+         *      in which this change is to be applied
+         */
         void set_densities_const(double hare, double puma, size_t x_dim, size_t y_dim);
 
         /** \brief provides access to the current state
