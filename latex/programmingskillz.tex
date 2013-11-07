@@ -29,6 +29,8 @@
 \usepackage[makeroom]{cancel}
 \include{header}
 \usepackage{indentfirst}
+\usepackage[toc,page]{appendix}
+
 
 
 
@@ -297,9 +299,12 @@ For the purposes of this simple simulation, this output method is over engineere
 
 \subsubsection{Visualisation}
 
-A key part of any simulation is the ability to visualize the results.  This program has been configured to output file types usable for three visualization program. 
+A key part of any simulation is the ability to visualize the results.  This program has been configured to output file types usable for three visualization program.  These visualizers are \texttt{Visual Molecular Dynamics, Gnuplot} and \texttt{Imagemagick}, the last of which is used to visualize PPM files.  Each of these programs have their strengths and weaknesses, as discussed below. 
 
-VMD: live animation pipe, output formats, "new molecule," file type, CPK, 0 bond radius,
+The most informative of the three is \texttt{Visual Molecular Dynamics, VMD}.  While this visualizer is intended to model molecule interactions, it accepts an \texttt{XYZ} file type, where the location of each particle in Cartesian coordinates is written for every time step.  The main advantage of this visualizer is that it allows for a 3D visualization of the data.  This visualization can then be rendered to a video file format, which is both compact and portable.  The disadvantage is that it is computationally intense to process large maps and render high quality videos.  
+
+The easiest viewer is \texttt{Gnuplot}.  This visualizer 
+
 
 GNUPLOT:
 
@@ -373,7 +378,15 @@ stabilization of decreasing time step
 Conclusions Some brief conclusions.
  
 \subsection{Further Works}
- Ideas for further work, or what you would have done if you had had more time.
+
+\subsubsection{Environmental Variables}
+
+
+
+\newpage
+\begin{appendices}
+\section{Quick Start Guide for Solver}
+\end{appendices}
 
 \end{document}
 
