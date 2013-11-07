@@ -223,7 +223,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
 int main(int argc, char *argv[])
 {
     // Starts Stopwatch
-    double start_time = PUMA::get_time_micro_s();
+    long start_time = PUMA::get_time_micro_s();
 
     // Speeds up IO when there is a lot of IO to be done,
     // at the cost of making printf/scanf nonsafe to use
