@@ -96,7 +96,7 @@ PUMA::Simulator* read_params(int argc, char *argv[],
         ("output,o", 
          po::value<std::string>(output_fn)->default_value("output"),
          "the main output file, or hares output file for methods requiring auxiliary outputs")
-        ("aux,auxiliary-output",
+        ("aux,a",
          po::value<std::string>(aux_output_fn),
          "auxiliary output file, ie. puma output file, used by some output methods")
         ("output-format,f",
