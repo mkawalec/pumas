@@ -212,6 +212,8 @@ PUMA::Simulator* read_params(int argc, char *argv[],
     simulation->k = vm["k"].as<double>();
     simulation->l = vm["l"].as<double>();
 
+    simulation->dt = *dt;
+
     // Bind the current output method
     simulation->current_serializer = 
         PUMA::Serializer::choose_output_method(output_method);

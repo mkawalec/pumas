@@ -33,7 +33,6 @@ namespace PUMA {
          */
         boost::shared_array<landscape> temp_state;
 
-        double dt;
         /// X and Y sizes of the simulation area
         size_t size_x, size_y;
 
@@ -77,6 +76,9 @@ namespace PUMA {
         double k;
         /// Diffusion ratefor pumas
         double l;
+
+        // Timestep
+        double dt;
 
         /** \brief Calculates the average densities of pumas/hares
          *  over all land cells of the current state. 
