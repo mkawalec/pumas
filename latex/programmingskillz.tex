@@ -22,15 +22,15 @@
 \usepackage{wrapfig}
 \usepackage[floatrow]{chemstyle}
 \usepackage{enumitem}
+\usepackage{epstopdf}
 \usepackage{multicol}
 \usepackage{pbox}
 \usepackage{cite}
-\usepackage{titlesec}
+\usepackage[compact]{titlesec}
 \usepackage[makeroom]{cancel}
 \include{header}
 \usepackage{indentfirst}
 \usepackage[toc,page]{appendix}
-
 
 
 
@@ -63,20 +63,20 @@
 \vfill
 
 \textbf{ \begin{huge}
-Developing a Predator Prey Simulation
+Developing a Predator-Prey Simulation
 \end{huge}}
 
 \vspace{0.4cm}
 
 \begin{Large}
- \textit{Programming Skills}
+ \textit{Programming Skills Group Report}
 \end{Large}
 
 \vspace{1cm}
 
 
 \begin{tabular}{ccc}
-\large{Diamantis Dakaris, Ewen Lawson Gillies, Michal Kawalec, Claude Schmidt} \vspace{0.15cm}\\
+\large{Diamantis Ntakaris, Ewen Lawson Gillies, Michal Kawalec, Claude Schmidt} \vspace{0.15cm}\\
 \large{\textit{University of Edinburgh, UK}}\\
 \end{tabular}
 
@@ -85,7 +85,6 @@ Developing a Predator Prey Simulation
 
   
 \vspace{0.7cm}
-\large{Something here?}\\
 \vspace{0.7cm}
 \includegraphics[width=0.33\textwidth]{edinburgh_crest.jpg}\\
 \vspace{0.7cm}
@@ -97,7 +96,7 @@ Developing a Predator Prey Simulation
 
 \begin{abstract}
 
-The aim of this project is to develop the essential programming skills through a group project 
+The aim of this project is to develop the essential programming skills through developing a predatory-prey simulation.  The group was given a system of coupled partial differential equations that the population densities of pumas and hares on a 2D surface.  Using \texttt{C++} and other existing programming frame work, an efficient, portable, and extendable simulation was developed.  This simulation was then throughly tested, debugged, and optimized.  Despite being a relatively simple simulation, the analysis was able to give insight into the dynamics of the problem.
 
 \end{abstract}
 
@@ -153,7 +152,7 @@ In order to increase efficiency and productivity, the division of labour was det
 \noindent{\textbf{Ewen Gillies:}  Given his experience in numerical solutions to partial differential equations, Ewen was tasked with writing the integrating function and dealing with the boundary cells.  Since he lacked experience in $\texttt{C++}$, any additional structural ideas ideas were relayed to the more experience coders for optimal syntax.  He then reviewed this code to ensure all ideas were properly expressed.  Additionally, he was tasked with compiling the group report.
 \\
 
-\noindent{\textbf{Diamantis Dakaris:}}  Using his strong mathematical background, Diamantis conducted the preliminary analysis of the equation at hand, as well as the intermediate and final analysis of the output.  He also wrote the initial output function, which was then extrapolated to the final one.  As a relatively inexperienced coder, Diamantis was able to offer effective continual feedback on readability and the logical structure of the code, ensuring that all levels of coders would be able to read code and reproduce the results.  He also generated several of the input land maps for the simulation.
+\noindent{\textbf{Diamantis Ntakaris:}}  Using his strong mathematical background, Diamantis conducted the preliminary analysis of the equation at hand, as well as the intermediate and final analysis of the output.  He also wrote the initial output function, which was then extrapolated to the final one.  As a relatively inexperienced coder, Diamantis was able to offer effective continual feedback on readability and the logical structure of the code, ensuring that all levels of coders would be able to read code and reproduce the results.  He also generated several of the input land maps for the simulation.
 
 \subsection{Coordination}
 
@@ -193,7 +192,7 @@ The simulation options include the size of the time step, the frequency of the o
 The input/output options include the output names, extensions, and formats as well as the frequency at which the progress of the simulation is printed to the terminal.  
 
 All of the parameters are set using the \texttt{boost/program\_options} library, using the traditional syntax. 
-See Section~\ref{syntax} for an example.~\ref{tb:parameters}, below, contains a list of the simulation parameters and their default values. 
+See Appendix~\ref{syntax} for an example.~\ref{tb:parameters}, below, contains a list of the simulation parameters and their default values. 
 Note that shorthand parameters can be combined, so parameter \texttt{-oa output} is a valid sequence.
 
 Parameter sets other than the Generic options can be set from a configuration file. 
@@ -222,10 +221,10 @@ For an example, please see the \texttt{contrib/example.cfg} in the supporting do
  \multirow{7}{*}{\pbox{10cm}{\ \\ \ \\ \ \\ Input/Output \\ Options}} 
  & \texttt{-d, -{}-data-file} & Location of parameters file & none \\
  & \texttt{-o, -{}-output} & Filename of the main output file & \texttt{output} \\
- & \texttt{-a, -{}-aux} & Filename of the auxiliary output file & none \\
+ & \texttt{-u, -{}-aux} & Filename of the auxiliary output file & none \\
  & \texttt{-f, -{}-output-format}  &  Format of the output& \texttt{vmd} \\
   & &  (\texttt{vmd, gnuplot, ppm})   &  \\ 
- & \texttt{-e, -{}-output-extension} & Overrides the output extension & none \\
+ & \texttt{-x, -{}-output-extension} & Overrides the output extension & none \\
  & \texttt{-n, -{}-notify-after} & Output frames between printing  & 30 \\
   & & progress to terminal.  &  \\ 
  & \texttt{--split-files} & Forces the serializer to print each & \texttt{false} \\ 
@@ -239,18 +238,9 @@ For an example, please see the \texttt{contrib/example.cfg} in the supporting do
 
 \subsubsection{Land Map}
 
-The surface is discretised to have an $x$ and $y$ dimension, denoted interchangeably as \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y}.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in \texttt{solver.cpp}.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Section \ref{syntax}.
+The surface is discretised to have an $x$ and $y$ dimension, denoted interchangeably as \texttt{size\_x}, \texttt{dim\_x} and \texttt{size\_y}, \texttt{dim\_y}.  These two parameters are defined in the first line of every land map input file, and read in during the \texttt{ PUMA::Simulator* initialize} function in \texttt{solver.cpp}.  The rest of the land map input file entries are either 1 or 0 to denoted land or water.  To ensure the file format reflects the geometry of the surface, each line has \texttt{size\_x} entires, while the whole file has \texttt{size\_y} lines. The land map is read into the program at start up by naming it in the terminal, as shown in Appendix \ref{syntax}.
 
 These file maps can be generated in any way that respects the description above.  The ones included in the submission were generated using \texttt{Gimp}\footnote{This freely distributed software is available here: \url{http://www.gimp.org}}.  The advantage of using this program is it allows the user to draw the desired land map in black and white, and then outputs this file to a portable anymap (PNM) format.  This file is then transferred to the desired \texttt{ASCII} format using the \texttt{pnm2dat} program.  Likewise, arbitrary image files can be opened, changed to black and white, and outputted to the desired land map format.
-
- 
-\subsubsection{Sample Input Syntax}\label{syntax}
-
-All input parameters and files are set at program launch using the syntax \texttt{./solver -\{name\} \{value\} \emph{land\_map\_name}.dat}.  For example, the following line sets the birth rate of hares to 0.1 and the time step to 0.05, leaving the rest as default values, and reads in a file named \texttt{island.dat}.
-%MICHAL Double check syntax
-
-\vspace{5pt}
-\noindent\texttt{./solver -r 0.1 -dt 0.05 island.txt}
 
 \subsection{Simulation}
 
@@ -294,13 +284,13 @@ Once the  \texttt{current\_serializer} is set, \texttt{Simulator.cpp}  knows to 
 
 For the purposes of this simple simulation, this output method is over engineered.  Its true strength and simplicity is only realized when the simulation has more than one output type.  By including \texttt{Serializer.cpp}, the output method is adaptable, scaleable, and separates concerns.  Should a new format be needed, only \texttt{Serializer.cpp} and its header file need to be edited.  The motivation to include several output types was to test the outputs using several visualization methods.
 
-\subsubsection{Visualisation}
+\subsubsection{Visualisation}\label{visual}
 
-A key part of any simulation is the ability to visualize the results.  This program has been configured to output file types usable for three visualization program.  These visualizers are \texttt{Visual Molecular Dynamics, Gnuplot} and \texttt{Imagemagick}, the last of which is used to visualize PPM files.  Each of these programs have their strengths and weaknesses, as discussed below. 
+A key part of any simulation is the ability to visualize the results.  This program has been configured to output file types usable for three visualization program.  These visualizers are \texttt{Visual Molecular Dynamics, Gnuplot} and \texttt{Imagemagick}, the last of which is used to visualize PPM files.  Each of these programs have their strengths and weaknesses, as discussed below.  Links to sample visualizations are provided in Appendix \ref{links}.
 
 The most informative of the three is \texttt{Visual Molecular Dynamics, VMD}.  While this visualizer is intended to model molecule interactions, it accepts an \texttt{XYZ} file type, where the location of each particle is written in Cartesian coordinates for every time step.  The populations of pumas and hares can be stored as the $z$ coordinate of a ``particle,'' with the $x$ and $y$ coordinates representing which cell they are in.  The main advantage of this visualizer is that it allows for a 3D visualization of the data.  This visualization can then be rendered to a video file format, which is both compact and portable.  The disadvantage is that it is computationally intense to process large maps and render high quality videos.  
 
-The easiest viewer is \texttt{Gnuplot}.  This visualizer (MORE)
+The easiest viewer is \texttt{Gnuplot}.  This visualizer offered the most flexibility in visualization options using a relatively easy script.  A \texttt{Gnuplot} script is used to generate a color map to plot the populations against $x$ and $y$ at every time step.  These maps are then strung together in a \texttt{gif}.  The advantage of this visualizer is that is is the only one that includes a quantitative colour scale for the populations, as well as an indication of the current time step.  The downside to this viewer is that it takes a very long time to load large data files and requirers \texttt{Gnuplot} to be installed.
 
 The most portable visualization is when the populations are printed directly to a Portable Pixmap (PPM) format.  This generates image files directly from the \texttt{Serializer}, which are readable by nearly all systems and imaging processing software.  These files were processed by \texttt{imagemagick} to create a \texttt{.gif} moving image.  The difficulty with this output is that it is difficult to recover any kind of scale from the resulting images.  The only conclusive evidence they offer is whether or not a steady state is reached.  
 
@@ -308,7 +298,7 @@ The most portable visualization is when the populations are printed directly to 
 
 \section{Tools and Frameworks}
 
-Introduce this stuff
+The simulation was written in \texttt{C++}, which had a large impact on the tools and frameworks used throughout the project.  The code was compiled with \texttt{gcc} version 4.8.  The unit testing framework, as well as several key features, were included from the \texttt{Boost} library.  \texttt{Cmake} was used to help generate \texttt{Makefiles} across several different platforms.  From there, \texttt{gdb} was used to help debug the program.  Once the program was running, the performance testing tool \texttt{Valgrind} was used in order to optimize the code.  Finally, all documentation was was generated using \texttt{Doxygen}.
 
 \subsection{Programming Language}
 
@@ -329,11 +319,11 @@ To improve memory management, \texttt{boost::shared\_array} was used.  This obje
 
 Using \texttt{Boost}, the program options can be defined, grouped, and easily set at runtime.  This library also enables configuration files to be used with little added code.  The program options are also conveniently stored and displayed in a help menu, which can also be displayed at runtime.  
 
-Finally, the \texttt{Boost} was used to define a Mersenne-Twister random number generator.  This random number generator is seeded with the current time up to a microsecond.  This is to ensure a unique seed for all simulator classes, even when they are instantiated within a small time frame.  The Mersenne-Twister generator more random, long period, and because it is widely tested and used.  (REF)
+Finally, the \texttt{Boost} was used to define a Mersenne-Twister random number generator.  This random number generator is seeded with the current time up to a microsecond.  This is to ensure a unique seed for all simulator classes, even when they are instantiated within a small time frame.  The advantage of using the Mersenne-Twister generator is that it has been proved to have a better random number distribution and a longer period than the standard \texttt{C++} random number generator.  Additionally, it is widely used, and has been throughly tested.
 
 \subsection{Build}
 
-In order to build the simulation, a \texttt{Makefile} must be generated.  \texttt{CMake} was used to abstract this process, ensuring that it is as system independent as possible.   This is done using \texttt{find} scripts, which only require the user to supply the names the needed include files.  The paths to these files are determined, and printed to the \texttt{Makefile}.  Additionally, \texttt{CMake} prints the the build process, detailing the progress and any errors. (REF) %Minus:  Requires installation of CMake 2.8, ex: not available in scilinux 
+In order to build the simulation, a \texttt{Makefile} must be generated.  \texttt{CMake} was used to abstract this process, ensuring that it is as system independent as possible.   This is done using \texttt{find} scripts, which only require the user to supply the names the needed include files.  The paths to these files are determined, and printed to the \texttt{Makefile}.  Additionally, \texttt{CMake} prints the the build process, detailing the progress and any errors.  The disadvantage is that it requires the installation of the latest version of \texttt{CMake}, which is not available on Scientific Linux/  
 
 \subsection{Revision Control}
 
@@ -346,11 +336,7 @@ The revision control software \texttt{git} was used to streamline group editing 
 
 All unit testing was done with \texttt{boost::UNIT\_TEST}.  This library is included in \texttt{boost} and provides the basic functionality needed for the program.  Tests were included in a \texttt{test\_suite.cpp} file.  The first of these tests ensure that the simulator can be constructed and that the land map is parsed correctly.  The next set ensures that the \texttt{apply\_step} function effects the populations of the land cells, but do not effect the populations of the water cells.  To test the output, the \texttt{test\_suite} turns off all birth and death rate terms to ensure the diffusion of populations works correctly.   
 
-Performance profiling was used to optimize the simulation.  This profiling was done with \texttt{Valgrind} using the \texttt{Callgrind} tool.  This tool provided an estimate of the time spent on each function.  The \texttt{Kcachegrind} tool visualized this information, as shown below in \ref{fig:pref}.
-
-%INSERT FIG PREF
-
-The performance profiling reveal that 95\% of the computation was devoted to printing the output, with less than 1\% spent on \texttt{apply\_step}.  This motivated the group to decrease the default time step and print frequency by a factor of 100.  This greatly improved the accuracy of the simulation without significantly increasing the computation time.  
+Performance profiling was used to optimize the simulation.  This profiling was done with \texttt{Valgrind} using the \texttt{Callgrind} tool.  This tool provided an estimate of the time spent on each function. The performance profiling reveal that 94.11\% of the computation was devoted to printing the output, with only 0.861\% spent on the actual \texttt{apply\_step} calculation.  This motivated the group to decrease the default time step and print frequency by a factor of 100.  After this optimization, 64.34\% was spent on printing, with 33.83 \% spent on calculations.  This greatly improved the accuracy of the simulation without significantly increasing the computation time.  The \texttt{Kcachegrind} tool visualized this information.  See Appendix \ref{Kcashegrind} for an example of this output. 
 
 \subsection{Debugging}
 
@@ -360,30 +346,157 @@ To ensure that there were no memory leaks in the program, the \texttt{memcheck} 
  
  \subsection{Documentation}
 
-In order to document our code, we opted for the \texttt{Doxygen}\footnote{See \url{http://www.doxygen.org} for details.} documentation generator. This tool reads the source files and generates documentation according to the comments inside the \texttt{C++} code, as long as these follow the necessary syntax. \texttt{Doxygen} then creates the documentation in various output formats. One such output is an easy to navigate \texttt{html} page that is readable by most web-browsers. It also provides a \LaTeX  script that can be run to produce a concise user manual. The resulting documentation shows the class structure that is used in the source code as well as a description of all functions, structures, and variables used. The use of \texttt{Doxygen} allowed us to focus on producing a working product without having to worry about also writing documentation, as we could readily produce this as a side product by sensible commenting.   
+In order to document our code, we opted for the \texttt{Doxygen}\footnote{See \url{http://www.doxygen.org} for details.} documentation generator. This tool reads the source files and generates documentation according to the comments inside the \texttt{C++} code, as long as these follow the necessary syntax. \texttt{Doxygen} then creates the documentation in various output formats. One such output is an easy to navigate \texttt{html} page that is readable by most web-browsers. It also provides a \LaTeX \ script that can be run to produce a concise user manual. The resulting documentation shows the class structure that is used in the source code as well as a description of all functions, structures, and variables used. The use of \texttt{Doxygen} allowed us to focus on producing a working product without having to worry about also writing documentation, as we could readily produce this as a side product by sensible commenting.   
  
  \section{Analysis}
  
- \subsection{Testing}
-Performance tests and analysis Description on the performance experiments you did and an analysis
-of the results of these.
-
-stabilization of decreasing time step
  
+Once the simulation was running, several maps were tested with different time steps.  These runs were visualized using the methods discussed in Section \ref{visual}.  By visualizing the results, the group was able to spot some weaknesses in the code very early on.  Once these weaknesses were fixed, the resulting simulations were analyzed to determined some qualitative properties of the system.
+
+\subsection{Instabilities}
+
+One of the earlier visualizations showed a diverging behaviour in the populations, where the amplitude increased with every oscillation.  This caused negative populations to occur, which destabilized the system.  The average population of this simulation is shown in \ref{fig:unstable}.  Following this result, the time step was lowered and the populations were given a minimum value of zero.  This stabilized the simulation.  These two comparative visualisations are linked in Appendix \ref{links}, with titles ``Unstable'' and ``Stable'' respectively. 
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{unstable.eps}
+\caption{Unstabile Average Population}
+\label{fig:unstable}
+\end{figure}
+ 
+
+\subsection{Average Densities} 
+Once the code was stabilized, the average populations were mapped against time.  The plot below in \ref{fig:stable} shows the average population of pumas and hares across a 2000$\times$2000 map with the default settings.  It is clear from this plot that both average population are sinusoidal and in a dynamic equilibrium.  With these parameters, the hares almost always have a higher population than the pumas, except for a brief period once per cycle.  
+ 
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{stable.eps}
+\caption{StabileAverage Population}
+\label{fig:stable}
+\end{figure}
+ 
+ 
+Upon close inspection, it seems that the concavity of the puma population is related to the slope of the hare population.  This is to say that as the hare population diminishes or increase, the acceleration of the puma population likewise diminishes or increases.  This is an understandable result, since the total number of pumas births depends on the availability of hares.  Once the total number of pumas born per time step is very high, they eat more hares than normal, and the hare population plummets.  As it does so, the rate of puma birth deceases, and the cycle continues.  This relationship is the foundation of the dynamic equilibrium achieved.  It is clearly expressed in equations \eqref{hares} and \eqref{pumas}, and unsurprisingly reflected in the result.  This qualitative analysis implies that the simulation is accuracy. 
+
+\subsection{Population Surface Features}
+ 
+It is clear from the source code and from the visualization that the initial populations are entirely random.  This causes the population from cell to cell to be discontinuous.  Using any of the three visualization types, it is clear that this discontinuity is quickly smoothed out, on the order of a quarter of the period of population oscillation.  The random distribution still causes features in the population surface to persist.  As time passes, these features lessen, until the population surface becomes flat.  This behaviour is due to the diffusion terms equations \eqref{hares} and \eqref{pumas}.  This result implies that these diffusion terms act somewhat independently to the birth, death, and predation terms.  For links to these visualizations, see Appendix \ref{links}.
+ 
+\section{Further Works}
+
+The finished simulation, documentation, and analysis were all to the groups satisfaction.  With that said, several ideas were never properly implemented due to time constraints.  These included introducing different dynamics and initial conditions to the simulation, as well as expanding the output options.  The following section details some of these ideas.
+
+\subsection{Novel Dynamics}
+
+The partial differential equations and random initial condtions that dictated the dynamics of the system represent one of the simplest Predator-Prey simulations.  The easiest extension to this simulation would be to introduce new initial conditions.  It was suggested that these conditions could introduce dense pockets of hares an pumas that do not touch at first on different locations on the map or surround a low population of pumas with lots of hares  and observe the result.  An analysis of how the initial conditions effect the final out come has the potential to add a substantial amount of content to the simulation.  
+
+Perhaps a less obvious extension that was suggested would be to have both populations prefer to be close to water sources.  The two hypothesized methods of achieving there were to introduce new terms to equations \eqref{hares} and \eqref{pumas} or to make the birth and death rate constants functions of the the distance from water.  While the exact effects could only be speculated, this feature does reflect real Predator-Prey simulations.  It has the potential to completely change the dynamics of the system, and would have been interesting to explore
+
+\subsection{Improved Output}
+
+A lot of the work done on this project focused on including a wide range of outputs.  Since the majority of this work was not prompted by the project description, the focus was on the ensuring that the infrastructure that provided the output was optimal.  This meant that once an output/visualization pair was working, efforts were shifted to less developed parts of the simulation.  As a result, the output files and/or visualizations produced are not optimal.  
+
+The \texttt{VMD} output populates three ``molecules'' per cell, one for hare population, one for puma population, and one for land/water, regardless of cell type.  This means that each water cell has two more molecules than needed, since we know the populations in these cells are always zero.  These two extra cells cause the the output file type to be larger than needed and result in an ambiguous colour scheme in the final visualization.  Were there more time, the land map would be pre-scanned before serialization, and each water cell would only be given one molecule.
+
+The \texttt{Gnuplot} output is informative, compact, easy to use, and fairly portable.  It provides useful visualizations of the populations vs. position using a 2D color map.   \texttt{Gnuplot} also supports 3D contour maps to the same data.  Additionally, the color of these contours can be used to plot a fourth variable.  Adding this feature to the list of available visualizers would have been fairly straight forward, and very powerful.  
+
+Finally, the \texttt{PPM} output fails to show any kind of scale in its visualizations.  While it is useful for to ensure the simulation has not destabilized and to get a rough, qualitative sense of the dynamics, it fails to show exactly what range the populations are in.  Adding a color scale, either as a separate image file or in the same image file as the visualization would drastically improve the utility of these visualizations.
  
  \section{Conclusion}
-Conclusions Some brief conclusions.
- 
-\subsection{Further Works}
 
-\subsubsection{Environmental Variables}
-
-\subsubsection{Clean Up VMD output}
-
+The members were able to coordinate their efforts to plan, write, develop, debug, and optimize a basic Predator-Prety simulation.  Through a group effort, each member was able to contribute to the areas they were comfortable with, while learning more about the areas they were less familiar with.   The combined result is a well functioning, portable, efficient,   simulation.  While the simulation itself is quite simple, the structure is designed to be extended to more complex scenarios.  Despite its simplicity, the output of the simulation provided a qualitative insight to the dynamics of the system.  Were there more time, further analysis could have been done involving different initial conditions and novel dynamic variables.  While all the output methods are in working order, each has plenty of room for improvement.  Overall, this project has been a huge success.  The group was able to work as a team at every point of the process to produce a high quality final product. 
 
 \newpage
 \begin{appendices}
-\section{Quick Start Guide for Solver}
+\section{Quick Start Guide for Simulation }
+\subsection{Creating Input Land Maps}
+
+To create input land maps, open the \texttt{puma/data/} directory and and run \texttt{gimp} version 2.8. Select \texttt{File $\rightarrow$ New} and enter the size of the desired land map in the window that opens.  Be sure to select \texttt{Greyscale} under \texttt{Advanced Options} and then press \texttt{OK}. An interface will open where the land map can be drawn. Note that points lighter than \texttt{greyscale} = 128 will be water, whereas the darker ones will be land. Once the map is drawn, select \texttt{File $\rightarrow$ Save as} and enter the desired file when prompted.  Be sure to use the extension \texttt{.pnm} in the file name.  Click save and finally choose the ASCII file format.
+
+Close gimp, and open the \texttt{pnm2dat} executable, provided through \textit{Learn}, in the same directory. Enter the following commands in the terminal, where the first ensures that \texttt{pnm2dat} is an executable and the second converts the file to the desired file format. 
+
+\vspace{5pt}
+\noindent \texttt{chmod +x pnm2dat}
+
+\noindent \texttt{./pnm2dat \emph{filename}.pnm  \emph{filename}.dat}
+\vspace{5pt}
+
+\subsection{Compiling \texttt{solver, test-suite}, and Documentation}
+
+To compile the source code, create a \texttt{build} directory under \texttt{puma/} and open a terminal session in it. Compile the program by entering the following commands.
+
+\vspace{5pt}
+\noindent \texttt{cmake ..}
+
+\noindent \texttt{make -j3}
+
+\noindent\texttt{make doc}
+\vspace{5pt}
+
+The first two commands create the executables \texttt{solver} and \texttt{test-suite}.   The third generates the program documentation the working directory using \texttt{oxygen}. This documentation is contained in the \texttt{html/} and \texttt{latex/} subdirectories, where \texttt{html} and the \LaTeX documentation can be found. 
+
+\subsection{Running the Simulation}\label{syntax}
+
+After compiling the program, the simulation can be run from the \texttt{build/} directory. \texttt{solver} can be run with various options as discussed in Section \ref{params}. Run \texttt{./solver -h} for help. The simplest way to run the simulation is to use all default parameters by only specifying a land map file, as seen below.
+
+\vspace{5pt}
+\noindent\texttt{./solver ../data/testmap.dat}
+\vspace{5pt}
+
+To change the defaults, all input parameters and files follow the following syntax \texttt{./solver -\{name\} \{value\} \emph{land\_map\_name}.dat}.  For example, the following line sets the end time to 250, the birth rate of hares to 0.2, the diffusion rate for pumas to 0.1.  The results will be printed to a file \texttt{results.xyz} which is readable by \texttt{VMD}.
+
+\vspace{5pt}
+\noindent\texttt{./solver ../data/testmap.dat -o results -f vmd -e 250 -r 0.2 -l 0.1}
+\vspace{5pt}
+
+
+
+%MICHAL Double check syntax
+
+
+\newpage
+\section{Output for \texttt{Kcachegrind}}\label{Kcashegrind} 
+
+The performance profiling visualization tool \label{Kcashegrind} allows for an effective analysis of the time spent on each function.  This analysis is representing in an descending list of processes, ranking them by computation time.  It further breaks down each process into each function called, and similarly shows how much time was spent on each of these functions.  It also gives a pictographic representation of this break down.  Screenshots from using this program before and after optimization are provided in \ref{fig:before} and \ref{fig:after} respectively.  
+
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{before_opti.png}
+\caption{Output before optimization}
+\label{fig:before}
+\end{figure}
+\vspace{-0.5cm}
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{after_opti.png}
+\caption{Output after optimization}
+\label{fig:after}
+\end{figure}
+
+\newpage
+\section{Links to Visualizations}\label{links}
+
+This section includes online links to samples of each visualization type.  They are organized into the table below.  Note that all options are default unless specified otherwise.  
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Type} & \textbf{Name} & \textbf{Map} & \textbf{Options} & \textbf{Link} \\ \hline
+\multirow{3}{*}{\pbox{10cm}{\texttt{Visual} \\ \texttt{Molecular} \\ \texttt{Dynamics}}}
+ & \emph{Unstable Hares} & \texttt{small.dat} & \texttt{dt=0.1} & \href{http://youtu.be/MmkpzO7vNhs}{youtu.be/MmkpzO7vNhs}  \\
+ &  \emph{Stable Hares} & \texttt{small.dat} & \texttt{default} & \href{http://youtu.be/jbDyxL0PFB8}{youtu.be/jbDyxL0PFB8}\\
+  &  \emph{Spiral Hares} & \texttt{spiral.dat} & \texttt{default}  & \href{http://youtu.be/sVR1NyPAj14}{youtu.be/sVR1NyPAj14}\\ \hline
+\multirow{2}{*}{\pbox{10cm}{\texttt{Gnuplot}} }
+ & \emph{Face hares} & \texttt{face.dat}& \texttt{default}   & \href{https://bazzle.me/animate.gif}{bazzle.me/animate.gif}\\
+ & \emph{Face pumas} & \texttt{face.dat} & \texttt{default}  & \url{}\\ \hline
+\multirow{3}{*}{\pbox{10cm}{\texttt{PPM}}} 
+ & \emph{movie} &   \texttt{small.dat}& \texttt{default} & \href{https://bazzle.me/pumas/data/movie.gif}{bazzle.me/pumas/data/movie.gif} \\
+ &   \emph{movie2}&  \texttt{small.dat}&\texttt{default}& \href{https://bazzle.me/pumas/data/movie2.gif}{bazzle.me/pumas/data/movie2.gif}\\
+ &  \emph{movie3} & \texttt{islands.dat}& \texttt{default}&\href{https://bazzle.me/pumas/data/movie3.gif}{bazzle.me/pumas/data/movie3.gif} \\ \hline
+ 
+
+\end{tabular}
+\label{tb:parameters}
+\end{table}
+
+
 \end{appendices}
 
 \end{document}
@@ -394,8 +507,7 @@ Conclusions Some brief conclusions.
 
 
 %TO DO
-%  reobserve nLand param in apply_step.  has same name in averages
 %  discretize equations
-% HOW TO USE PROGRAM appendix
-% 
+% reference the output visualization locations
+% change parameters
 
