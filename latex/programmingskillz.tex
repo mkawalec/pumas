@@ -96,7 +96,7 @@ Developing a Predator-Prey Simulation
 
 \begin{abstract}
 
-The aim of this project is to develop the essential programming skills through developing a predatory-prey simulation.  The group was given a system of coupled partial differential equations that the population densities of pumas and hares on a 2D surface.  Using \texttt{C++} and other existing programming frame work, an efficient, portable, and extendable simulation was developed.  This simulation was then throughly tested, debugged, and optimized.  Despite being a relatively simple simulation, the analysis was able to give insight into the dynamics of the problem.
+The aim of this project is to develop the essential programming skills through developing a predatory-prey simulation.  The group was given a system of coupled partial differential equations that the population densities of pumas and hares on a 2D surface.  Using \texttt{C++} and other existing programming framework, an efficient, portable, and extendable simulation was developed.  This simulation was then throughly tested, debugged, and optimized.  Despite being a relatively simple simulation, the analysis was able to give insight into the dynamics of the problem.
 
 \end{abstract}
 
@@ -122,7 +122,7 @@ The aim of this project is to develop the essential programming skills through d
 
 
 \section{Introduction}
-The focus of this project was to apply the skills acquired in class to develop a Predator-Prey simulation in a group setting.  This group opted write the program in \texttt{C++}.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  The revision control software $\texttt{git}$ was used to streamline the collaborative efforts of the group.  Once a working simulation was written, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different visualization programs.  
+The focus of this project was to apply the skills acquired in the Programming Skills course to develop a Predator-Prey simulation in a group setting.  This group opted to write the program in \texttt{C++}.  In order to do so, the project members started with a rough outline of the program.  From here, development tasks were assigned to each member.  The revision control software $\texttt{git}$ was used to streamline the collaborative efforts of the group.  Once a working simulation was written, it was thoroughly tested, debugged, and improved.  The resulting simulation includes several output types for different visualization programs.  
 
 For reference, the coupled partial differential equations that dictate the time evolution of the populations of pumas and hares are included below.  $H$ is the population of hares, $P$ is the population of pumas, $x,y,$ and $t$ are space and time coordinates respectively, and $r,a,k,b,m$ and $l$ are scaling parameters, as discussion in Section \ref{params}.
 
@@ -149,10 +149,10 @@ In order to increase efficiency and productivity, the division of labour was det
 \noindent\textbf{Claude  Schmit:}   With a strong working understanding of $\texttt{C++}$, Claude was tasked with writing the first draft of the constructor. Once the main simulation was set up, he extended the test framework and included various sanity checks into the test-suite. After moving to a more advanced output structure, Claude was tasked to implement the \texttt{PlainPPMSerializer} and its dependencies. Having a first working version, it was his job to create various landmaps on which he then ran the simulation. He also provided the group with the structure and planning needed for optimal time management.  
 \\
 
-\noindent{\textbf{Ewen Gillies:}  Given his experience in numerical solutions to partial differential equations, Ewen was tasked with writing the integrating function and dealing with the boundary cells.  Since he lacked experience in $\texttt{C++}$, any additional structural ideas ideas were relayed to the more experience coders for optimal syntax.  He then reviewed this code to ensure all ideas were properly expressed.  Additionally, he was tasked with compiling the group report.
+\noindent{\textbf{Ewen Gillies:}  Given his experience in numerical solutions to partial differential equations, Ewen was tasked with writing the integrating function and dealing with the boundary cells.  Since he lacked experience in $\texttt{C++}$, any additional structural ideas were relayed to the more experience coders for optimal syntax.  He then reviewed this code to ensure all ideas were properly expressed.  Additionally, he was tasked with compiling the group report.
 \\
 
-\noindent{\textbf{Diamantis Ntakaris:}}  Using his strong mathematical background, Diamantis conducted the preliminary analysis of the equation at hand, as well as the intermediate and final analysis of the output.  He also wrote the initial output function, which was then extrapolated to the final one.  As a relatively inexperienced coder, Diamantis was able to offer effective continual feedback on readability and the logical structure of the code, ensuring that all levels of coders would be able to read code and reproduce the results.  He also generated several of the input land maps for the simulation.
+\noindent{\textbf{Diamantis Ntakaris:}}  Using his strong mathematical background, Diamantis conducted the preliminary analysis of the equation at hand, as well as the intermediate and final analysis of the output.  He also wrote the initial output function, which was then extrapolated to the final one.  As a relatively inexperienced coder, Diamantis was able to offer effective continual feedback on readability and the logical structure of the code, ensuring that all levels of coders would be able to read the code and reproduce the results.  He also generated several of the input land maps for the simulation.
 
 \subsection{Coordination}
 
@@ -167,11 +167,11 @@ By adding items to the to do list, shifting them to doing, and placing them in d
 
 \section{Design} 
 
-This simulation has three major comments: Input, Simulation, and Output.  
+This simulation has three major components: Input, Simulation, and Output.  
 It is designed to accept an ASCII file that determines the land map of the simulation.
 The parameters that dictate the time evolution of the hare and puma populations can also be adjusted, although default values are provided.  
 The simulation is then initialized, run for a set amount of time steps, and properly finalised.  
-A a regular interval of time steps, the population of hares and pumas is printed to an output file using one of the available output methods.  
+After a regular interval of time steps, the population of hares and pumas is printed to an output file using one of the available output methods.  
 These outputs can then be visualized, plotted, and analyzed.
 
 \subsection{Input}
@@ -192,7 +192,7 @@ The simulation options include the size of the time step, the frequency of the o
 The input/output options include the output names, extensions, and formats as well as the frequency at which the progress of the simulation is printed to the terminal.  
 
 All of the parameters are set using the \texttt{boost/program\_options} library, using the traditional syntax. 
-See Appendix~\ref{syntax} for an example.~\ref{tb:parameters}, below, contains a list of the simulation parameters and their default values. 
+See Appendix~\ref{syntax} for an example. \ref{tb:parameters}, below, contains a list of the simulation parameters and their default values. 
 Note that shorthand parameters can be combined, so parameter \texttt{-oa output} is a valid sequence.
 
 Parameter sets other than the Generic options can be set from a configuration file. 
@@ -244,24 +244,24 @@ These file maps can be generated in any way that respects the description above.
 
 \subsection{Simulation}
 
-The structure of the simulation itself is straightforward.  \texttt{Simulator.cpp} contains the majority of the computation and simulation properties.  The \texttt{solver.cpp} file contains the main function, along with an input parameters parser and \texttt{Simulator} class instantiation.  The results of the simulation passed to \texttt{Serializer.cpp} for printing.  These results can then be visualized.  For more on in-depth discussion of output, see Section \ref{output}.
+The structure of the simulation itself is straightforward.  \texttt{Simulator.cpp} contains the majority of the computation and simulation properties.  The \texttt{solver.cpp} file contains the main function, along with an input parameters parser and \texttt{Simulator} class instantiation.  The results of the simulation passed to \texttt{Serializer.cpp} for printing.  These results can then be visualized.  For an in-depth discussion of output, see Section \ref{output}.
 
 \subsubsection{Initialization}
 
-The simulation starts by parsing all input parameters and the land map file in the \texttt{solver.cpp} class.  First, the land map input file accessed by the \texttt{initialize} function.  As per the input file format, the first two entires are used to define the dimensions of the simulation .  The rest of the entries are stored in the one dimensional boolean \texttt{land\_map} array which has ($\texttt{dim\_x} \times \texttt{dim\_y}$) elements.  In this array, a value of \texttt{true} corresponds to a land entry, whereas \texttt{false} corresponds to a water entry.  The function then constructs a \texttt{Simulator}, as defined in the \texttt{Simulator.cpp} file, with the appropriate dimensions and land/water entries.  
+The simulation starts by parsing all input parameters and the land map file in \texttt{solver.cpp}.  First, the land map input file is accessed by the \texttt{initialize} function.  As per the input file format, the first two entires are used to define the dimensions of the simulation .  The rest of the entries are stored in the one dimensional boolean \texttt{land\_map} array which has ($\texttt{dim\_x} \times \texttt{dim\_y}$) elements.  In this array, a value of \texttt{true} corresponds to a land entry, whereas \texttt{false} corresponds to a water entry.  The function then constructs a \texttt{Simulator}, as defined in the \texttt{Simulator.cpp} file, with the appropriate dimensions and land/water entries.  
 
 \subsubsection{Construction}
 
-The \texttt{Simulator} constructor effectively starts by allocating enough memory for store the information of two subsequent time steps.  These states are  referred to as \texttt{current\_state} and \texttt{temp\_state}.  Using the \texttt{boost} library, they each defined as a \texttt{shared\_array}\footnote{See section (REF) for a discussion of \texttt{shared\_arrays}}} of \texttt{landscape} entries.  The \texttt{landscape} structure\footnote{This structure is defined in \texttt{\textbackslash include\textbackslash helper.hpp}} stores information about the cell including whether it is land or water, the hare population, and the puma population. The boolean \texttt{land\_map} array is copied on to both states.  The land cells in the \texttt{current\_state} are then given a random\footnote{The random number generator is seeded according to the start time to ensure unique results for each run.} population of hares and pumas between 0 and 5, whereas the water cells are set to 0.  All cells in the \texttt{temp\_state} are initialized to zero.
+The \texttt{Simulator} constructor effectively starts by allocating enough memory to store the information of two subsequent time steps.  These states are  referred to as \texttt{current\_state} and \texttt{temp\_state}.  Using the \texttt{boost} library, they are each defined as a \texttt{shared\_array}\footnote{See section \ref{boost} for a discussion of \texttt{shared\_arrays}}} of \texttt{landscape} entries.  The \texttt{landscape} structure\footnote{This structure is defined in \texttt{\textbackslash include\textbackslash helper.hpp}} stores information about the cell including whether it is land or water, the hare population, and the puma population. The boolean \texttt{land\_map} array is copied onto both states.  The land cells in the \texttt{current\_state} are then given a random\footnote{The random number generator is seeded according to the start time to ensure unique results for each run.} population of hares and pumas between 0 and 5, whereas the water cells are set to 0.  All cells in the \texttt{temp\_state} are initialized to zero.
 
-The simulation is built with default values for all parameters.  After the constructor is called, the \texttt{solver.cpp} class reads any user set values and sets the simulator values accordingly, including the output type.
+The simulation is built with default values for all parameters.  After the constructor is called, \texttt{solver.cpp} reads any user set values and sets the simulator values accordingly, including the output type.
 
 \subsubsection{Calculation}
 
 After declaring some output streams and initializing an \texttt{average\_densities} structure\footnote{This structure stores one double for average hare density and one for average puma density, as defined in \texttt{\textbackslash include\textbackslash helper.hpp}.}, the simulation moves into the main calculation loop.  This loop is defined to iterate the simulation from the initial time to the final time in the defined time-step increments.  Most of the work is done in the \texttt{apply\_step} function, as defined in \texttt{Simulator.cpp}.  
 
-The  \texttt{apply\_step} function starts by switching the contents of the  \texttt{current\_state} and the \texttt{temp\_state}.  It then opens a loop through all the sites in the system.  If the site is a land cell, it counts the number of neighboring land cells for use in the discretized partial differential equations.  The values in \texttt{temp\_state} are used to calculate the updated populations according to equations \eqref{hares} and \eqref{pumas} (REF), which are then stored in \texttt{current\_state}.  These values have a minimum value of zero.  All water cells are skipped so that their populations remain at zero.
-.  
+The  \texttt{apply\_step} function starts by switching the contents of the  \texttt{current\_state} and the \texttt{temp\_state}.  It then opens a loop through all the sites in the system.  If the site is a land cell, it counts the number of neighboring land cells for use in the discretized partial differential equations.  The values in \texttt{temp\_state} are used to calculate the updated populations according to equations \eqref{hares} and \eqref{pumas}, which are then stored in \texttt{current\_state}.  These values have a minimum value of zero.  All water cells are skipped so that their populations remain at zero.
+
 
 A key part of the \texttt{apply\_step} function is that it accesses all cells through the \texttt{get\_cell} function.  For all defined cells on the map, it returns the value of the \texttt{temp\_state}, as expected.  For all cells outside the limits of the system, it returns the \texttt{halo\_cell} which was initialized in the constructor.  Since all cells outside the system are defined to have a zero population, this is a cost effective way of setting and changing the boundary conditions.
 
@@ -274,13 +274,13 @@ After the system is moved forward one time step, the average populations across 
 
 \subsection{Output}\label{output}
 
-The output of the simulation is handled by the \texttt{Serializer.cpp} file.  This file defines three output formats, each with its own class.  One format is chosen as a parameter of the current simulation.  The main loop tells the \texttt{Simulator.cpp} class to print, which then passes all the information to the \texttt{Serializer.cpp} where it is properly formatted.   This is intended to maximize flexibility in adding, removing, and choosing available output formats.  Once the output file has been generated, it can be visualized using one of several visualizers.
+The output of the simulation is handled by the \texttt{Serializer.cpp} file.  This file defines three output formats, each with its own class.  One format is chosen as a parameter of the current simulation.  The main loop tells the \texttt{Simulator} class to print, which then passes all the information to a \texttt{Serializer} class where it is properly formatted.   This is intended to maximize flexibility in adding, removing, and choosing available output formats.  Once the output file has been generated, it can be visualized using one of several visualizers.
 
 \subsubsection{Serializer}
 
-\texttt{Serializer.cpp} is designed to effectively handle the output file format and nothing else.  It defines a class for all available output format.  These classes are all named and pointed to using a list of pointers.  \texttt{Simulator.cpp} defines a pointer to a \texttt{Serializer.cpp} class called \texttt{current\_serializer}.  Strictly speaking, the simulator is initialized as pointing to nothing.  It is then set to point to the desired format class in \texttt{solver.cpp} via the \texttt{choose\_output\_method(}\emph{arg}\texttt{)} function.  This function checks its argument against the names of the formats pointed to in the list, returning the appropriate pointer in the event of a match.  If none match, then the program returns an error.  In the event that the function is never called, \texttt{Simulator.cpp} sets \texttt{current\_serializer} to point to the first pointer of the list of available serializers.  
+\texttt{Serializer.cpp} is designed to effectively handle the output file format and nothing else.  It defines a class for each available output format.  These classes are all named and pointed to using a list of pointers.  \texttt{Simulator} defines a pointer to a \texttt{Serializer} class called \texttt{current\_serializer}.  Strictly speaking, the simulator is initialized as pointing to nothing.  It is then set to point to the desired format class in \texttt{solver.cpp} via the \texttt{choose\_output\_method(}\emph{arg}\texttt{)} function.  This function checks its argument against the names of the formats pointed to in the list, returning the appropriate pointer in the event of a match.  If none match, then the program returns an error.  In the event that the function is never called, the \texttt{Simulator} sets \texttt{current\_serializer} to point to the first pointer of the list of available serializers.  
 
-Once the  \texttt{current\_serializer} is set, \texttt{Simulator.cpp}  knows to where pass all the output data.  In the main loop, \texttt{solver.cpp}  opens two out streams, which are then passed to the \texttt{Simulator::serialize} function.  This function passes these out streams, as well as the \texttt{current\_state} and dimensions of the system to the address of the \texttt{current\_serializer} pointer, which is a class defined in \texttt{Serializer.cpp}.  This class then handles all formatting, and prints the contents of the current state to the appropriate stream.
+Once the  \texttt{current\_serializer} is set, the \texttt{Simulator} knows to where pass all the output data.  In the main loop, \texttt{solver.cpp}  opens two out streams, which are then passed to the \texttt{Simulator::serialize} function.  This function passes these out streams, as well as the \texttt{current\_state} and dimensions of the system to the address of the \texttt{current\_serializer} pointer, which is a class defined in \texttt{Serializer.cpp}.  This class then handles all formatting, and prints the contents of the current state to the appropriate stream.
 
 For the purposes of this simple simulation, this output method is over engineered.  Its true strength and simplicity is only realized when the simulation has more than one output type.  By including \texttt{Serializer.cpp}, the output method is adaptable, scalable, and separates concerns.  Should a new format be needed, only \texttt{Serializer.cpp} and its header file need to be edited.  The motivation to include several output types was to test the outputs using several visualization methods.
 
@@ -290,7 +290,7 @@ A key part of any simulation is the ability to visualize the results.  This prog
 
 The most informative of the three is \texttt{Visual Molecular Dynamics, VMD}.  While this visualizer is intended to model molecule interactions, it accepts an \texttt{XYZ} file type, where the location of each particle is written in Cartesian coordinates for every time step.  The populations of pumas and hares can be stored as the $z$ coordinate of a ``particle,'' with the $x$ and $y$ coordinates representing which cell they are in.  The main advantage of this visualizer is that it allows for a 3D visualization of the data.  This visualization can then be rendered to a video file format, which is both compact and portable.  The disadvantage is that it is computationally intense to process large maps and render high quality videos.  
 
-The easiest viewer is \texttt{Gnuplot}.  This visualizer offered the most flexibility in visualization options using a relatively easy script.  A \texttt{Gnuplot} script is used to generate a color map to plot the populations against $x$ and $y$ at every time step.  These maps are then strung together in a \texttt{gif}.  The advantage of this visualizer is that is is the only one that includes a quantitative colour scale for the populations, as well as an indication of the current time step.  The downside to this viewer is that it takes a very long time to load large data files and requirers \texttt{Gnuplot} to be installed.
+The easiest viewer is \texttt{Gnuplot}.  This visualizer offered the most flexibility in visualization options using a relatively easy script.  A \texttt{Gnuplot} script is used to generate a color map to plot the populations against $x$ and $y$ at every time step.  These maps are then strung together in a \texttt{gif}.  The advantage of this visualizer is that it is the only one that includes a quantitative colour scale for the populations, as well as an indication of the current time step.  The downside to this viewer is that it takes a very long time to load large data files and requirers \texttt{Gnuplot} to be installed.
 
 The most portable visualization is when the populations are printed directly to a Portable Pixmap (PPM) format.  This generates image files directly from the \texttt{Serializer}, which are readable by nearly all systems and imaging processing software.  These files were processed by \texttt{imagemagick} to create a \texttt{.gif} moving image.  The difficulty with this output is that it is difficult to recover any kind of scale from the resulting images.  The only conclusive evidence they offer is whether or not a steady state is reached.  
 
@@ -298,7 +298,7 @@ The most portable visualization is when the populations are printed directly to 
 
 \section{Tools and Frameworks}
 
-The simulation was written in \texttt{C++}, which had a large impact on the tools and frameworks used throughout the project.  The code was compiled with \texttt{gcc} version 4.8.  The unit testing framework, as well as several key features, were included from the \texttt{Boost} library.  \texttt{Cmake} was used to help generate \texttt{Makefiles} across several different platforms.  From there, \texttt{gdb} was used to help debug the program.  Once the program was running, the performance testing tool \texttt{Valgrind} was used in order to optimize the code.  Finally, all documentation was was generated using \texttt{Doxygen}.
+The simulation was written in \texttt{C++}, which had a large impact on the tools and frameworks used throughout the project.  The code was compiled with \texttt{gcc} version 4.8.  The unit testing framework, as well as several key features, were included from the \texttt{Boost} library.  \texttt{Cmake} was used to help generate \texttt{Makefiles} across several different platforms.  From there, \texttt{gdb} was used to help debug the program.  Once the program was running, the performance testing tool \texttt{Valgrind} was used in order to optimize the code.  Finally, all documentation was generated using \texttt{Doxygen}.
 
 \subsection{Programming Language}
 
@@ -310,7 +310,7 @@ The simulation was compiled with \texttt{gcc} version 4.6, which is the most wid
 
 %SOMETHING ELSE
 
-\subsubsection{Boost}
+\subsubsection{Boost}\label{boost}
 
 \texttt{Boost} is one of the most widely used, reviewed, and tested \texttt{C++} libraries.  It greatly improved the memory management, parsing methods, and standard functions  available to the simulation.   It also provided a unit testing framework, as discussed in Section \ref{test}.  
 
@@ -319,17 +319,17 @@ To improve memory management, \texttt{boost::shared\_array} was used.  This obje
 
 Using \texttt{Boost}, the program options can be defined, grouped, and easily set at runtime.  This library also enables configuration files to be used with little added code.  The program options are also conveniently stored and displayed in a help menu, which can also be displayed at runtime.  
 
-Finally, the \texttt{Boost} was used to define a Mersenne-Twister random number generator.  This random number generator is seeded with the current time up to a microsecond.  This is to ensure a unique seed for all simulator classes, even when they are instantiated within a small time frame.  The advantage of using the Mersenne-Twister generator is that it has been proved to have a better random number distribution and a longer period than the standard \texttt{C++} random number generator.  Additionally, it is widely used, and has been throughly tested.
+Finally, \texttt{Boost} was used to define a Mersenne-Twister random number generator.  This random number generator is seeded with the current time up to a microsecond.  This is to ensure a unique seed for all simulator classes, even when they are instantiated within a small time frame.  The advantage of using the Mersenne-Twister generator is that it has been proved to have a better random number distribution and a longer period than the standard \texttt{C++} random number generator.  Additionally, it is widely used, and has been throughly tested.
 
 \subsection{Build}
 
-In order to build the simulation, a \texttt{Makefile} must be generated.  \texttt{CMake} was used to abstract this process, ensuring that it is as system independent as possible.   This is done using \texttt{find} scripts, which only require the user to supply the names the needed include files.  The paths to these files are determined, and printed to the \texttt{Makefile}.  Additionally, \texttt{CMake} prints the build process, detailing the progress and any errors.  The disadvantage is that it requires the installation of the latest version of \texttt{CMake}, which is not available on Scientific Linux/  
+In order to build the simulation, a \texttt{Makefile} must be generated.  \texttt{CMake} was used to abstract this process, ensuring that it is as system independent as possible.   This is done using \texttt{find} scripts, which only require the user to supply the names the needed include files.  The paths to these files are determined, and printed to the \texttt{Makefile}.  Additionally, \texttt{CMake} prints the build process, detailing the progress and any errors.  The disadvantage is that it requires the installation of the latest version of \texttt{CMake}, which is not available on Scientific Linux.
 
 \subsection{Revision Control}
 
-The revision control software \texttt{git} was used to streamline group editing of the source code and coordinate efforts between group members.  This software based on a decentralized repository structure, which is favorable to a centralized repository structure.  By decentralizing, the development no longer has a single point of failure.  In addition, decentralized structures allow for easy write privilege management and allow changes can be committed offline.
+The revision control software \texttt{git} was used to streamline group editing of the source code and coordinate efforts between group members.  This software based on a decentralized repository structure, which is favorable to a centralized repository structure.  By decentralizing, the development no longer has a single point of failure.  In addition, decentralized structures allow for easy write privilege management and for changes to committed offline.
 
-\texttt{git} was chosen over the popular decentralized alternatives because it is the mostly widely supported and fasted available.  Using \texttt{git} meant that the free online repository \texttt{GitHub} could be used.  Using this software, changes could be tracked and visualized.  It was one of the most important lines of communication between group members.
+\texttt{git} was chosen over the popular decentralized alternatives because it is the most widely supported and most thoroughly tested available.  Using \texttt{git} meant that the free online repository \texttt{GitHub} could be used.  Using this software, changes could be tracked and visualized.  It was one of the most important lines of communication between group members.
 
 
 \subsection{Testing}\label{test}
@@ -365,7 +365,7 @@ One of the earlier visualizations showed a diverging behaviour in the population
  
 
 \subsection{Average Densities} 
-Once the code was stabilized, the average populations were mapped against time.  The plot below in \ref{fig:stable} shows the average population of pumas and hares across a 2000$\times$2000 map with the default settings.  It is clear from this plot that both average population are sinusoidal and in a dynamic equilibrium.  With these parameters, the hares almost always have a higher population than the pumas, except for a brief period once per cycle.  
+Once the code was stabilized, the average populations were mapped against time.  The plot below in \ref{fig:stable} shows the average population of pumas and hares across a 2000$\times$2000 map with the default settings.  It is clear from this plot that both average populations are sinusoidal and in a dynamic equilibrium.  With these parameters, the hares almost always have a higher population than the pumas, except for a brief period once per cycle.  
  
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{stable.eps}
@@ -386,19 +386,19 @@ The finished simulation, documentation, and analysis were all to the groups sati
 
 \subsection{Novel Dynamics}
 
-The partial differential equations and random initial conditions that dictated the dynamics of the system represent one of the simplest Predator-Prey simulations.  The easiest extension to this simulation would be to introduce new initial conditions.  It was suggested that these conditions could introduce dense pockets of hares an pumas that do not touch at first on different locations on the map or surround a low population of pumas with lots of hares  and observe the result.  An analysis of how the initial conditions effect the final out come has the potential to add a substantial amount of content to the simulation.  
+The partial differential equations and random initial conditions that dictated the dynamics of the system represent one of the simplest Predator-Prey simulations.  The easiest extension to this simulation would be to introduce new initial conditions.  It was suggested that these conditions could introduce dense pockets of hares and pumas that do not touch at first on different locations on the map or surround a low population of pumas with lots of hares  and observe the result.  An analysis of how the initial conditions effect the final outcome has the potential to add a substantial amount of content to the simulation.  
 
-Perhaps a less obvious extension that was suggested would be to have both populations prefer to be close to water sources.  The two hypothesized methods of achieving there were to introduce new terms to equations \eqref{hares} and \eqref{pumas} or to make the birth and death rate constants functions of the distance from water.  While the exact effects could only be speculated, this feature does reflect real Predator-Prey simulations.  It has the potential to completely change the dynamics of the system, and would have been interesting to explore
+Perhaps a less obvious extension that was suggested would be to have both populations prefer to be close to water sources.  The two hypothesized methods of achieving this were to introduce new terms to equations \eqref{hares} and \eqref{pumas} or to make the birth and death rate constants functions of the distance from water.  While the exact effects could only be speculated, this feature does reflect real Predator-Prey simulations.  It has the potential to completely change the dynamics of the system, and would have been interesting to explore.
 
 \subsection{Improved Output}
 
 A lot of the work done on this project focused on including a wide range of outputs.  Since the majority of this work was not prompted by the project description, the focus was on the ensuring that the infrastructure that provided the output was optimal.  This meant that once an output/visualization pair was working, efforts were shifted to less developed parts of the simulation.  As a result, the output files and/or visualizations produced are not optimal.  
 
-The \texttt{VMD} output populates three ``molecules'' per cell, one for hare population, one for puma population, and one for land/water, regardless of cell type.  This means that each water cell has two more molecules than needed, since we know the populations in these cells are always zero.  These two extra cells cause the the output file type to be larger than needed and result in an ambiguous colour scheme in the final visualization.  Were there more time, the land map would be pre-scanned before serialization, and each water cell would only be given one molecule.
+The \texttt{VMD} output populates three ``molecules'' per cell, one for hare population, one for puma population, and one for land/water, regardless of cell type.  This means that each water cell has two more molecules than needed, since we know the populations in these cells are always zero.  These two extra molecules cause the output file type to be larger than needed and result in an ambiguous colour scheme in the final visualization.  Were there more time, the land map would be pre-scanned before serialization, and each water cell would only be given one molecule.
 
 The \texttt{Gnuplot} output is informative, compact, easy to use, and fairly portable.  It provides useful visualizations of the populations vs. position using a 2D color map.   \texttt{Gnuplot} also supports 3D contour maps to the same data.  Additionally, the color of these contours can be used to plot a fourth variable.  Adding this feature to the list of available visualizers would have been fairly straight forward, and very powerful.  
 
-Finally, the \texttt{PPM} output fails to show any kind of scale in its visualizations.  While it is useful for to ensure the simulation has not destabilized and to get a rough, qualitative sense of the dynamics, it fails to show exactly what range the populations are in.  Adding a color scale, either as a separate image file or in the same image file as the visualization would drastically improve the utility of these visualizations.
+Finally, the \texttt{PPM} output fails to show any kind of scale in its visualizations.  While it is useful for checking the simulation has not destabilized and to get a rough, qualitative sense of the dynamics, it fails to show exactly what range the populations are in.  Adding a color scale, either as a separate image file or in the same image file as the visualization would drastically improve the utility of these visualizations.
  
  \section{Conclusion}
 
@@ -409,7 +409,7 @@ The members were able to coordinate their efforts to plan, write, develop, debug
 \section{Quick Start Guide for Simulation }
 \subsection{Creating Input Land Maps}
 
-To create input land maps, open the \texttt{puma/data/} directory and run \texttt{gimp} version 2.8. Select \texttt{File $\rightarrow$ New} and enter the size of the desired land map in the window that opens.  Be sure to select \texttt{Greyscale} under \texttt{Advanced Options} and then press \texttt{OK}. An interface will open where the land map can be drawn. Note that points lighter than \texttt{greyscale} = 128 will be water, whereas the darker ones will be land. Once the map is drawn, select \texttt{File $\rightarrow$ Save as} and enter the desired file when prompted.  Be sure to use the extension \texttt{.pnm} in the file name.  Click save and finally choose the ASCII file format.
+To create input land maps, open the \texttt{puma/data/} directory and run \texttt{gimp} version 2.6. Select \texttt{File $\rightarrow$ New} and enter the size of the desired land map in the window that opens.  Be sure to select \texttt{Greyscale} under \texttt{Advanced Options} and then press \texttt{OK}. An interface will open where the land map can be drawn. Note that points lighter than \texttt{greyscale} = 128 will be water, whereas the darker ones will be land. Once the map is drawn, select \texttt{File $\rightarrow$ Save as} and enter the desired file when prompted.  Be sure to use the extension \texttt{.pnm} in the file name.  Click save and finally choose the ASCII file format.
 
 Close gimp, and open the \texttt{pnm2dat} executable, provided through \textit{Learn}, in the same directory. Enter the following commands in the terminal, where the first ensures that \texttt{pnm2dat} is an executable and the second converts the file to the desired file format. 
 
@@ -431,7 +431,7 @@ To compile the source code, create a \texttt{build} directory under \texttt{puma
 \noindent\texttt{make doc}
 \vspace{5pt}
 
-The first two commands create the executables \texttt{solver} and \texttt{test-suite}.   The third generates the program documentation the working directory using \texttt{oxygen}. This documentation is contained in the \texttt{html/} and \texttt{latex/} subdirectories, where \texttt{html} and the \LaTeX documentation can be found. 
+The first two commands create the executables \texttt{solver} and \texttt{test-suite}.   The third generates the program documentation the working directory using \texttt{doxygen}. This documentation is contained in the \texttt{html/} and \texttt{latex/} subdirectories, where \texttt{html} and the \LaTeX documentation can be found. 
 
 \subsection{Running the Simulation}\label{syntax}
 
@@ -455,7 +455,7 @@ To change the defaults, all input parameters and files follow the following synt
 \newpage
 \section{Output for \texttt{Kcachegrind}}\label{Kcashegrind} 
 
-The performance profiling visualization tool \label{Kcashegrind} allows for an effective analysis of the time spent on each function.  This analysis is representing in an descending list of processes, ranking them by computation time.  It further breaks down each process into each function called, and similarly shows how much time was spent on each of these functions.  It also gives a pictographic representation of this break down.  Screenshots from using this program before and after optimization are provided in \ref{fig:before} and \ref{fig:after} respectively.  
+The performance profiling visualization tool \label{Kcashegrind} allows for an effective analysis of the time spent on each function.  This analysis is represented by an descending list of processes, ranking them by computation time.  It further breaks down each process into each function called, and similarly shows how much time was spent on each of these functions.  It also gives a pictographic representation of this break down.  Screenshots from using this program before and after optimization are provided in \ref{fig:before} and \ref{fig:after} respectively.  
 
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{before_opti.png}
@@ -472,7 +472,7 @@ The performance profiling visualization tool \label{Kcashegrind} allows for an e
 \newpage
 \section{Links to Visualizations}\label{links}
 
-This section includes online links to samples of each visualization type.  They are organized into the table below.  Note that all options are default unless specified otherwise.  
+This section includes online links to samples of each visualization type.  They are organized into the table below.  Note that all options are default unless specified otherwise.  If the current PDF viewer does not support links, or if a hard copy is being read, be sure the add \texttt{https://} to all links before entering them into a web browser.
 
 \begin{table}
 \centering
@@ -485,7 +485,7 @@ This section includes online links to samples of each visualization type.  They 
   &  \emph{Spiral Hares} & \texttt{spiral.dat} & \texttt{default}  & \href{http://youtu.be/sVR1NyPAj14}{youtu.be/sVR1NyPAj14}\\ \hline
 \multirow{2}{*}{\pbox{10cm}{\texttt{Gnuplot}} }
  & \emph{Face hares} & \texttt{face.dat}& \texttt{default}   & \href{https://bazzle.me/animate.gif}{bazzle.me/animate.gif}\\
- & \emph{Face pumas} & \texttt{face.dat} & \texttt{default}  & \url{}\\ \hline
+ & \emph{Face pumas} & \texttt{face.dat} & \texttt{default}  & \href{https://bazzle.me/out.gif}{bazzle.me/out.gif}\\ \hline
 \multirow{3}{*}{\pbox{10cm}{\texttt{PPM}}} 
  & \emph{movie} &   \texttt{small.dat}& \texttt{default} & \href{https://bazzle.me/pumas/data/movie.gif}{bazzle.me/pumas/data/movie.gif} \\
  &   \emph{movie2}&  \texttt{small.dat}&\texttt{default}& \href{https://bazzle.me/pumas/data/movie2.gif}{bazzle.me/pumas/data/movie2.gif}\\
@@ -493,7 +493,6 @@ This section includes online links to samples of each visualization type.  They 
  
 
 \end{tabular}
-\label{tb:parameters}
 \end{table}
 
 
